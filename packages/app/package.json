@@ -1,0 +1,9 @@
+{
+  "name": "trophy-hunter-pubg-app",
+  "version": "1.0.0",
+  "description": "Trophy Hunter PUBG Overwolf app",
+  "repository": "https://github.com/lmachens/trophy-hunter-pubg/tree/master/packages/app",
+  "author": "Leon Machens <leon.machens@googlemail.com>",
+  "license": "AGPL-3.0",
+  "private": true
+}

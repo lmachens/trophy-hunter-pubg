@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "name": "pubg-api",
+  "alias": ["pubg-api.th.gl"],
+  "env": {
+    "PUBG_API_KEY": "@pubg_api_key"
+  },
+  "builds": [{ "src": "endpoints/**/*.ts", "use": "@now/node@canary" }],
+  "routes": [{ "src": "/(.*)", "dest": "/endpoints/$1" }]
+}

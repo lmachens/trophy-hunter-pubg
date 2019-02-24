@@ -1,0 +1,18 @@
+{
+  "name": "trophy-hunter-pubg-api",
+  "version": "1.0.0",
+  "description": "Trophy Hunter PUBG API",
+  "repository": "https://github.com/lmachens/trophy-hunter-pubg/tree/master/packages/api",
+  "author": "Leon Machens <leon.machens@googlemail.com>",
+  "license": "AGPL-3.0",
+  "private": true,
+  "scripts": {
+    "dev": "ts-node-dev server"
+  },
+  "dependencies": {
+    "axios": "^0.18.0"
+  },
+  "devDependencies": {
+    "ts-node-dev": "^1.0.0-pre.32"
+  }
+}
