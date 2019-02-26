@@ -5,5 +5,27 @@
   "repository": "https://github.com/lmachens/trophy-hunter-pubg/tree/master/packages/app",
   "author": "Leon Machens <leon.machens@googlemail.com>",
   "license": "AGPL-3.0",
-  "private": true
+  "private": true,
+  "scripts": {
+    "dev": "next",
+    "build": "next build",
+    "export": "next build && next export",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@material-ui/core": "^3.9.2",
+    "@material-ui/icons": "^3.0.2",
+    "@material-ui/styles": "^3.0.0-alpha.10",
+    "classnames": "^2.2.6",
+    "jss": "^10.0.0-alpha.11",
+    "next": "^8.0.3",
+    "nprogress": "^0.2.0",
+    "react": "^16.8.3",
+    "react-dom": "^16.8.3"
+  },
+  "devDependencies": {
+    "@types/next": "^8.0.1",
+    "@types/nprogress": "^0.0.29",
+    "@zeit/next-typescript": "^1.1.1"
+  }
 }
