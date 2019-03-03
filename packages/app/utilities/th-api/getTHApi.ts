@@ -16,7 +16,7 @@ const getTHApi = <T>(url: string) => {
       return response.data;
     })
     .catch(error => {
-      error.message = `${error.message}: ${url}`;
+      console.error(`${error.message}: ${url}`);
       throw error;
     });
 };

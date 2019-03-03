@@ -10,7 +10,7 @@ const getPlayer = ({ platform, playerName }: GetPlayerProps) => {
   return getPUBGApi<Players>({
     platform,
     endpoint: `players?filter[playerNames]=${encodeURI(playerName)}`
-  });
+  }).then(players => players.data[0]);
 };
 
 export default getPlayer;

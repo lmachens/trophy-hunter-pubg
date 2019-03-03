@@ -32,6 +32,11 @@ const theme = createMuiTheme({
         border: '1px solid rgba(255, 255, 255, 0.23)',
         maxWidth: 350
       }
+    },
+    MuiSnackbarContent: {
+      root: {
+        color: '#fff'
+      }
     }
   }
 });

@@ -10,6 +10,7 @@ import theme from './_theme';
 import Web from 'layouts/Web';
 import Overwolf from 'layouts/Overwolf';
 import { CssBaseline } from '@material-ui/core';
+import { StorageProvider } from 'contexts/storage';
 
 NProgress.configure({ parent: '#__next', showSpinner: false });
 
@@ -32,25 +33,27 @@ export default class MyApp extends App {
   }
 
   render() {
-    const { Component, pageProps } = this.props;
+    const { Component, pageProps, router } = this.props;
     return (
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <Container>
-          <Head>
-            <title>Trophy Hunter</title>
-          </Head>
-          {isOverwolfApp && (
-            <Overwolf>
-              <Component {...pageProps} />
-            </Overwolf>
-          )}
-          {!isOverwolfApp && (
-            <Web>
-              <Component {...pageProps} />
-            </Web>
-          )}
-        </Container>
+        <StorageProvider>
+          <Container>
+            <Head>
+              <title>Trophy Hunter</title>
+            </Head>
+            {isOverwolfApp && (
+              <Overwolf route={router.route}>
+                <Component {...pageProps} />
+              </Overwolf>
+            )}
+            {!isOverwolfApp && (
+              <Web>
+                <Component {...pageProps} />
+              </Web>
+            )}
+          </Container>
+        </StorageProvider>
       </ThemeProvider>
     );
   }

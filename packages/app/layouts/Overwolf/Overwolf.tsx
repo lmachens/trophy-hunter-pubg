@@ -10,11 +10,16 @@ import {
   ListItemText,
   AppBar,
   Toolbar,
-  ListSubheader,
   ListItemAvatar,
   Avatar
 } from '@material-ui/core';
 import Link from 'components/Link';
+import PlayerInfo from 'components/PlayerInfo';
+import classNames from 'classnames';
+
+interface OverwolfProps {
+  route: string;
+}
 
 const drawerWidth = 200;
 const useStyles = makeStyles(theme => ({
@@ -61,9 +66,13 @@ const useStyles = makeStyles(theme => ({
   content: {
     flexGrow: 1
   },
-  avatar: {
-    height: 30,
-    width: 30
+  item: {
+    '&:hover': {
+      backgroundColor: theme.palette.secondary.main
+    }
+  },
+  selectedItem: {
+    backgroundColor: theme.palette.secondary.dark
   }
 }));
 
@@ -85,7 +94,7 @@ const handleClose = () => {
   });
 };
 
-const Overwolf: FunctionComponent = ({ children }) => {
+const Overwolf: FunctionComponent<OverwolfProps> = ({ children, route }) => {
   const classes = useStyles();
 
   return (
@@ -114,15 +123,21 @@ const Overwolf: FunctionComponent = ({ children }) => {
       >
         <div className={classes.toolbar} />
         <List>
-          <Link href="/trophies">
-            <ListItem button>
+          <Link href="/">
+            <ListItem
+              button
+              className={classNames(classes.item, { [classes.selectedItem]: route === '/' })}
+            >
               <ListItemAvatar>
-                <Avatar className={classes.avatar} alt="Trophies" src="/static/icon.png" />
+                <Avatar alt="Home" src="/static/icon.png" />
               </ListItemAvatar>
-              <ListItemText primary="Trophies" />
+              <ListItemText primary="Home" />
             </ListItem>
           </Link>
-          <ListSubheader>Last Matches</ListSubheader>
+
+          <PlayerInfo
+            className={classNames(classes.item, { [classes.selectedItem]: route === '/player' })}
+          />
         </List>
       </Drawer>
       <main className={classes.main}>
