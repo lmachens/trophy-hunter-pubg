@@ -3,8 +3,14 @@
 const withTypescript = require('@zeit/next-typescript');
 const fs = require('fs');
 const { join } = require('path');
+const dotenv = require('dotenv');
+
+dotenv.config();
 
 module.exports = withTypescript({
+  env: {
+    TH_PUBG_API: process.env.TH_PUBG_API
+  },
   exportPathMap: (defaultPathMap, { dev, dir, outDir, distDir, buildId }) => {
     if (dev) {
       return defaultPathMap;

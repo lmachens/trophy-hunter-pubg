@@ -24,7 +24,7 @@
       "googlesyndication": "http"
     },
     "externally_connectable": {
-      "matches": []
+      "matches": ["pubg-api.th.gl"]
     },
     "start_window": "MainWindow",
     "windows": {

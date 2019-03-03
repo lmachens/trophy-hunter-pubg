@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import { AppBar, IconButton, Toolbar, Tooltip } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import Link from 'components/Link';
@@ -35,7 +35,7 @@ const useStyles = makeStyles({
   }
 });
 
-const Header = () => {
+const Header: FunctionComponent = () => {
   const classes = useStyles();
   return (
     <AppBar className={classes.appBar} position="static">

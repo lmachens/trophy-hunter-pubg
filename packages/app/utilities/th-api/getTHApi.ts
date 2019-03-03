@@ -1,22 +1,15 @@
 import axios from 'axios';
 
 const instance = axios.create({
-  baseURL: 'https://api.pubg.com/shards/',
+  baseURL: process.env.TH_PUBG_API || 'https://pubg-api.th.gl',
   timeout: 1000,
   headers: {
-    Authorization: 'Bearer ' + process.env.PUBG_API_KEY,
     Accept: 'application/json',
     'Content-Type': 'application/json'
   }
 });
 
-interface GetPUBGApiProps {
-  platform: string;
-  endpoint: string;
-}
-
-const getPUBGApi = <T>({ platform, endpoint }: GetPUBGApiProps) => {
-  const url = `/${platform.toLowerCase()}/${endpoint}`;
+const getTHApi = <T>(url: string) => {
   return instance
     .get<T>(url)
     .then(response => {
@@ -28,4 +21,4 @@ const getPUBGApi = <T>({ platform, endpoint }: GetPUBGApiProps) => {
     });
 };
 
-export default getPUBGApi;
+export default getTHApi;

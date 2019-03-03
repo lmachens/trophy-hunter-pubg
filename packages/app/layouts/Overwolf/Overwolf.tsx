@@ -53,9 +53,13 @@ const useStyles = makeStyles(theme => ({
   drawerPaper: {
     width: drawerWidth
   },
-  content: {
+  main: {
     flexGrow: 1,
-    padding: theme.spacing.unit * 3
+    display: 'flex',
+    flexDirection: 'column'
+  },
+  content: {
+    flexGrow: 1
   },
   avatar: {
     height: 30,
@@ -121,9 +125,9 @@ const Overwolf: FunctionComponent = ({ children }) => {
           <ListSubheader>Last Matches</ListSubheader>
         </List>
       </Drawer>
-      <main className={classes.content}>
+      <main className={classes.main}>
         <div className={classes.toolbar} />
-        {children}
+        <div className={classes.content}>{children}</div>
       </main>
     </div>
   );
