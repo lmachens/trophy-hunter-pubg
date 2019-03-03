@@ -5,6 +5,7 @@ import Search from '@material-ui/icons/Search';
 import getPlayer from 'utilities/th-api/player';
 import { useStorage } from 'contexts/storage';
 import Router from 'next/router';
+import Player from 'utilities/th-api/player/interface';
 
 interface PlayerSearchProps {
   className?: string;
@@ -57,10 +58,10 @@ const PlayerSearch: FunctionComponent<PlayerSearchProps> = ({ className }) => {
     setError(null);
     setLoading(true);
     getPlayer({ platform, playerName })
-      .then(result => {
-        setItem('th-pubg-player', JSON.stringify(result));
+      .then((player: Player) => {
+        setItem('th-pubg-player', JSON.stringify(player));
         setLoading(false);
-        Router.push('/player');
+        Router.push(`/player?platform=${platform}&playerName=${playerName}`);
       })
       .catch((error: Error) => {
         console.error(error);

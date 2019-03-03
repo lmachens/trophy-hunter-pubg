@@ -16,7 +16,13 @@ export default async (req: IncomingMessage, res: ServerResponse) => {
 
   try {
     const result = await getPlayer({ platform, playerName });
-    res.end(JSON.stringify(result));
+    const player = {
+      name: playerName,
+      platform,
+      matches: result.relationships.matches.data
+    };
+
+    res.end(JSON.stringify(player));
   } catch (error) {
     console.error(error.message);
     res.writeHead(error.response.status);

@@ -11,11 +11,13 @@ import {
   AppBar,
   Toolbar,
   ListItemAvatar,
-  Avatar
+  Avatar,
+  ListSubheader
 } from '@material-ui/core';
 import Link from 'components/Link';
 import PlayerInfo from 'components/PlayerInfo';
 import classNames from 'classnames';
+import LastMatches from 'components/LastMatches';
 
 interface OverwolfProps {
   route: string;
@@ -134,10 +136,12 @@ const Overwolf: FunctionComponent<OverwolfProps> = ({ children, route }) => {
               <ListItemText primary="Home" />
             </ListItem>
           </Link>
-
+          <ListSubheader>Active Player</ListSubheader>
           <PlayerInfo
             className={classNames(classes.item, { [classes.selectedItem]: route === '/player' })}
           />
+          <ListSubheader>Last Matches</ListSubheader>
+          <LastMatches />
         </List>
       </Drawer>
       <main className={classes.main}>

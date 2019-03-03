@@ -21,14 +21,11 @@ interface PlayerInfoProps {
 
 const PlayerInfo: FunctionComponent<PlayerInfoProps> = ({ className }) => {
   const { storageValues, removeItem } = useStorage(['th-pubg-player']);
-  const [anchorEl, setAnchorEl] = useState<EventTarget | null>(null);
+  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const open = Boolean(anchorEl);
 
   const player: Player =
     storageValues['th-pubg-player'] && JSON.parse(storageValues['th-pubg-player']);
-  if (!player) {
-    return null;
-  }
 
   const handleClick = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
     event.stopPropagation();
@@ -45,14 +42,18 @@ const PlayerInfo: FunctionComponent<PlayerInfoProps> = ({ className }) => {
     Router.push('/');
   };
 
+  if (!player) {
+    return null;
+  }
+
   return (
     <>
-      <Link href="/player">
+      <Link href={`/player?platform=${player.platform}&playerName=${player.name}`}>
         <ListItem button className={className}>
           <ListItemAvatar>
-            <ProfilePicture name={player.attributes.name} />
+            <ProfilePicture name={player.name} />
           </ListItemAvatar>
-          <ListItemText primary={player.attributes.name} />
+          <ListItemText primary={player.name} />
           <ListItemSecondaryAction>
             <IconButton
               aria-label="More"
