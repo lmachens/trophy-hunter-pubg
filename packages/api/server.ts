@@ -10,7 +10,11 @@ if (!process.env.PUBG_API_KEY) {
   throw new Error(`No process.env.PUBG_API_KEY set. Set env PUBG_API_KEY="xxx" first`);
 }
 
-const endpoints = {
+interface Endpoints {
+  [key: string]: any;
+}
+
+const endpoints: Endpoints = {
   match,
   player,
   samples,
@@ -21,8 +25,9 @@ const hostname = '127.0.0.1';
 const port = 7000;
 http
   .createServer(async (req, res) => {
-    const { pathname } = parse(req.url);
-    const endpoint = endpoints[pathname.substr(1)];
+    const { pathname = ''} = parse(req.url!);
+    const endpointName = pathname.substr(1);
+    const endpoint = endpoints[endpointName] 
     if (!endpoint) {
       res.writeHead(400);
       res.end(`Unknown endpoint ${req.url}`);

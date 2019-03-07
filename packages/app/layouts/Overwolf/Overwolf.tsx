@@ -30,6 +30,7 @@ const useStyles = makeStyles(theme => ({
     height: '100vh'
   },
   appBar: {
+    backgroundImage: 'url(/static/backgrounds/gun-metal.png)',
     zIndex: theme.zIndex.drawer + 1
   },
   toolbar: {
@@ -58,7 +59,8 @@ const useStyles = makeStyles(theme => ({
     flexShrink: 0
   },
   drawerPaper: {
-    width: drawerWidth
+    width: drawerWidth,
+    backgroundImage: 'url(/static/backgrounds/dark-mosaic.png)'
   },
   main: {
     flexGrow: 1,
@@ -66,7 +68,9 @@ const useStyles = makeStyles(theme => ({
     flexDirection: 'column'
   },
   content: {
-    flexGrow: 1
+    flexGrow: 1,
+    backgroundColor: '#000',
+    backgroundImage: 'url(/static/backgrounds/dark-mosaic.png)'
   },
   item: {
     '&:hover': {

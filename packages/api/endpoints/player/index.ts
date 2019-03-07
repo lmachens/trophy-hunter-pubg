@@ -6,7 +6,7 @@ export default async (req: IncomingMessage, res: ServerResponse) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
 
-  const { platform, playerName } = parse(req.url, true).query;
+  const { platform, playerName } = parse(req.url!, true).query;
   if (!platform || typeof platform !== 'string' || !playerName || typeof playerName !== 'string') {
     res.writeHead(400);
     return res.end('Invalid query');
