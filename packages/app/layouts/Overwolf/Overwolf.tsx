@@ -4,34 +4,29 @@ import Close from '@material-ui/icons/Close';
 import Minimize from '@material-ui/icons/Minimize';
 import {
   IconButton,
-  Drawer,
   List,
   ListItem,
-  ListItemText,
   AppBar,
   Toolbar,
   ListItemAvatar,
-  Avatar,
-  ListSubheader
+  Avatar
 } from '@material-ui/core';
 import Link from 'components/Link';
-import PlayerInfo from 'components/PlayerInfo';
 import classNames from 'classnames';
-import LastMatches from 'components/LastMatches';
 
 interface OverwolfProps {
   route: string;
 }
 
-const drawerWidth = 200;
 const useStyles = makeStyles(theme => ({
   frame: {
     display: 'flex',
+    flexDirection: 'column',
     height: '100vh'
   },
   appBar: {
     backgroundImage: 'url(/static/backgrounds/gun-metal.png)',
-    zIndex: theme.zIndex.drawer + 1
+    zIndex: theme.zIndex.drawer + 2
   },
   toolbar: {
     minHeight: 0,
@@ -54,31 +49,25 @@ const useStyles = makeStyles(theme => ({
     padding: '2px 8px',
     borderRadius: 0
   },
-  drawer: {
-    width: drawerWidth,
-    flexShrink: 0
+  container: {
+    flex: 1,
+    display: 'flex'
   },
-  drawerPaper: {
-    width: drawerWidth,
-    backgroundImage: 'url(/static/backgrounds/dark-mosaic.png)'
+  nav: {
+    backgroundColor: theme.palette.common.black,
+    backgroundImage: 'url(/static/backgrounds/dark-mosaic.png)',
+    width: theme.spacing.unit * 9 + 1,
+    zIndex: theme.zIndex.drawer + 1
   },
   main: {
     flexGrow: 1,
     display: 'flex',
-    flexDirection: 'column'
-  },
-  content: {
-    flexGrow: 1,
-    backgroundColor: '#000',
-    backgroundImage: 'url(/static/backgrounds/dark-mosaic.png)'
-  },
-  item: {
-    '&:hover': {
-      backgroundColor: theme.palette.secondary.main
-    }
+    flexDirection: 'column',
+    backgroundImage: 'url(/static/backgrounds/dark-mosaic.png)',
+    position: 'relative'
   },
   selectedItem: {
-    backgroundColor: theme.palette.secondary.dark
+    borderLeft: `3px solid ${theme.palette.secondary.dark}`
   }
 }));
 
@@ -105,7 +94,7 @@ const Overwolf: FunctionComponent<OverwolfProps> = ({ children, route }) => {
 
   return (
     <div className={classes.frame}>
-      <AppBar position="fixed" className={classes.appBar}>
+      <AppBar position="sticky" className={classes.appBar}>
         <Toolbar className={classes.toolbar}>
           <Link href="/">
             <img className={classes.logo} src="/static/text.png" />
@@ -120,38 +109,20 @@ const Overwolf: FunctionComponent<OverwolfProps> = ({ children, route }) => {
           </IconButton>
         </Toolbar>
       </AppBar>
-      <Drawer
-        className={classes.drawer}
-        variant="permanent"
-        classes={{
-          paper: classes.drawerPaper
-        }}
-      >
-        <div className={classes.toolbar} />
-        <List>
-          <Link href="/">
-            <ListItem
-              button
-              className={classNames(classes.item, { [classes.selectedItem]: route === '/' })}
-            >
-              <ListItemAvatar>
-                <Avatar alt="Home" src="/static/icon.png" />
-              </ListItemAvatar>
-              <ListItemText primary="Home" />
-            </ListItem>
-          </Link>
-          <ListSubheader>Active Player</ListSubheader>
-          <PlayerInfo
-            className={classNames(classes.item, { [classes.selectedItem]: route === '/player' })}
-          />
-          <ListSubheader>Last Matches</ListSubheader>
-          <LastMatches />
-        </List>
-      </Drawer>
-      <main className={classes.main}>
-        <div className={classes.toolbar} />
-        <div className={classes.content}>{children}</div>
-      </main>
+      <div className={classes.container}>
+        <nav className={classes.nav}>
+          <List>
+            <Link href="/">
+              <ListItem button className={classNames({ [classes.selectedItem]: route === '/' })}>
+                <ListItemAvatar>
+                  <Avatar alt="Home" src="/static/icon.png" />
+                </ListItemAvatar>
+              </ListItem>
+            </Link>
+          </List>
+        </nav>
+        <main className={classes.main}>{children}</main>
+      </div>
     </div>
   );
 };

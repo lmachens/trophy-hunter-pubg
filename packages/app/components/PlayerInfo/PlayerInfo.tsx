@@ -3,23 +3,16 @@ import { useStorage } from 'contexts/storage';
 import {
   ListItem,
   ListItemText,
-  ListItemAvatar,
   Menu,
   MenuItem,
   ListItemSecondaryAction,
   IconButton
 } from '@material-ui/core';
-import Link from 'components/Link';
-import Player from 'utilities/th-api/player/interface';
-import ProfilePicture from 'components/ProfilePicture';
+import { Player } from 'utilities/th-api/player/interface';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Router from 'next/router';
 
-interface PlayerInfoProps {
-  className?: string;
-}
-
-const PlayerInfo: FunctionComponent<PlayerInfoProps> = ({ className }) => {
+const PlayerInfo: FunctionComponent = () => {
   const { storageValues, removeItem } = useStorage(['th-pubg-player']);
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const open = Boolean(anchorEl);
@@ -42,30 +35,22 @@ const PlayerInfo: FunctionComponent<PlayerInfoProps> = ({ className }) => {
     Router.push('/');
   };
 
-  if (!player) {
-    return null;
-  }
-
   return (
     <>
-      <Link href={`/player?platform=${player.platform}&playerName=${player.name}`}>
-        <ListItem button className={className}>
-          <ListItemAvatar>
-            <ProfilePicture name={player.name} />
-          </ListItemAvatar>
-          <ListItemText primary={player.name} />
-          <ListItemSecondaryAction>
-            <IconButton
-              aria-label="More"
-              aria-owns={open ? 'long-menu' : undefined}
-              aria-haspopup="true"
-              onClick={handleClick}
-            >
-              <MoreVertIcon />
-            </IconButton>
-          </ListItemSecondaryAction>
-        </ListItem>
-      </Link>
+      <ListItem>
+        <ListItemText primary={player ? player.name : 'Trophy Hunter'} />
+        <ListItemSecondaryAction>
+          <IconButton
+            aria-label="More"
+            aria-owns={open ? 'long-menu' : undefined}
+            aria-haspopup="true"
+            onClick={handleClick}
+            disabled={!player}
+          >
+            <MoreVertIcon />
+          </IconButton>
+        </ListItemSecondaryAction>
+      </ListItem>
       <Menu id="player-menu" anchorEl={anchorEl} open={open} onClose={handleClose}>
         <MenuItem onClick={handleChangePlayer}>Change Player</MenuItem>
       </Menu>

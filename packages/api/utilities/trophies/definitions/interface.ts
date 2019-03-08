@@ -1,12 +1,12 @@
 import { ParticipantStats } from '../../pubg-api/match/interface';
 
+interface CheckProps {
+  participantStats: ParticipantStats;
+}
+
 export default interface Trophy {
   name: string;
   title: string;
   description: string;
-  check(CheckProps): boolean;
-}
-
-interface CheckProps {
-  participantStats: ParticipantStats;
+  check(props: CheckProps): boolean;
 }

@@ -1,8 +1,6 @@
 import http from 'http';
 import match from './endpoints/match';
 import player from './endpoints/player';
-import samples from './endpoints/samples';
-import trophies from './endpoints/trophies';
 import { parse } from 'url';
 
 console.log(process.env.PSModulePath);
@@ -16,18 +14,16 @@ interface Endpoints {
 
 const endpoints: Endpoints = {
   match,
-  player,
-  samples,
-  trophies
+  player
 };
 
 const hostname = '127.0.0.1';
 const port = 7000;
 http
   .createServer(async (req, res) => {
-    const { pathname = ''} = parse(req.url!);
+    const { pathname = '' } = parse(req.url!);
     const endpointName = pathname.substr(1);
-    const endpoint = endpoints[endpointName] 
+    const endpoint = endpoints[endpointName];
     if (!endpoint) {
       res.writeHead(400);
       res.end(`Unknown endpoint ${req.url}`);

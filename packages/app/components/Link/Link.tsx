@@ -6,7 +6,11 @@ import { makeStyles } from '@material-ui/styles';
 
 const useStyles = makeStyles({
   link: {
-    cursor: 'pointer'
+    cursor: 'pointer',
+    textDecoration: 'none',
+    '&:hover': {
+      textDecoration: 'none'
+    }
   }
 });
 

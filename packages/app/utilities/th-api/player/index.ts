@@ -1,5 +1,5 @@
 import getTHApi from '../getTHApi';
-import Player from './interface';
+import { Player } from './interface';
 
 interface GetPlayerProps {
   platform: string;
@@ -11,3 +11,4 @@ const getPlayer = ({ platform, playerName }: GetPlayerProps) => {
 };
 
 export default getPlayer;
+export * from './interface';

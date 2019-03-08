@@ -1,4 +1,5 @@
-interface Player {
+export interface Player {
+  id: string;
   name: string;
   platform: string;
   matches: {
@@ -6,5 +7,3 @@ interface Player {
     id: string;
   }[];
 }
-
-export default Player;

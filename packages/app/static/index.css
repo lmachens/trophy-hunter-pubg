@@ -43,3 +43,45 @@ body {
     /* Chrome 26+, Opera 23+, Firefox 39+ */ url('/static/fonts/roboto-v18-latin-500.woff')
       format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
 }
+
+::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+}
+
+::-webkit-scrollbar-button {
+  width: 0px;
+  height: 0px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c4b998;
+  border: 1px solid rgba(224, 136, 33, 0.117647);
+  border-radius: 28px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #937341;
+}
+
+::-webkit-scrollbar-thumb:active {
+  background: #937341;
+}
+
+::-webkit-scrollbar-track {
+  background: #0e0e0e;
+  border: 56px none #ffffff;
+  border-radius: 0px;
+}
+
+::-webkit-scrollbar-track:hover {
+  background: #0e0e0e;
+}
+
+::-webkit-scrollbar-track:active {
+  background: #0e0e0e;
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}

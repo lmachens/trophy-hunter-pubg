@@ -28,8 +28,8 @@ const StorageProvider: FunctionComponent<StorageProviderProps> = ({
   }
   const [state, setState] = useState<StorageProviderState>({});
 
-  const handleStorage = event => {
-    if (event.storageArea === storage) {
+  const handleStorage = (event: StorageEvent) => {
+    if (event.storageArea === storage && event.key) {
       if (!state[event.key]) {
         return;
       }
@@ -38,14 +38,14 @@ const StorageProvider: FunctionComponent<StorageProviderProps> = ({
         const newState =
           event.newValue === null || event.newValue === undefined
             ? {
-                [event.key]: {
-                  count: prevState[event.key].count,
+                [event.key!]: {
+                  count: prevState[event.key!].count,
                   value: undefined
                 }
               }
             : {
-                [event.key]: {
-                  count: prevState[event.key].count,
+                [event.key!]: {
+                  count: prevState[event.key!].count,
                   value: event.newValue
                 }
               };

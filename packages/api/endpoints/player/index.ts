@@ -17,6 +17,7 @@ export default async (req: IncomingMessage, res: ServerResponse) => {
   try {
     const result = await getPlayer({ platform, playerName });
     const player = {
+      id: result.id,
       name: playerName,
       platform,
       matches: result.relationships.matches.data
