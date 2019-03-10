@@ -45,7 +45,7 @@ const MatchDetails: FunctionComponent<MatchPageProps> = ({ match, trophies }) =>
               key={trophy.name}
               trophy={trophy}
               achieved={match.trophyNames.includes(trophy.name)}
-              participantStats={match.stats}
+              match={match}
             />
           ))}
         </Grid>

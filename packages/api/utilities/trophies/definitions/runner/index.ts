@@ -6,7 +6,7 @@ const runner: Trophy = {
   description: 'Walk at least 2000 meters',
   attributes: [
     {
-      key: 'walkDistance',
+      key: 'participantStats.walkDistance',
       text: 'm walked'
     }
   ],

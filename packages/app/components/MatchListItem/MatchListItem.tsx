@@ -73,7 +73,7 @@ const MatchListItem: FunctionComponent<MatchListItemProps> = ({ match }) => {
         </Typography>
       </div>
       <Typography className={classes.place}>
-        #{match.stats.winPlace}
+        #{match.participantStats.winPlace}
         <span className={classes.placeCount}>/{match.participantCount}</span>
       </Typography>
     </div>

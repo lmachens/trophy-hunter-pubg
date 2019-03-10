@@ -1,7 +1,7 @@
 import { IncomingMessage, ServerResponse } from 'http';
 import { parse } from 'url';
 import getMatch from '../../utilities/pubg-api/match';
-import { getParticipant, getParticipantCount } from '../../utilities/match';
+import { getParticipant, getParticipantCount, getGeneralStats } from '../../utilities/match';
 // import getTeam from '../../utilities/match/getTeam';
 import { calculateTrophies } from '../../utilities/trophies';
 
@@ -22,14 +22,16 @@ export default async (req: IncomingMessage, res: ServerResponse) => {
     const participant = getParticipant({ match, playerId });
     // const team = getTeam({ match, participant });
     const participantStats = participant.attributes.stats;
-    const trophyNames = calculateTrophies({ participantStats });
     const participantCount = getParticipantCount({ match });
+    const generalStats = getGeneralStats({ match });
+    const trophyNames = calculateTrophies({ participantStats, generalStats });
     const result = {
       platform,
       matchId,
       playerId,
       trophyNames,
-      stats: participantStats,
+      participantStats,
+      generalStats,
       createdAt: match.data.attributes.createdAt,
       duration: match.data.attributes.duration,
       mapName: match.data.attributes.mapName,

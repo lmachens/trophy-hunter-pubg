@@ -6,7 +6,7 @@ const swimmer: Trophy = {
   description: 'Swim at least 20 meters',
   attributes: [
     {
-      key: 'swimDistance',
+      key: 'participantStats.swimDistance',
       text: 'm swam'
     }
   ],

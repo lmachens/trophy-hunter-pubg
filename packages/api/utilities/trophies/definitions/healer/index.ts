@@ -6,7 +6,7 @@ const healer: Trophy = {
   description: 'Heal at least one teammate',
   attributes: [
     {
-      key: 'heals',
+      key: 'participantStats.heals',
       text: 'healed'
     }
   ],

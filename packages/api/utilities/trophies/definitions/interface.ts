@@ -1,7 +1,9 @@
 import { ParticipantStats } from '../../pubg-api/match/interface';
+import { GeneralStats } from 'utilities/match/getGeneralStats';
 
 interface CheckProps {
   participantStats: ParticipantStats;
+  generalStats: GeneralStats;
 }
 
 export default interface Trophy {
@@ -10,41 +12,8 @@ export default interface Trophy {
   description: string;
   svgPath: string;
   attributes: {
-    key: Attributes;
+    key: string;
     text: string;
   }[];
   check(props: CheckProps): boolean;
 }
-
-export type Attributes =
-  | 'DBNOs'
-  | 'assists'
-  | 'boosts'
-  | 'damageDealt'
-  | 'deathType'
-  | 'headshotKills'
-  | 'heals'
-  | 'killPlace'
-  | 'killPoints'
-  | 'killPointsDelta'
-  | 'killStreaks'
-  | 'kills'
-  | 'lastKillPoints'
-  | 'lastWinPoints'
-  | 'longestKill'
-  | 'mostDamage'
-  | 'name'
-  | 'playerId'
-  | 'rankPoints'
-  | 'revives'
-  | 'rideDistance'
-  | 'roadKills'
-  | 'swimDistance'
-  | 'teamKills'
-  | 'timeSurvived'
-  | 'vehicleDestroys'
-  | 'walkDistance'
-  | 'weaponsAcquired'
-  | 'winPlace'
-  | 'winPoints'
-  | 'winPointsDelta';

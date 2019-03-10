@@ -5,12 +5,12 @@ import classNames from 'classnames';
 import TrophyIcon from 'components/TrophyIcon';
 import DoneIcon from '@material-ui/icons/Done';
 import { Trophy } from 'utilities/th-api/trophies';
-import { ParticipantStats } from 'utilities/th-api/match';
+import { Match } from 'utilities/th-api/match';
 
 interface MatchTrophyProps {
   achieved: boolean;
   trophy: Trophy;
-  participantStats: ParticipantStats;
+  match: Match;
 }
 
 const useStyles = makeStyles(theme => ({
@@ -40,17 +40,27 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const formatAttribute = (attribute: number | string) => {
-    if (typeof attribute === 'number') { 
-        return Math.floor(attribute);
-    }
-    return attribute
-}
+  if (typeof attribute === 'number') {
+    return Math.floor(attribute);
+  }
+  return attribute;
+};
 
-const MatchTrophy: FunctionComponent<MatchTrophyProps> = ({
-  achieved,
-  trophy,
-  participantStats
-}) => {
+const getProperty = (propertyName: string, object: any) => {
+  const parts = propertyName.split('.');
+  let property = object;
+
+  for (let i = 0; i < parts.length; i++) {
+    if (!property) {
+      return undefined;
+    }
+    property = property[parts[i]];
+  }
+
+  return property;
+};
+
+const MatchTrophy: FunctionComponent<MatchTrophyProps> = ({ achieved, trophy, match }) => {
   const classes = useStyles();
   const [details, setDetails] = useState(false);
 
@@ -69,10 +79,10 @@ const MatchTrophy: FunctionComponent<MatchTrophyProps> = ({
       >
         {details && (
           <div className={classes.details}>
-            <Typography variant="subtitle1">{trophy.title}</Typography>
+            <Typography variant="subtitle2">{trophy.title}</Typography>
             {trophy.attributes.map(attribute => (
               <Typography key={attribute.key}>
-                {formatAttribute(participantStats[attribute.key])} {attribute.text}
+                {formatAttribute(getProperty(attribute.key, match))} {attribute.text}
               </Typography>
             ))}
           </div>

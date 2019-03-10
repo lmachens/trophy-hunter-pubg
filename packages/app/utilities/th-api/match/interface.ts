@@ -3,7 +3,7 @@ export interface Match {
   matchId: string;
   playerId: string;
   trophyNames: string[];
-  stats: ParticipantStats;
+  participantStats: ParticipantStats;
   createdAt: string;
   duration: number;
   mapName: string;
