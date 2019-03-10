@@ -12,11 +12,6 @@ import {
   Avatar
 } from '@material-ui/core';
 import Link from 'components/Link';
-import classNames from 'classnames';
-
-interface OverwolfProps {
-  route: string;
-}
 
 const useStyles = makeStyles(theme => ({
   frame: {
@@ -89,7 +84,7 @@ const handleClose = () => {
   });
 };
 
-const Overwolf: FunctionComponent<OverwolfProps> = ({ children, route }) => {
+const Overwolf: FunctionComponent = ({ children }) => {
   const classes = useStyles();
 
   return (
@@ -113,7 +108,7 @@ const Overwolf: FunctionComponent<OverwolfProps> = ({ children, route }) => {
         <nav className={classes.nav}>
           <List>
             <Link href="/">
-              <ListItem button className={classNames({ [classes.selectedItem]: route === '/' })}>
+              <ListItem button className={classes.selectedItem}>
                 <ListItemAvatar>
                   <Avatar alt="Home" src="/static/icon.png" />
                 </ListItemAvatar>

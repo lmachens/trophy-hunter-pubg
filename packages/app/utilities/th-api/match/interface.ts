@@ -1,14 +1,8 @@
-export interface Trophy {
-  name: string;
-  title: string;
-  description: string;
-}
-
 export interface Match {
   platform: string;
   matchId: string;
   playerId: string;
-  trophies: Trophy[];
+  trophyNames: string[];
   stats: ParticipantStats;
   createdAt: string;
   duration: number;

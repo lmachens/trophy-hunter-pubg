@@ -11,6 +11,7 @@ import Web from 'layouts/Web';
 import Overwolf from 'layouts/Overwolf';
 import { CssBaseline } from '@material-ui/core';
 import { StorageProvider } from 'contexts/storage';
+import Main from 'layouts/Main';
 
 NProgress.configure({ parent: '#__next', showSpinner: false });
 
@@ -34,6 +35,12 @@ export default class MyApp extends App {
 
   render() {
     const { Component, pageProps, router } = this.props;
+
+    const content = (
+      <Main router={router}>
+        <Component {...pageProps} />
+      </Main>
+    );
     return (
       <ThemeProvider theme={theme}>
         <CssBaseline />
@@ -42,16 +49,8 @@ export default class MyApp extends App {
             <Head>
               <title>Trophy Hunter</title>
             </Head>
-            {isOverwolfApp && (
-              <Overwolf route={router.route}>
-                <Component {...pageProps} />
-              </Overwolf>
-            )}
-            {!isOverwolfApp && (
-              <Web>
-                <Component {...pageProps} />
-              </Web>
-            )}
+            {isOverwolfApp && <Overwolf>{content}</Overwolf>}
+            {!isOverwolfApp && <Web>{content}</Web>}
           </Container>
         </StorageProvider>
       </ThemeProvider>

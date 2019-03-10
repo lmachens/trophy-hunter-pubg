@@ -1,6 +1,7 @@
 import http from 'http';
 import match from './endpoints/match';
 import player from './endpoints/player';
+import trophies from './endpoints/trophies';
 import { parse } from 'url';
 
 console.log(process.env.PSModulePath);
@@ -14,7 +15,8 @@ interface Endpoints {
 
 const endpoints: Endpoints = {
   match,
-  player
+  player,
+  trophies
 };
 
 const hostname = '127.0.0.1';

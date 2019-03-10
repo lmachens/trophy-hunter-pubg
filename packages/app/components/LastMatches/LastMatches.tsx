@@ -7,6 +7,12 @@ import { makeStyles } from '@material-ui/styles';
 import getMatch, { Match } from 'utilities/th-api/match';
 import throttle from 'utilities/throttle';
 import MatchListItem from 'components/MatchListItem';
+import classNames from 'classnames';
+import { RouterProps } from 'next/router';
+
+interface LastMatchesProps {
+  router: RouterProps;
+}
 
 interface MatchMap {
   [matchId: string]: Match | null;
@@ -25,7 +31,7 @@ const useStyles = makeStyles({
 
 const cachedMatches: MatchMap = {};
 
-const LastMatches: FunctionComponent = () => {
+const LastMatches: FunctionComponent<LastMatchesProps> = ({ router }) => {
   const { storageValues } = useStorage(['th-pubg-player']);
   const classes = useStyles();
   const [, triggerReload] = useState(0);
@@ -77,8 +83,15 @@ const LastMatches: FunctionComponent = () => {
     <div className={classes.container} onScroll={handleScroll} ref={containerEl}>
       {player &&
         player.matches.slice(0, Math.max(maxItems, items)).map(match => (
-          <Link key={match.id} href={`/match?platform=${player.platform}&matchId=${match.id}`}>
-            <ListItem button className={classes.item}>
+          <Link
+            key={match.id}
+            href={`/match?platform=${player.platform}&matchId=${match.id}&playerId=${player.id}`}
+          >
+            <ListItem
+              button
+              className={classNames(classes.item)}
+              selected={router.query && router.query.matchId === match.id}
+            >
               {cachedMatches[match.id] ? (
                 <MatchListItem match={cachedMatches[match.id]!} />
               ) : (

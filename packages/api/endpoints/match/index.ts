@@ -3,7 +3,7 @@ import { parse } from 'url';
 import getMatch from '../../utilities/pubg-api/match';
 import { getParticipant, getParticipantCount } from '../../utilities/match';
 // import getTeam from '../../utilities/match/getTeam';
-import { getTrophies } from '../../utilities/trophies';
+import { calculateTrophies } from '../../utilities/trophies';
 
 export default async (req: IncomingMessage, res: ServerResponse) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -22,13 +22,13 @@ export default async (req: IncomingMessage, res: ServerResponse) => {
     const participant = getParticipant({ match, playerId });
     // const team = getTeam({ match, participant });
     const participantStats = participant.attributes.stats;
-    const trophies = getTrophies({ participantStats });
+    const trophyNames = calculateTrophies({ participantStats });
     const participantCount = getParticipantCount({ match });
     const result = {
       platform,
       matchId,
       playerId,
-      trophies,
+      trophyNames,
       stats: participantStats,
       createdAt: match.data.attributes.createdAt,
       duration: match.data.attributes.duration,

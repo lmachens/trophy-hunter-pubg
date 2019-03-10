@@ -1,1 +1,1 @@
-export { default as getTrophies } from './getTrophies';
+export { default as calculateTrophies } from './calculateTrophies';
