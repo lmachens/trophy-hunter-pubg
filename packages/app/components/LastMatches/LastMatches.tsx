@@ -15,7 +15,7 @@ interface LastMatchesProps {
 }
 
 interface MatchMap {
-  [matchId: string]: Match | null;
+  [matchId: string]: Match | 'loading' | 'error';
 }
 
 const itemHeight = 46;
@@ -56,6 +56,22 @@ const LastMatches: FunctionComponent<LastMatchesProps> = ({ router }) => {
     }
   }, 1000);
 
+  const loadMatch = (matchId: string) => {
+    cachedMatches[matchId] = 'loading';
+    return getMatch({
+      platform: player.platform,
+      matchId,
+      playerId: player.id
+    })
+      .then(match => {
+        cachedMatches[matchId] = match;
+      })
+      .catch(() => {
+        cachedMatches[matchId] = 'error';
+      });
+  };
+  const handleRefresh = (matchId: string) => () => loadMatch(matchId);
+
   useEffect(() => {
     if (player) {
       if (items === 0 && containerEl.current) {
@@ -63,14 +79,7 @@ const LastMatches: FunctionComponent<LastMatchesProps> = ({ router }) => {
       }
       const promises = player.matches.slice(0, items).map(matchInfo => {
         if (typeof cachedMatches[matchInfo.id] === 'undefined') {
-          cachedMatches[matchInfo.id] = null;
-          return getMatch({
-            platform: player.platform,
-            matchId: matchInfo.id,
-            playerId: player.id
-          }).then(match => {
-            cachedMatches[match.matchId] = match;
-          });
+          return loadMatch(matchInfo.id);
         }
       });
       Promise.all(promises).then(() => {
@@ -91,15 +100,21 @@ const LastMatches: FunctionComponent<LastMatchesProps> = ({ router }) => {
               button
               className={classNames(classes.item)}
               selected={router.query && router.query.matchId === match.id}
+              onClick={cachedMatches[match.id] === 'error' ? handleRefresh(match.id) : undefined}
             >
-              {cachedMatches[match.id] ? (
-                <MatchListItem match={cachedMatches[match.id]!} />
-              ) : (
-                <ListItemText primary="loading" />
+              {cachedMatches[match.id] && typeof cachedMatches[match.id] !== 'string' && (
+                <MatchListItem match={cachedMatches[match.id] as Match} />
               )}
+              {cachedMatches[match.id] === 'loading' && <ListItemText primary="Loading..." />}
+              {cachedMatches[match.id] === 'error' && <ListItemText primary="Click to refresh" />}
             </ListItem>
           </Link>
         ))}
+      {player && player.matches.length === 0 && (
+        <ListItem>
+          <ListItemText>No matches found</ListItemText>
+        </ListItem>
+      )}
     </div>
   );
 };

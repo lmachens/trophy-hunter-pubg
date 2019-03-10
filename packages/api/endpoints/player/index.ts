@@ -26,6 +26,12 @@ export default async (req: IncomingMessage, res: ServerResponse) => {
     res.end(JSON.stringify(player));
   } catch (error) {
     console.error(error.message);
+    if (!error.response) {
+      error.response = {
+        status: 400,
+        statusText: 'Internal error'
+      };
+    }
     res.writeHead(error.response.status);
     res.end(error.response.statusText);
   }

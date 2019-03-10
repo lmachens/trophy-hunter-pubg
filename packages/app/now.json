@@ -1,0 +1,9 @@
+{
+  "version": 2,
+  "name": "pubg-app",
+  "alias": ["pubg.th.gl"],
+  "env": {
+    "TH_PUBG_API": "https://pubg-api.th.gl"
+  },
+  "builds": [{ "src": "next.config.js", "use": "@now/next" }]
+}
