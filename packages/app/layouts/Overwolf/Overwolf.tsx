@@ -51,7 +51,7 @@ const useStyles = makeStyles(theme => ({
   nav: {
     backgroundColor: theme.palette.common.black,
     backgroundImage: 'url(/static/backgrounds/dark-mosaic.png)',
-    width: theme.spacing.unit * 9 + 1,
+    width: theme.spacing(9) + 1,
     zIndex: theme.zIndex.drawer + 1
   },
   main: {

@@ -1,5 +1,3 @@
-import '../_bootstrap';
-
 import React from 'react';
 import PlayerSearch from 'components/PlayerSearch';
 import { NextFunctionComponent } from 'next';

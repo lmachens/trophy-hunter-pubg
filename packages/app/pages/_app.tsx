@@ -1,5 +1,3 @@
-import '../_bootstrap';
-
 import { ThemeProvider } from '@material-ui/styles';
 import App, { Container } from 'next/app';
 import Head from 'next/head';

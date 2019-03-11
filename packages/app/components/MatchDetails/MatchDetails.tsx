@@ -12,7 +12,7 @@ interface MatchPageProps {
 
 const useStyles = makeStyles(theme => ({
   container: {
-    padding: theme.spacing.unit * 3,
+    padding: theme.spacing(3),
     height: '100%',
     display: 'flex',
     flexDirection: 'column',
@@ -20,10 +20,10 @@ const useStyles = makeStyles(theme => ({
   },
   trophies: {
     flex: 1,
-    marginTop: theme.spacing.unit
+    marginTop: theme.spacing(1)
   },
   score: {
-    marginBottom: theme.spacing.unit
+    marginBottom: theme.spacing(1)
   }
 }));
 

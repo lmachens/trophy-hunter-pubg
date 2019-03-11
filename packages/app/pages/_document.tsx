@@ -1,5 +1,3 @@
-import '../_bootstrap';
-
 import { createGenerateClassName, StylesProvider } from '@material-ui/styles';
 import { SheetsRegistry } from 'jss';
 import Document, { Head, Main, NextDocumentContext, NextScript } from 'next/document';

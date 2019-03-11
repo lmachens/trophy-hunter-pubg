@@ -1,5 +1,3 @@
-import '../_bootstrap';
-
 import React from 'react';
 import MatchDetails from 'components/MatchDetails';
 import { NextFunctionComponent } from 'next';

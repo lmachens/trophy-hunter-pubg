@@ -19,7 +19,8 @@ const useStyles = makeStyles(theme => ({
     position: 'relative',
     margin: 1,
     width: 110,
-    height: 110
+    height: 110,
+    cursor: 'pointer'
   },
   achieved: {},
   trophy: {
@@ -35,7 +36,7 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: theme.palette.secondary.main
   },
   details: {
-    padding: theme.spacing.unit
+    padding: theme.spacing(1)
   }
 }));
 
