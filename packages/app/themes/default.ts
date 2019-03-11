@@ -33,7 +33,7 @@ const theme = createMuiTheme({
     },
     MuiSnackbarContent: {
       root: {
-        color: '#fff'
+        //color: '#fff'
       }
     }
   }

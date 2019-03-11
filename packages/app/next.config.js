@@ -38,6 +38,6 @@ module.exports = phase => {
       config.resolve.modules.unshift(__dirname);
       return config;
     },
-    target: 'serverless'
+    target: phase === PHASE_PRODUCTION_SERVER ? 'serverless' : 'server'
   });
 };

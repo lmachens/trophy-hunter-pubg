@@ -12,6 +12,7 @@ import {
   Avatar
 } from '@material-ui/core';
 import Link from 'components/Link';
+import GameListener from 'components/GameListener';
 
 const useStyles = makeStyles(theme => ({
   frame: {
@@ -38,7 +39,8 @@ const useStyles = makeStyles(theme => ({
     marginLeft: 6
   },
   grow: {
-    flex: 1
+    flex: 1,
+    height: '100%'
   },
   button: {
     padding: '2px 8px',
@@ -118,6 +120,7 @@ const Overwolf: FunctionComponent = ({ children }) => {
         </nav>
         <main className={classes.main}>{children}</main>
       </div>
+      <GameListener />
     </div>
   );
 };

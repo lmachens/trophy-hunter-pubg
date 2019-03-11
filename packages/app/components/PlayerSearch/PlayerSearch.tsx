@@ -34,7 +34,8 @@ const useStyles = makeStyles(theme => ({
     padding: 10
   },
   error: {
-    backgroundColor: theme.palette.error.dark
+    backgroundColor: theme.palette.error.dark,
+    color: theme.palette.common.white
   }
 }));
 

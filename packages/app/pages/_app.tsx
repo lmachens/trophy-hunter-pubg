@@ -4,7 +4,7 @@ import Head from 'next/head';
 import Router from 'next/router';
 import NProgress from 'nprogress';
 import React from 'react';
-import theme from './_theme';
+import theme from 'themes/default';
 import Web from 'layouts/Web';
 import Overwolf from 'layouts/Overwolf';
 import { CssBaseline } from '@material-ui/core';
