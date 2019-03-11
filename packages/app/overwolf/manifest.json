@@ -40,8 +40,8 @@
         "use_os_windowing": true,
         "popup_blocker": true,
         "min_size": {
-          "width": 1222,
-          "height": 720
+          "width": 600,
+          "height": 420
         },
         "max_size": {
           "width": 1222,

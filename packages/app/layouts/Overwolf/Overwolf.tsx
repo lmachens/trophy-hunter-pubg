@@ -65,6 +65,24 @@ const useStyles = makeStyles(theme => ({
   },
   selectedItem: {
     borderLeft: `3px solid ${theme.palette.secondary.dark}`
+  },
+  bottomLeft: {
+    width: 20,
+    height: 20,
+    bottom: 0,
+    left: 0,
+    position: 'absolute',
+    zIndex: theme.zIndex.drawer + 2,
+    cursor: 'sw-resize'
+  },
+  bottomRight: {
+    width: 20,
+    height: 20,
+    bottom: 0,
+    right: 0,
+    position: 'absolute',
+    zIndex: theme.zIndex.drawer + 2,
+    cursor: 'se-resize'
   }
 }));
 
@@ -83,6 +101,12 @@ const handleMinimize = () => {
 const handleClose = () => {
   overwolf.windows.getCurrentWindow(result => {
     overwolf.windows.close(result.window.id, () => {});
+  });
+};
+
+const dragResize = (edge: string) => () => {
+  overwolf.windows.getCurrentWindow(result => {
+    overwolf.windows.dragResize(result.window.id, edge);
   });
 };
 
@@ -121,6 +145,8 @@ const Overwolf: FunctionComponent = ({ children }) => {
         <main className={classes.main}>{children}</main>
       </div>
       <GameListener />
+      <div className={classes.bottomLeft} onMouseDown={dragResize('BottomLeft')} />
+      <div className={classes.bottomRight} onMouseDown={dragResize('BottomRight')} />
     </div>
   );
 };
