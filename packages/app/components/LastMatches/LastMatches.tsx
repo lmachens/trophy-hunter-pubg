@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useEffect, useState, useRef } from 'react';
 import { useStorage } from 'contexts/storage';
-import { ListItem, ListItemText } from '@material-ui/core';
+import { ListItem, ListItemText, ListSubheader } from '@material-ui/core';
 import Link from 'components/Link';
 import { Player } from 'utilities/th-api/player/interface';
 import { makeStyles } from '@material-ui/styles';
@@ -19,15 +19,16 @@ interface MatchMap {
 }
 
 const itemHeight = 46;
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
   container: {
     overflowY: 'auto',
-    flex: 1
+    flex: 1,
+    backgroundColor: theme.palette.background.paper
   },
   item: {
     height: itemHeight
   }
-});
+}));
 
 const cachedMatches: MatchMap = {};
 
@@ -90,6 +91,7 @@ const LastMatches: FunctionComponent<LastMatchesProps> = ({ router }) => {
 
   return (
     <div className={classes.container} onScroll={handleScroll} ref={containerEl}>
+      <ListSubheader>Last Matches</ListSubheader>
       {player &&
         player.matches.slice(0, Math.max(maxItems, items)).map(match => (
           <Link

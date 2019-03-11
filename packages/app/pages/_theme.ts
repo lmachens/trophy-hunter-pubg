@@ -8,6 +8,9 @@ const theme = createMuiTheme({
     },
     secondary: {
       main: '#bc7229'
+    },
+    background: {
+      paper: '#1d1c1d'
     }
   },
   overrides: {
@@ -19,11 +22,6 @@ const theme = createMuiTheme({
       root: {
         border: 'none',
         borderBottom: `1px solid #4b4b4b`
-      }
-    },
-    MuiPaper: {
-      root: {
-        backgroundColor: '#1d1c1d'
       }
     },
     MuiTooltip: {
