@@ -10,6 +10,7 @@ import Overwolf from 'layouts/Overwolf';
 import { CssBaseline } from '@material-ui/core';
 import { StorageProvider } from 'contexts/storage';
 import Main from 'layouts/Main';
+import AutoRefresh from 'components/AutoRefresh';
 
 NProgress.configure({ parent: '#__next', showSpinner: false });
 
@@ -39,18 +40,25 @@ export default class MyApp extends App {
         <Component {...pageProps} />
       </Main>
     );
+
+    const container = (
+      <Container>
+        <Head>
+          <title>Trophy Hunter</title>
+        </Head>
+        {isOverwolfApp && <Overwolf>{content}</Overwolf>}
+        {!isOverwolfApp && <Web>{content}</Web>}
+        <AutoRefresh />
+      </Container>
+    );
+
     return (
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <StorageProvider>
-          <Container>
-            <Head>
-              <title>Trophy Hunter</title>
-            </Head>
-            {isOverwolfApp && <Overwolf>{content}</Overwolf>}
-            {!isOverwolfApp && <Web>{content}</Web>}
-          </Container>
-        </StorageProvider>
+        {typeof localStorage !== 'undefined' && (
+          <StorageProvider storage={localStorage}>{container}</StorageProvider>
+        )}
+        {typeof localStorage === 'undefined' && container}
       </ThemeProvider>
     );
   }

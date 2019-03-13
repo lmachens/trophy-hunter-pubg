@@ -33,7 +33,11 @@ const theme = createMuiTheme({
     },
     MuiSnackbarContent: {
       root: {
-        //color: '#fff'
+        color: '#fff',
+        backgroundColor: '#bc7229'
+      },
+      message: {
+        margin: '0 auto'
       }
     }
   }

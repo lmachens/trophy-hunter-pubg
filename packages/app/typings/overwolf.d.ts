@@ -1,4 +1,3 @@
-/* eslint-disable */
 declare namespace overwolf {
   const version: string;
 
@@ -22,7 +21,7 @@ declare namespace overwolf {
      * @param filePath The path to check for.
      * @param callback Returns with the result.
      */
-    function fileExists(filePath: string, callback: () => void): void;
+    function fileExists(filePath: string, callback: (status: string, found: boolean) => void): void;
 
     /**
      * Writes the content to the target file. If the file doesn't exist, it will be created, along with any needed directories along the path. Otherwise, the file's content will be overwritten.
@@ -37,7 +36,7 @@ declare namespace overwolf {
       content: string,
       encoding: any,
       triggerUacIfRequired: boolean,
-      callback: () => void
+      callback: (status: string) => void
     ): void;
 
     /**
@@ -46,7 +45,11 @@ declare namespace overwolf {
      * @param encoding The encoding to use, see more at
      * @param callback Called with the status of the request and the file contect.
      */
-    function readFileContents(filePath: string, encoding: any, callback: () => void): void;
+    function readFileContents(
+      filePath: string,
+      encoding: any,
+      callback: (status: string, message: string) => void
+    ): void;
 
     /**
      * Copy a file from the local extension directory to a destination on the localmachine
@@ -213,10 +216,10 @@ declare namespace overwolf {
     }
 
     /**
-       * {
-    "summary": "See overwolf.media.replays"
-  }
-       */
+     * {
+  "summary": "See overwolf.media.replays"
+}
+     */
     abstract class onGifGenerationError implements OWEvent {
       static addListener(callback: (payload?: any) => void): void;
       static removeListener(callback: (payload?: any) => void): void;
@@ -466,13 +469,13 @@ declare namespace overwolf {
       ): void;
 
       /**
-         * Update Tobii streaming layer.
-         * @param param The Tobii layer visibilty param.
-         * @param callback [
-   "A function that will be called with a JSON containing the status\r\n and the stream id if successful:\r\n ",
-   "\r\n or an error message if not:\r\n "
-  ]
-         */
+       * Update Tobii streaming layer.
+       * @param param The Tobii layer visibilty param.
+       * @param callback [
+ "A function that will be called with a JSON containing the status\r\n and the stream id if successful:\r\n ",
+ "\r\n or an error message if not:\r\n "
+]
+       */
       function updateTobiiSetting(param: any, callback: () => void): void;
 
       /**
@@ -529,16 +532,16 @@ declare namespace overwolf {
     function openLoginDialog(): void;
 
     /**
-       * {
-    "example": {
-      "code": {
-        "@lang": "javascript",
-        "#text": "{\r\n status: \"success\",\r\n connectionState: \"Online\", // can be \"Online\", \"Offline\", \"Connecting\", etc.\r\n username: \"...\" // when the status is other than \"Offline\", will be the currently connected username.\r\n }"
-      }
-    },
-    "summary": "Fired when a user logged in or logged out, with the following structure:"
-  }
-       */
+     * {
+  "example": {
+    "code": {
+      "@lang": "javascript",
+      "#text": "{\r\n status: \"success\",\r\n connectionState: \"Online\", // can be \"Online\", \"Offline\", \"Connecting\", etc.\r\n username: \"...\" // when the status is other than \"Offline\", will be the currently connected username.\r\n }"
+    }
+  },
+  "summary": "Fired when a user logged in or logged out, with the following structure:"
+}
+     */
     abstract class onLoginStateChanged implements OWEvent {
       static addListener(callback: (payload?: any) => void): void;
       static removeListener(callback: (payload?: any) => void): void;
@@ -592,7 +595,7 @@ declare namespace overwolf {
       windowId: string,
       width: number,
       height: number,
-      callback: () => void
+      callback: (result: any) => void
     ): void;
 
     /**
@@ -606,7 +609,7 @@ declare namespace overwolf {
       windowId: string,
       left: number,
       top: number,
-      callback: () => void
+      callback: (result: any) => void
     ): void;
 
     /**
@@ -1071,21 +1074,21 @@ declare namespace overwolf {
 
   namespace benchmarking {
     /**
-       * {
-    "summary": "Requests hardware information within a given interval. Note that this call requires Overwolf to have Administrative permissions. If it does not have it, the callback will return with 'Permissions Required'. You will then have to ask the app user for permissions and according to the user's choice, call . It is then required to call again."
-  }
-       * @param interval The desired maximal interval (in milliseconds) in which events will be triggered. Minimum is 500ms.
-       * @param callback A callback function which will be called with the status of the request.
-       */
+     * {
+  "summary": "Requests hardware information within a given interval. Note that this call requires Overwolf to have Administrative permissions. If it does not have it, the callback will return with 'Permissions Required'. You will then have to ask the app user for permissions and according to the user's choice, call . It is then required to call again."
+}
+     * @param interval The desired maximal interval (in milliseconds) in which events will be triggered. Minimum is 500ms.
+     * @param callback A callback function which will be called with the status of the request.
+     */
     function requestHardwareInfo(interval: number, callback: () => void): void;
 
     /**
-       * {
-    "summary": "Requests process information within a given interval. See overwolf.benchmarking for administrative permissions instructions."
-  }
-       * @param interval The desired maximal interval (in milliseconds) in which events will be triggered. Minimum is 500ms.
-       * @param callback A callback function which will be called with the status of the request.
-       */
+     * {
+  "summary": "Requests process information within a given interval. See overwolf.benchmarking for administrative permissions instructions."
+}
+     * @param interval The desired maximal interval (in milliseconds) in which events will be triggered. Minimum is 500ms.
+     * @param callback A callback function which will be called with the status of the request.
+     */
     function requestProcessInfo(interval: number, callback: () => void): void;
 
     /**
@@ -1160,10 +1163,10 @@ declare namespace overwolf {
     function getRecentlyPlayedGames(maxNumOfGames: number, callback: () => void): void;
 
     /**
-       * {
-    "summary": "Fired when the game info is updated, including game name, game running, game terminated, game changing focus, etc. Passes a GameInfoChangeData object."
-  }
-       */
+     * {
+  "summary": "Fired when the game info is updated, including game name, game running, game terminated, game changing focus, etc. Passes a GameInfoChangeData object."
+}
+     */
     abstract class onGameInfoUpdated implements OWEvent {
       static addListener(callback: (payload?: any) => void): void;
       static removeListener(callback: (payload?: any) => void): void;
@@ -1178,14 +1181,14 @@ declare namespace overwolf {
     }
 
     /**
-       * {
-    "code": {
-      "@lang": "javascript",
-      "#text": "{\r\n \"fps_status\": \"Increase\",\r\n \"fps\": 35\r\n }"
-    },
-    "summary": "[\r\n \"\\r\\n Fired when the rendering frame rate of the currently injected game changes dramatically:\\r\\n \",\r\n \"\\r\\n The \\\"fps_status\\\" field can be \\\"None\\\", \\\"Stable\\\", \\\"Drop\\\" and \\\"Increase\\\".\\r\\n \"\r\n]"
-  }
-       */
+     * {
+  "code": {
+    "@lang": "javascript",
+    "#text": "{\r\n \"fps_status\": \"Increase\",\r\n \"fps\": 35\r\n }"
+  },
+  "summary": "[\r\n \"\\r\\n Fired when the rendering frame rate of the currently injected game changes dramatically:\\r\\n \",\r\n \"\\r\\n The \\\"fps_status\\\" field can be \\\"None\\\", \\\"Stable\\\", \\\"Drop\\\" and \\\"Increase\\\".\\r\\n \"\r\n]"
+}
+     */
     abstract class onMajorFrameRateChange implements OWEvent {
       static addListener(callback: (payload?: any) => void): void;
       static removeListener(callback: (payload?: any) => void): void;
@@ -1213,10 +1216,10 @@ declare namespace overwolf {
       ): void;
 
       /**
-         * {
-    "summary": "Fired when the launcher info is updated, including game name, game running, game terminated, game changing focus, etc. Passes a ILauncherInfo object."
-  }
-         */
+       * {
+  "summary": "Fired when the launcher info is updated, including game name, game running, game terminated, game changing focus, etc. Passes a ILauncherInfo object."
+}
+       */
       abstract class onUpdated implements OWEvent {
         static addListener(callback: (info: ILauncherInfo) => void): void;
         static removeListener(callback: (info: ILauncherInfo) => void): void;
@@ -1251,7 +1254,7 @@ declare namespace overwolf {
        * Gets the current game info.
        * @param callback
        */
-      function getInfo(callback: () => void): void;
+      function getInfo(callback: (payload?: any) => void): void;
 
       /**
        * Fired when there was an error in the game events system.
@@ -1330,10 +1333,10 @@ declare namespace overwolf {
       }
 
       /**
-         * {
-    "summary": "Fired when a keyboard key has been pressed.Event information is similar to"
-  }
-         */
+       * {
+  "summary": "Fired when a keyboard key has been pressed.Event information is similar to"
+}
+       */
       abstract class onKeyDown implements OWEvent {
         static addListener(callback: (payload?: any) => void): void;
         static removeListener(callback: (payload?: any) => void): void;
@@ -1348,10 +1351,10 @@ declare namespace overwolf {
       }
 
       /**
-         * {
-    "summary": "Fired a mouse key has been pressed.Event information is similar to"
-  }
-         */
+       * {
+  "summary": "Fired a mouse key has been pressed.Event information is similar to"
+}
+       */
       abstract class onMouseDown implements OWEvent {
         static addListener(callback: (payload?: any) => void): void;
         static removeListener(callback: (payload?: any) => void): void;
@@ -1361,12 +1364,12 @@ declare namespace overwolf {
 
   namespace web {
     /**
-       * {
-    "summary": "Creates a web server. This call returns an object with two fields: A status string and a server object. The server objectis of type"
-  }
-       * @param port The port to use.
-       * @param callback 
-       */
+     * {
+  "summary": "Creates a web server. This call returns an object with two fields: A status string and a server object. The server objectis of type"
+}
+     * @param port The port to use.
+     * @param callback 
+     */
     function createServer(port: number, callback: () => void): void;
 
     namespace webserver {
@@ -1547,10 +1550,10 @@ declare namespace overwolf {
       function shutdown(): void;
 
       /**
-         * {
-    "summary": "An Arx event send with a Logitech Arx Event Data object."
-  }
-         */
+       * {
+  "summary": "An Arx event send with a Logitech Arx Event Data object."
+}
+       */
       abstract class onEvent implements OWEvent {
         static addListener(callback: (payload?: any) => void): void;
         static removeListener(callback: (payload?: any) => void): void;
@@ -2006,23 +2009,23 @@ declare namespace overwolf {
 
   namespace streaming {
     /**
-       * Start a new stream.
-       * @param settings The stream settings.
-       * @param callback [
-   "A function that will be called with a JSON containing the status\r\n and the stream id if successful:\r\n ",
-   "\r\n or an error message if not:\r\n "
-  ]
-       */
+     * Start a new stream.
+     * @param settings The stream settings.
+     * @param callback [
+ "A function that will be called with a JSON containing the status\r\n and the stream id if successful:\r\n ",
+ "\r\n or an error message if not:\r\n "
+]
+     */
     function start(settings: any, callback: () => void): void;
 
     /**
-       * Stops the given stream.
-       * @param streamId The id of the stream to stop.
-       * @param callback [
-   "A function that will be called with a JSON containing the status\r\n and the stream id if successful:\r\n ",
-   "\r\n or an error message if not:\r\n "
-  ]
-       */
+     * Stops the given stream.
+     * @param streamId The id of the stream to stop.
+     * @param callback [
+ "A function that will be called with a JSON containing the status\r\n and the stream id if successful:\r\n ",
+ "\r\n or an error message if not:\r\n "
+]
+     */
     function stop(streamId: number, callback: () => void): void;
 
     /**
@@ -2118,14 +2121,14 @@ declare namespace overwolf {
     function getAudioDevices(callback: () => void): void;
 
     /**
-       * Update Tobii streaming layer.
-       * @param streamId The id of the stream to stop.
-       * @param param The Tobii layer visibilty param.
-       * @param callback [
-   "A function that will be called with a JSON containing the status\r\n and the stream id if successful:\r\n ",
-   "\r\n or an error message if not:\r\n "
-  ]
-       */
+     * Update Tobii streaming layer.
+     * @param streamId The id of the stream to stop.
+     * @param param The Tobii layer visibilty param.
+     * @param callback [
+ "A function that will be called with a JSON containing the status\r\n and the stream id if successful:\r\n ",
+ "\r\n or an error message if not:\r\n "
+]
+     */
     function updateTobiiSetting(streamId: number, param: any, callback: () => void): void;
 
     /**
@@ -2501,23 +2504,23 @@ declare namespace overwolf {
 
   namespace settings {
     /**
-       * {
-    "code": "{\r\n status : \"success\",\r\n hotkey : \"Ctrl+F2\"\r\n }",
-    "summary": "Returns the hotkey assigned to a given feature id by calling the callback. The callback parameter will be a JSON in the following format:"
-  }
-       * @param featureId The feature id for which to get the set hotkey.
-       * @param callback A function called with the result of the request which contains the hotkey if successful.
-       */
+     * {
+  "code": "{\r\n status : \"success\",\r\n hotkey : \"Ctrl+F2\"\r\n }",
+  "summary": "Returns the hotkey assigned to a given feature id by calling the callback. The callback parameter will be a JSON in the following format:"
+}
+     * @param featureId The feature id for which to get the set hotkey.
+     * @param callback A function called with the result of the request which contains the hotkey if successful.
+     */
     function getHotKey(featureId: string, callback: (result: any) => void): void;
 
     /**
-       * {
-    "para": "If the registration had failed, the callback function will be called immediately with the status \"error\" and another property,\r\n \"error\", indicating the reason for the failure. Otherwise, the callback function will be called when the hotkey is pressed and the status\r\n will be \"success\". Note that Shift can only be combined with F keys.",
-    "summary": "Registers a callback for a given hotkey action."
-  }
-       * @param actionId The action id for which to register the callback.
-       * @param callback The function to run when the hotkey is pressed.
-       */
+     * {
+  "para": "If the registration had failed, the callback function will be called immediately with the status \"error\" and another property,\r\n \"error\", indicating the reason for the failure. Otherwise, the callback function will be called when the hotkey is pressed and the status\r\n will be \"success\". Note that Shift can only be combined with F keys.",
+  "summary": "Registers a callback for a given hotkey action."
+}
+     * @param actionId The action id for which to register the callback.
+     * @param callback The function to run when the hotkey is pressed.
+     */
     function registerHotKey(actionId: string, callback: (result: any) => void): void;
 
     /**
@@ -2757,12 +2760,12 @@ declare namespace overwolf {
       function getUserInfo(callback: () => void): void;
 
       /**
-         * {
-    "summary": "If the user is currently logged into Twitter, this will perform themedia share (image or video).|twitterShareParams| is of type  errors that can occur:- Disconnected (user isn't signed in)- MissingFile (trying to share a missing file)- UnsupportedFile (trying to share an unsupported format)- ExceedsMaxSize (the file is too large: > 15 MB for images, > 512 MBfor videos)"
-  }
-         * @param twitterShareParams The share parameters. See TwitterShareParameters
-         * @param callback Will contain the status of the request.
-         */
+       * {
+  "summary": "If the user is currently logged into Twitter, this will perform themedia share (image or video).|twitterShareParams| is of type  errors that can occur:- Disconnected (user isn't signed in)- MissingFile (trying to share a missing file)- UnsupportedFile (trying to share an unsupported format)- ExceedsMaxSize (the file is too large: > 15 MB for images, > 512 MBfor videos)"
+}
+       * @param twitterShareParams The share parameters. See TwitterShareParameters
+       * @param callback Will contain the status of the request.
+       */
       function share(twitterShareParams: any, callback: () => void): void;
 
       /**

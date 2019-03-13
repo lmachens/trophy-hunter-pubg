@@ -66,7 +66,7 @@ const PlayerSearch: FunctionComponent = () => {
     setLoading(true);
     getPlayer({ platform, playerName })
       .then((player: Player) => {
-        setItem('th-pubg-player', JSON.stringify(player));
+        setItem('th-pubg-player', player);
         setLoading(false);
       })
       .catch((error: Error) => {
@@ -122,7 +122,7 @@ const PlayerSearch: FunctionComponent = () => {
           }}
           open={!!error}
           onClose={handleClose}
-          autoHideDuration={2000}
+          autoHideDuration={3000}
           ContentProps={{
             'aria-describedby': 'message-id',
             className: classes.error

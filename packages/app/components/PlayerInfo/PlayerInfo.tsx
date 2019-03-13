@@ -11,9 +11,7 @@ interface PlayerInfoProps {
 const PlayerInfo: FunctionComponent<PlayerInfoProps> = ({ selected }) => {
   const { storageValues } = useStorage(['th-pubg-player']);
 
-  const player: Player =
-    storageValues['th-pubg-player'] && JSON.parse(storageValues['th-pubg-player']);
-
+  const player: Player = storageValues['th-pubg-player'];
   return (
     <Link href="/">
       <ListItem button selected={selected}>

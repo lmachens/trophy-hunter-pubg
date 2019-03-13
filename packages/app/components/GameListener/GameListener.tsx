@@ -1,46 +1,68 @@
-import { gameEnded, gameLaunched, gameRunning } from 'utilities/overwolf/games';
+import { gameEnded, gameLaunched, gameRunning, setFeatures } from 'utilities/overwolf/games';
 import React, { FunctionComponent, useState, useEffect } from 'react';
 import { Snackbar } from '@material-ui/core';
-import { makeStyles } from '@material-ui/styles';
+import { useStorage } from 'contexts/storage';
+import getPlayer, { Player } from 'utilities/th-api/player';
 
-const useStyles = makeStyles(theme => ({
-  container: {
-    top: 'auto',
-    bottom: 0,
-    position: 'fixed',
-    zIndex: theme.zIndex.drawer + 3,
-    width: '100%',
-    backgroundColor: theme.palette.secondary.dark
-  },
-  toolbar: {
-    alignItems: 'center',
-    justifyContent: 'space-between'
-  },
-  snackbar: {
-    position: 'absolute'
-  },
-  snackbarContent: {
-    width: 360
-  }
-}));
+const interestedInFeatures = ['me'];
 
 const GameListener: FunctionComponent = () => {
-  const classes = useStyles();
-  const [gameInfo, setGameInfo] = useState<any>(null);
+  const { storageValues, setItem } = useStorage(['th-pubg-player']);
+  const [open, setOpen] = useState(false);
+
+  const handleClose = (_: any, reason: string) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
+  };
+
+  const updatePlayer = (name: string) => {
+    const player: Player = storageValues['th-pubg-player'];
+    if (!player || player.name !== name) {
+      getPlayer({ platform: 'PC', playerName: name })
+        .then((player: Player) => {
+          setItem('th-pubg-player', player);
+        })
+        .catch((error: Error) => {
+          console.error(error);
+        });
+    }
+  };
+  const handleInfoUpdate = (infoUpdate: any) => {
+    if (infoUpdate.info.me) {
+      updatePlayer(infoUpdate.info.me.name);
+    }
+  };
+
+  const handleInfo = ({ status, res }: any) => {
+    if (status === 'success' && res.me) {
+      updatePlayer(res.me.name);
+    }
+  };
+
+  const startListening = () => {
+    overwolf.games.events.onInfoUpdates2.addListener(handleInfoUpdate);
+    setTimeout(() => setFeatures(interestedInFeatures), 1000);
+    overwolf.games.events.getInfo(handleInfo);
+  };
 
   const handleGameInfoUpdated = (gameInfoResult: any) => {
     if (gameLaunched(gameInfoResult)) {
-      setGameInfo(gameInfoResult.gameInfo);
+      setOpen(true);
+      startListening();
     } else if (gameEnded(gameInfoResult)) {
-      setGameInfo(null);
+      setOpen(false);
     }
   };
 
   const handleRunningGameInfo = (gameInfo: any) => {
     if (gameRunning(gameInfo)) {
-      setGameInfo(gameInfo);
+      setOpen(true);
+      startListening();
     } else if (gameInfo) {
-      setGameInfo(null);
+      setOpen(false);
     }
   };
 
@@ -51,6 +73,7 @@ const GameListener: FunctionComponent = () => {
 
       return () => {
         overwolf.games.onGameInfoUpdated.removeListener(handleGameInfoUpdated);
+        overwolf.games.events.onInfoUpdates2.removeListener(handleInfoUpdate);
       };
     }
   }, []);
@@ -58,16 +81,16 @@ const GameListener: FunctionComponent = () => {
   return (
     <Snackbar
       anchorOrigin={{
-        vertical: 'bottom',
-        horizontal: 'center'
+        vertical: 'top',
+        horizontal: 'right'
       }}
-      open={!!gameInfo}
+      open={open}
+      autoHideDuration={6000}
+      onClose={handleClose}
       ContentProps={{
-        'aria-describedby': 'message-id',
-        className: classes.snackbarContent
+        'aria-describedby': 'message-id'
       }}
-      message={<span id="message-id">{gameInfo && gameInfo.title}</span>}
-      className={classes.snackbar}
+      message={<span id="message-id">Have fun playing PUBG!</span>}
     />
   );
 };

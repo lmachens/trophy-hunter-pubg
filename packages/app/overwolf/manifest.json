@@ -18,8 +18,17 @@
   "data": {
     "game_targeting": {
       "type": "dedicated",
-      "game_ids": [5426]
+      "game_ids": [10906]
     },
+    "launch_events": [
+      {
+        "event": "GameLaunch",
+        "event_data": {
+          "game_ids": [10906]
+        },
+        "start_minimized": false
+      }
+    ],
     "protocol_override_domains": {
       "googlesyndication": "http"
     },
@@ -55,15 +64,6 @@
         "mute": true,
         "enable_top_isolation": true
       }
-    },
-    "launch_events": [
-      {
-        "event": "GameLaunch",
-        "event_data": {
-          "game_ids": [10906]
-        },
-        "start_minimized": false
-      }
-    ]
+    }
   }
 }

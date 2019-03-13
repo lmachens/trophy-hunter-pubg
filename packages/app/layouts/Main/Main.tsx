@@ -29,20 +29,19 @@ const Main: FunctionComponent<MainProps> = ({ children, router }) => {
   const classes = useStyles();
   const { storageValues, setItem } = useStorage(['th-pubg-player']);
 
-  const player: Player =
-    storageValues['th-pubg-player'] && JSON.parse(storageValues['th-pubg-player']);
+  const player: Player = storageValues['th-pubg-player'];
 
   useEffect(() => {
     if (player) {
       getPlayer({ platform: player.platform, playerName: player.name })
         .then((player: Player) => {
-          setItem('th-pubg-player', JSON.stringify(player));
+          setItem('th-pubg-player', player);
         })
         .catch((error: Error) => {
           console.error(error);
         });
     }
-  }, [storageValues['th-pubg-player']]);
+  }, [player && player.id]);
 
   return (
     <div className={classes.container}>

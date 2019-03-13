@@ -6,7 +6,7 @@ interface StorageContextProps {
   };
   subscribeItems(keys: string[], callback?: () => void): void;
   unsubscribeItems(keys: string[]): void;
-  setItem(key: string, value: string): void;
+  setItem(key: string, value: any): void;
   removeItem(key: string): void;
 }
 

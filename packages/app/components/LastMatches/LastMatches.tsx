@@ -40,8 +40,7 @@ const LastMatches: FunctionComponent<LastMatchesProps> = ({ router }) => {
   const [maxItems, setMaxItems] = useState(0);
   const containerEl = useRef<HTMLDivElement>(null);
 
-  const player: Player =
-    storageValues['th-pubg-player'] && JSON.parse(storageValues['th-pubg-player']);
+  const player: Player = storageValues['th-pubg-player'];
 
   const handleScroll = throttle(() => {
     if (containerEl.current) {
@@ -87,7 +86,7 @@ const LastMatches: FunctionComponent<LastMatchesProps> = ({ router }) => {
         triggerReload(Date.now());
       });
     }
-  }, [storageValues['th-pubg-player'], items, containerEl.current]);
+  }, [player && player.id, items, containerEl.current]);
 
   return (
     <div className={classes.container} onScroll={handleScroll} ref={containerEl}>

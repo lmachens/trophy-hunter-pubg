@@ -32,7 +32,15 @@ const SubDrawer: FunctionComponent = ({ children }) => {
   return (
     <>
       <Hidden mdUp implementation="css">
-        <Drawer anchor="right" variant="temporary" open={mobileOpen} onClose={handleDrawerToggle}>
+        <Drawer
+          anchor="right"
+          variant="temporary"
+          open={mobileOpen}
+          onClose={handleDrawerToggle}
+          ModalProps={{
+            keepMounted: true // Better open performance on mobile.
+          }}
+        >
           {children}
         </Drawer>
       </Hidden>

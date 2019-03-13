@@ -8,24 +8,14 @@ interface Subscription {
 }
 
 interface StorageProviderProps {
-  storage?: Storage;
-  defaultState?: {
-    [key: string]: string;
-  };
+  storage: Storage;
 }
 
 interface StorageProviderState {
   [key: string]: Subscription | undefined;
 }
 
-const StorageProvider: FunctionComponent<StorageProviderProps> = ({
-  children,
-  defaultState,
-  storage
-}) => {
-  if (!storage && typeof localStorage !== 'undefined') {
-    storage = localStorage;
-  }
+const StorageProvider: FunctionComponent<StorageProviderProps> = ({ children, storage }) => {
   const [state, setState] = useState<StorageProviderState>({});
 
   const handleStorage = (event: StorageEvent) => {
@@ -33,27 +23,24 @@ const StorageProvider: FunctionComponent<StorageProviderProps> = ({
       if (!state[event.key]) {
         return;
       }
-
-      setState(prevState => {
-        const newState =
-          event.newValue === null || event.newValue === undefined
-            ? {
-                [event.key!]: {
-                  count: prevState[event.key!].count,
-                  value: undefined
-                }
+      const newState =
+        event.newValue === null || event.newValue === undefined
+          ? {
+              [event.key!]: {
+                count: state[event.key!]!.count,
+                value: undefined
               }
-            : {
-                [event.key!]: {
-                  count: prevState[event.key!].count,
-                  value: event.newValue
-                }
-              };
+            }
+          : {
+              [event.key!]: {
+                count: state[event.key!]!.count,
+                value: JSON.parse(event.newValue)
+              }
+            };
 
-        return {
-          ...prevState,
-          ...newState
-        };
+      setState({
+        ...state,
+        ...newState
       });
     }
   };
@@ -61,7 +48,7 @@ const StorageProvider: FunctionComponent<StorageProviderProps> = ({
   const getValues = () => {
     const values = Object.entries(state)
       .filter(([, value]) => value)
-      .map(([key, value]) => ({ [key]: value.value }));
+      .map(([key, value]) => ({ [key]: value!.value }));
     return Object.assign({}, ...values);
   };
 
@@ -73,22 +60,21 @@ const StorageProvider: FunctionComponent<StorageProviderProps> = ({
     };
   }, [state]);
 
-  const subscribeItems = async (keys: [string], callback?) => {
-    await setState(prevState => {
-      const newState = {};
-      keys.forEach(key => {
-        const sub = prevState[key] || {
-          count: 0,
-          value: storage.getItem(key) || (defaultState && defaultState[key])
-        };
-        sub.count++;
-        newState[key] = sub;
-      });
-
-      return {
-        ...prevState,
-        ...newState
+  const subscribeItems = async (keys: [string], callback?: any) => {
+    const newState: StorageProviderState = {};
+    keys.forEach(key => {
+      const value = JSON.parse(storage.getItem(key) || 'undefined');
+      const sub = state[key] || {
+        count: 0,
+        value
       };
+      sub.count++;
+      newState[key] = sub;
+    });
+
+    setState({
+      ...state,
+      ...newState
     });
 
     if (callback) {
@@ -98,49 +84,37 @@ const StorageProvider: FunctionComponent<StorageProviderProps> = ({
   };
 
   const unsubscribeItems = (keys: [string]) => {
-    setState(prevState => {
-      const newState = { ...prevState };
-      keys.forEach(key => {
-        if (!newState[key] || newState[key].count <= 1) {
-          newState[key] = undefined;
-        } else {
-          newState[key].count--;
-        }
-      });
-      return newState;
+    const newState = { ...state };
+    keys.forEach(key => {
+      if (!newState[key] || state[key]!.count <= 1) {
+        newState[key] = undefined;
+      } else {
+        state[key]!.count--;
+      }
     });
+
+    setState(newState);
   };
 
-  const setItem = async (key: string, value) => {
-    await setState(prevState => {
-      if (!prevState[key]) {
-        return prevState;
-      }
-      return {
-        ...prevState,
+  const setItem = async (key: string, value: any) => {
+    if (state[key]) {
+      setState({
+        ...state,
         [key]: {
-          count: prevState[key].count,
-          value
+          count: state[key]!.count,
+          value: value
         }
-      };
-    });
-    storage.setItem(key, value);
+      });
+    }
+    storage.setItem(key, JSON.stringify(value));
   };
 
   const removeItem = async (key: string) => {
-    await setState(prevState => {
-      if (!prevState[key]) {
-        return prevState;
-      }
-      const newState = {
-        ...prevState,
-        [key]: {
-          count: prevState[key].count,
-          value: undefined
-        }
-      };
-      return newState;
-    });
+    if (state[key]) {
+      const newState = { ...state };
+      delete newState[key];
+      setState(newState);
+    }
     storage.removeItem(key);
   };
 

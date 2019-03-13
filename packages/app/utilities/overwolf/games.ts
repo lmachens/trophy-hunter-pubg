@@ -49,3 +49,11 @@ export const gameRunning = (gameInfo: any) => {
 
   return true;
 };
+
+export const setFeatures = (features: string[]) => {
+  overwolf.games.events.setRequiredFeatures(features, info => {
+    if (info.status == 'error') {
+      setTimeout(setFeatures, 2000);
+    }
+  });
+};

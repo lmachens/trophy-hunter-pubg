@@ -8,7 +8,8 @@
   "private": true,
   "scripts": {
     "api": "yarn --cwd \"packages/api\" dev",
-    "app": "yarn --cwd \"packages/app\" dev"
+    "app": "yarn --cwd \"packages/app\" dev",
+    "export-app": "yarn --cwd \"packages/app\" export"
   },
   "devDependencies": {
     "@types/node": "^11.10.5",
