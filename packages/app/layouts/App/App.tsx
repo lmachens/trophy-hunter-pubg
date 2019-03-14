@@ -110,7 +110,8 @@ const dragResize = (edge: string) => () => {
   });
 };
 
-const Overwolf: FunctionComponent = ({ children }) => {
+const isOverwolfApp = typeof overwolf !== 'undefined';
+const App: FunctionComponent = ({ children }) => {
   const classes = useStyles();
 
   return (
@@ -121,13 +122,17 @@ const Overwolf: FunctionComponent = ({ children }) => {
             <img className={classes.logo} src="/static/text.png" />
           </Link>
           <img className={classes.game} src="/static/pubg.png" />
-          <div className={classes.grow} onMouseDown={handleMouseDown} />
-          <IconButton className={classes.button} disableRipple onClick={handleMinimize}>
-            <Minimize />
-          </IconButton>
-          <IconButton className={classes.button} disableRipple onClick={handleClose}>
-            <Close />
-          </IconButton>
+          {isOverwolfApp && (
+            <>
+              <div className={classes.grow} onMouseDown={handleMouseDown} />
+              <IconButton className={classes.button} disableRipple onClick={handleMinimize}>
+                <Minimize />
+              </IconButton>
+              <IconButton className={classes.button} disableRipple onClick={handleClose}>
+                <Close />
+              </IconButton>
+            </>
+          )}
         </Toolbar>
       </AppBar>
       <div className={classes.container}>
@@ -145,10 +150,14 @@ const Overwolf: FunctionComponent = ({ children }) => {
         <main className={classes.main}>{children}</main>
       </div>
       <GameListener />
-      <div className={classes.bottomLeft} onMouseDown={dragResize('BottomLeft')} />
-      <div className={classes.bottomRight} onMouseDown={dragResize('BottomRight')} />
+      {isOverwolfApp && (
+        <>
+          <div className={classes.bottomLeft} onMouseDown={dragResize('BottomLeft')} />
+          <div className={classes.bottomRight} onMouseDown={dragResize('BottomRight')} />
+        </>
+      )}
     </div>
   );
 };
 
-export default Overwolf;
+export default App;

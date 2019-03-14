@@ -1,6 +1,6 @@
 .next
 node_modules
-overwolf
+/overwolf
 out
 README.md
 .env

@@ -5,12 +5,11 @@ import Router from 'next/router';
 import NProgress from 'nprogress';
 import React from 'react';
 import theme from 'themes/default';
-import Web from 'layouts/Web';
-import Overwolf from 'layouts/Overwolf';
 import { CssBaseline } from '@material-ui/core';
 import { StorageProvider } from 'contexts/storage';
 import Main from 'layouts/Main';
 import AutoRefresh from 'components/AutoRefresh';
+import AppLayout from 'layouts/App';
 
 NProgress.configure({ parent: '#__next', showSpinner: false });
 
@@ -19,8 +18,6 @@ Router.events.on('routeChangeStart', () => {
 });
 Router.events.on('routeChangeComplete', () => NProgress.done());
 Router.events.on('routeChangeError', () => NProgress.done());
-
-const isOverwolfApp = typeof overwolf !== 'undefined' || true;
 
 export default class MyApp extends App {
   componentDidMount() {
@@ -45,8 +42,7 @@ export default class MyApp extends App {
         <Head>
           <title>Trophy Hunter</title>
         </Head>
-        {isOverwolfApp && <Overwolf>{content}</Overwolf>}
-        {!isOverwolfApp && <Web>{content}</Web>}
+        <AppLayout>{content}</AppLayout>
         <AutoRefresh />
       </Container>
     );
