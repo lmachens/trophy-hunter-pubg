@@ -31,7 +31,7 @@ const SubDrawer: FunctionComponent = ({ children }) => {
 
   return (
     <>
-      <Hidden mdUp implementation="js">
+      <Hidden mdUp implementation="css">
         <Drawer
           anchor="right"
           variant="temporary"
@@ -44,7 +44,7 @@ const SubDrawer: FunctionComponent = ({ children }) => {
           {children}
         </Drawer>
       </Hidden>
-      <Hidden smDown implementation="js">
+      <Hidden smDown implementation="css">
         <Drawer
           className={classes.drawer}
           classes={{

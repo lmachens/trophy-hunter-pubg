@@ -14,8 +14,7 @@ import AutoRefresh from 'components/AutoRefresh';
 
 NProgress.configure({ parent: '#__next', showSpinner: false });
 
-Router.events.on('routeChangeStart', (url: string) => {
-  console.log(`Loading: ${url}`);
+Router.events.on('routeChangeStart', () => {
   NProgress.start();
 });
 Router.events.on('routeChangeComplete', () => NProgress.done());

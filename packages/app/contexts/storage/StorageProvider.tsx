@@ -87,7 +87,7 @@ const StorageProvider: FunctionComponent<StorageProviderProps> = ({ children, st
     const newState = { ...state };
     keys.forEach(key => {
       if (!newState[key] || state[key]!.count <= 1) {
-        newState[key] = undefined;
+        delete newState[key];
       } else {
         state[key]!.count--;
       }
