@@ -9,7 +9,7 @@ import Link from 'components/Link';
 
 interface LastMatchesProps {
   router: RouterProps;
-  player: Player;
+  player?: Player;
 }
 
 const itemHeight = 46;

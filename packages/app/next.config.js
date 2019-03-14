@@ -17,7 +17,8 @@ module.exports = phase => {
 
   return withTypescript({
     env: {
-      TH_PUBG_API: process.env.TH_PUBG_API
+      TH_PUBG_API: process.env.TH_PUBG_API,
+      GITHUB_TOKEN: process.env.GITHUB_TOKEN
     },
     exportPathMap: (defaultPathMap, { dev, dir, outDir, distDir, buildId }) => {
       if (dev || phase === PHASE_PRODUCTION_SERVER) {

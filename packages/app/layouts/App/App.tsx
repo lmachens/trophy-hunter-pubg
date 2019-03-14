@@ -9,10 +9,17 @@ import {
   AppBar,
   Toolbar,
   ListItemAvatar,
-  Avatar
+  Avatar,
+  Tooltip
 } from '@material-ui/core';
 import Link from 'components/Link';
 import GameListener from 'components/GameListener';
+import { RouterProps } from 'next/router';
+import classNames from 'classnames';
+
+interface AppLayout {
+  router: RouterProps;
+}
 
 const useStyles = makeStyles(theme => ({
   frame: {
@@ -63,6 +70,9 @@ const useStyles = makeStyles(theme => ({
     backgroundImage: 'url(/static/backgrounds/dark-mosaic.png)',
     position: 'relative'
   },
+  item: {
+    borderLeft: `3px solid transparent`
+  },
   selectedItem: {
     borderLeft: `3px solid ${theme.palette.secondary.dark}`
   },
@@ -111,7 +121,7 @@ const dragResize = (edge: string) => () => {
 };
 
 const isOverwolfApp = typeof overwolf !== 'undefined';
-const App: FunctionComponent = ({ children }) => {
+const App: FunctionComponent<AppLayout> = ({ children, router }) => {
   const classes = useStyles();
 
   return (
@@ -139,11 +149,32 @@ const App: FunctionComponent = ({ children }) => {
         <nav className={classes.nav}>
           <List>
             <Link href="/">
-              <ListItem button className={classes.selectedItem}>
-                <ListItemAvatar>
-                  <Avatar alt="Home" src="/static/icon.png" />
-                </ListItemAvatar>
-              </ListItem>
+              <Tooltip title="To the Trophy Hunter App" placement="right" enterDelay={200}>
+                <ListItem
+                  button
+                  className={classNames(classes.item, {
+                    [classes.selectedItem]: !router.route.startsWith('/contribution')
+                  })}
+                >
+                  <ListItemAvatar>
+                    <Avatar alt="Home" src="/static/icon.png" />
+                  </ListItemAvatar>
+                </ListItem>
+              </Tooltip>
+            </Link>
+            <Link href="/contribution">
+              <Tooltip title="To the Contribution section" placement="right" enterDelay={200}>
+                <ListItem
+                  button
+                  className={classNames(classes.item, {
+                    [classes.selectedItem]: router.route === '/contribution'
+                  })}
+                >
+                  <ListItemAvatar>
+                    <Avatar alt="Contribution" src="/static/github.png" />
+                  </ListItemAvatar>
+                </ListItem>
+              </Tooltip>
             </Link>
           </List>
         </nav>

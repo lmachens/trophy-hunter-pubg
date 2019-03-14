@@ -10,6 +10,8 @@ import { StorageProvider } from 'contexts/storage';
 import Main from 'layouts/Main';
 import AutoRefresh from 'components/AutoRefresh';
 import AppLayout from 'layouts/App';
+import AppDrawerContent from 'components/AppDrawerContent';
+import ContributionDrawerContent from 'components/ContributionDrawerContent';
 
 NProgress.configure({ parent: '#__next', showSpinner: false });
 
@@ -31,8 +33,13 @@ export default class MyApp extends App {
   render() {
     const { Component, pageProps, router } = this.props;
 
+    const drawerContent = router.route.startsWith('/contribution') ? (
+      <ContributionDrawerContent router={router} />
+    ) : (
+      <AppDrawerContent router={router} />
+    );
     const content = (
-      <Main router={router}>
+      <Main drawerContent={drawerContent}>
         <Component {...pageProps} />
       </Main>
     );
@@ -42,7 +49,7 @@ export default class MyApp extends App {
         <Head>
           <title>Trophy Hunter</title>
         </Head>
-        <AppLayout>{content}</AppLayout>
+        <AppLayout router={router}>{content}</AppLayout>
         <AutoRefresh />
       </Container>
     );
