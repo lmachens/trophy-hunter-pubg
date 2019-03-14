@@ -18,6 +18,17 @@ const useStyles = makeStyles(theme => ({
     justifyContent: 'center',
     flex: 1
   },
+  form: {
+    position: 'relative'
+  },
+  logo: {
+    maxWidth: 350,
+    position: 'absolute',
+    top: -140,
+    left: 0,
+    right: 0,
+    margin: '0 auto'
+  },
   paper: {
     padding: '2px 4px',
     display: 'flex',
@@ -86,7 +97,8 @@ const PlayerSearch: FunctionComponent = () => {
 
   return (
     <div className={classes.container}>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className={classes.form}>
+        <img className={classes.logo} src="/static/logo.png" />
         <Paper className={classes.paper} elevation={1}>
           <Select
             value={platform}
