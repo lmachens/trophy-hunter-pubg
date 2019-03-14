@@ -1,21 +1,15 @@
 import React, { FunctionComponent, useEffect, useState, useRef } from 'react';
 import { useStorage } from 'contexts/storage';
 import { ListItem, ListItemText, ListSubheader } from '@material-ui/core';
-import Link from 'components/Link';
 import { Player } from 'utilities/th-api/player/interface';
 import { makeStyles } from '@material-ui/styles';
-import getMatch, { Match } from 'utilities/th-api/match';
 import throttle from 'utilities/throttle';
 import MatchListItem from 'components/MatchListItem';
-import classNames from 'classnames';
 import { RouterProps } from 'next/router';
+import Link from 'components/Link';
 
 interface LastMatchesProps {
   router: RouterProps;
-}
-
-interface MatchMap {
-  [matchId: string]: Match | 'loading' | 'error';
 }
 
 const itemHeight = 46;
@@ -30,12 +24,9 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const cachedMatches: MatchMap = {};
-
 const LastMatches: FunctionComponent<LastMatchesProps> = ({ router }) => {
   const { storageValues } = useStorage(['th-pubg-player']);
   const classes = useStyles();
-  const [, triggerReload] = useState(0);
   const [items, setItems] = useState(0);
   const [maxItems, setMaxItems] = useState(0);
   const containerEl = useRef<HTMLDivElement>(null);
@@ -56,35 +47,9 @@ const LastMatches: FunctionComponent<LastMatchesProps> = ({ router }) => {
     }
   }, 1000);
 
-  const loadMatch = (matchId: string) => {
-    cachedMatches[matchId] = 'loading';
-    return getMatch({
-      platform: player.platform,
-      matchId,
-      playerId: player.id
-    })
-      .then(match => {
-        cachedMatches[matchId] = match;
-      })
-      .catch(() => {
-        cachedMatches[matchId] = 'error';
-      });
-  };
-  const handleRefresh = (matchId: string) => () => loadMatch(matchId);
-
   useEffect(() => {
-    if (player) {
-      if (items === 0 && containerEl.current) {
-        handleScroll();
-      }
-      const promises = player.matches.slice(0, items).map(matchInfo => {
-        if (typeof cachedMatches[matchInfo.id] === 'undefined') {
-          return loadMatch(matchInfo.id);
-        }
-      });
-      Promise.all(promises).then(() => {
-        triggerReload(Date.now());
-      });
+    if (player && items === 0 && containerEl.current) {
+      handleScroll();
     }
   }, [player && player.id, items, containerEl.current]);
 
@@ -97,18 +62,12 @@ const LastMatches: FunctionComponent<LastMatchesProps> = ({ router }) => {
             key={match.id}
             href={`/match?platform=${player.platform}&matchId=${match.id}&playerId=${player.id}`}
           >
-            <ListItem
-              button
-              className={classNames(classes.item)}
+            <MatchListItem
+              className={classes.item}
+              matchId={match.id}
+              player={player}
               selected={router.query && router.query.matchId === match.id}
-              onClick={cachedMatches[match.id] === 'error' ? handleRefresh(match.id) : undefined}
-            >
-              {cachedMatches[match.id] && typeof cachedMatches[match.id] !== 'string' && (
-                <MatchListItem match={cachedMatches[match.id] as Match} />
-              )}
-              {cachedMatches[match.id] === 'loading' && <ListItemText primary="Loading..." />}
-              {cachedMatches[match.id] === 'error' && <ListItemText primary="Click to refresh" />}
-            </ListItem>
+            />
           </Link>
         ))}
       {player && player.matches.length === 0 && (

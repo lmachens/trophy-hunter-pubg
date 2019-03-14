@@ -7,8 +7,17 @@ interface GetMatchProps {
   playerId: string;
 }
 
+const promiseCache: {
+  [matchId: string]: Promise<Match>;
+} = {};
+
 const getMatch = ({ platform, matchId, playerId }: GetMatchProps) => {
-  return getTHApi<Match>(`match?platform=${platform}&matchId=${matchId}&playerId=${playerId}`);
+  if (!promiseCache[matchId]) {
+    promiseCache[matchId] = getTHApi<Match>(
+      `match?platform=${platform}&matchId=${matchId}&playerId=${playerId}`
+    );
+  }
+  return promiseCache[matchId];
 };
 
 export default getMatch;
