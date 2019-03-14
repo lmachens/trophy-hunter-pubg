@@ -51,7 +51,7 @@ const SubDrawer: FunctionComponent = ({ children }) => {
             paper: classes.drawerPaper
           }}
           variant="persistent"
-          open
+          open={!!children}
         >
           {children}
         </Drawer>

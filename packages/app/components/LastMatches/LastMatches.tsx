@@ -1,5 +1,4 @@
 import React, { FunctionComponent, useEffect, useState, useRef } from 'react';
-import { useStorage } from 'contexts/storage';
 import { ListItem, ListItemText, ListSubheader } from '@material-ui/core';
 import { Player } from 'utilities/th-api/player/interface';
 import { makeStyles } from '@material-ui/styles';
@@ -10,6 +9,7 @@ import Link from 'components/Link';
 
 interface LastMatchesProps {
   router: RouterProps;
+  player: Player;
 }
 
 const itemHeight = 46;
@@ -24,14 +24,11 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const LastMatches: FunctionComponent<LastMatchesProps> = ({ router }) => {
-  const { storageValues } = useStorage(['th-pubg-player']);
+const LastMatches: FunctionComponent<LastMatchesProps> = ({ router, player }) => {
   const classes = useStyles();
   const [items, setItems] = useState(0);
   const [maxItems, setMaxItems] = useState(0);
   const containerEl = useRef<HTMLDivElement>(null);
-
-  const player: Player = storageValues['th-pubg-player'];
 
   const handleScroll = throttle(() => {
     if (containerEl.current) {

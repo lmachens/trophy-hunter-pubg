@@ -46,11 +46,13 @@ const Main: FunctionComponent<MainProps> = ({ children, router }) => {
   return (
     <div className={classes.container}>
       <SubDrawer>
-        <List className={classes.drawerContent}>
-          <PlayerInfo selected={router.route === '/'} />
-          <Divider />
-          <LastMatches router={router} />
-        </List>
+        {player && (
+          <List className={classes.drawerContent}>
+            <PlayerInfo player={player} selected={router.route === '/'} />
+            <Divider />
+            <LastMatches player={player} router={router} />
+          </List>
+        )}
       </SubDrawer>
       {children}
     </div>
