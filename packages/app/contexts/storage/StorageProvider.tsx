@@ -103,7 +103,6 @@ const StorageProvider: FunctionComponent<StorageProviderProps> = ({ children, st
   };
 
   const values = getValues();
-  console.log(values, state);
   const storageValue: StorageValue = {
     subscribeItems,
     setItem,
