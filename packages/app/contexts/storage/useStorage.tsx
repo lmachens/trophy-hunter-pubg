@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect } from 'react';
 import StorageContext from './StorageContext';
 
 const pick = (obj: { [key: string]: any }, props: string[]) =>
@@ -6,19 +6,15 @@ const pick = (obj: { [key: string]: any }, props: string[]) =>
 
 const useStorage = (subscriptions: string[]) => {
   const { subscribeItems, setItem, removeItem, values = {} } = useContext(StorageContext);
-  const [subscribed, setSubscribed] = useState(false);
 
   useEffect(() => {
-    subscribeItems(subscriptions, () => {
-      setSubscribed(true);
-    });
+    subscribeItems(subscriptions);
   }, []);
 
   return {
     storageValues: pick(values, subscriptions),
     setItem,
-    removeItem,
-    subscribed
+    removeItem
   };
 };
 

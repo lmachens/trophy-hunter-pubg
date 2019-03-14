@@ -4,7 +4,7 @@ import StorageContext from './StorageContext';
 
 interface Subscription {
   count: number; // number of subscribers
-  value: string;
+  value: any;
 }
 
 interface StorageProviderProps {
@@ -23,25 +23,18 @@ const StorageProvider: FunctionComponent<StorageProviderProps> = ({ children, st
       if (!state[event.key]) {
         return;
       }
-      const newState =
-        event.newValue === null || event.newValue === undefined
-          ? {
-              [event.key!]: {
-                count: state[event.key!]!.count,
-                value: undefined
-              }
-            }
-          : {
-              [event.key!]: {
-                count: state[event.key!]!.count,
-                value: JSON.parse(event.newValue)
-              }
-            };
-
-      setState({
-        ...state,
-        ...newState
-      });
+      const newState = { ...state };
+      if (event.newValue === null || event.newValue === undefined) {
+        newState[event.key]!.value = undefined;
+      } else {
+        try {
+          newState[event.key] = {
+            count: state[event.key!]!.count,
+            value: JSON.parse(event.newValue)
+          };
+        } catch (error) {}
+      }
+      setState(newState);
     }
   };
 
@@ -58,12 +51,20 @@ const StorageProvider: FunctionComponent<StorageProviderProps> = ({ children, st
     return () => {
       window.removeEventListener('storage', handleStorage);
     };
-  }, [state]);
+  }, [Object.keys(state)]);
 
   const subscribeItems = async (keys: [string], callback?: any) => {
     const newState: StorageProviderState = {};
     keys.forEach(key => {
-      const value = JSON.parse(storage.getItem(key) || 'undefined');
+      let value;
+      try {
+        const data = storage.getItem(key);
+        if (data) {
+          value = JSON.parse(data);
+        }
+      } catch (error) {
+        value = undefined;
+      }
       const sub = state[key] || {
         count: 0,
         value
@@ -71,29 +72,12 @@ const StorageProvider: FunctionComponent<StorageProviderProps> = ({ children, st
       sub.count++;
       newState[key] = sub;
     });
-
-    setState({
-      ...state,
-      ...newState
-    });
+    setState(newState);
 
     if (callback) {
       const values = getValues();
       callback(values);
     }
-  };
-
-  const unsubscribeItems = (keys: [string]) => {
-    const newState = { ...state };
-    keys.forEach(key => {
-      if (!newState[key] || state[key]!.count <= 1) {
-        delete newState[key];
-      } else {
-        state[key]!.count--;
-      }
-    });
-
-    setState(newState);
   };
 
   const setItem = async (key: string, value: any) => {
@@ -119,10 +103,9 @@ const StorageProvider: FunctionComponent<StorageProviderProps> = ({ children, st
   };
 
   const values = getValues();
-
+  console.log(values, state);
   const storageValue: StorageValue = {
     subscribeItems,
-    unsubscribeItems,
     setItem,
     removeItem,
     values
