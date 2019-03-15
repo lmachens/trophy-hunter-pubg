@@ -68,7 +68,8 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     flexDirection: 'column',
     backgroundImage: 'url(/static/backgrounds/dark-mosaic.png)',
-    position: 'relative'
+    position: 'relative',
+    overflow: 'auto'
   },
   item: {
     borderLeft: `3px solid transparent`

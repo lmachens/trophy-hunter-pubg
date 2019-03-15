@@ -37,7 +37,9 @@ const useStyles = makeStyles(theme => ({
     flexDirection: 'column',
     margin: theme.spacing(2)
   },
-  attributes: {}
+  attributes: {
+    overflow: 'auto'
+  }
 }));
 
 const newTrophy: Trophy = {
@@ -62,8 +64,7 @@ const CreateTrophyPage: NextFunctionComponent<CreateTrophyPageProps> = ({
   );
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const handleSubmit = () => {
     if (!loading) {
       setLoading(true);
       octokit.issues
@@ -81,6 +82,7 @@ ${JSON.stringify(trophy, null, 2)}
         })
         .then(() => {
           setLoading(false);
+          setTrophy(newTrophy);
         });
     }
   };
@@ -134,7 +136,7 @@ ${JSON.stringify(trophy, null, 2)}
 
   return (
     <div className={classes.root}>
-      <form onSubmit={handleSubmit} className={classes.form} autoComplete="off">
+      <div className={classes.form}>
         <FormControl margin="normal">
           <InputLabel htmlFor="template">Trophy Template</InputLabel>
           <Select
@@ -204,14 +206,16 @@ ${JSON.stringify(trophy, null, 2)}
               ))}
           </FormGroup>
         </FormControl>
+      </div>
+      <div className={classes.form}>
         <FormControl margin="normal">
           <FormLabel>Preview</FormLabel>
           <MatchTrophy trophy={trophy} match={match} />
         </FormControl>
-        <Button type="submit" disabled={loading}>
+        <Button onClick={handleSubmit} disabled={loading}>
           Send Trophy Proposal
         </Button>
-      </form>
+      </div>
     </div>
   );
 };
