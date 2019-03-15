@@ -5,6 +5,6 @@
   "env": {
     "PUBG_API_KEY": "@pubg_api_key"
   },
-  "builds": [{ "src": "endpoints/**/*.ts", "use": "@now/node@canary" }],
+  "builds": [{ "src": "endpoints/**/*.ts", "use": "@now/node" }],
   "routes": [{ "src": "/(.*)", "dest": "/endpoints/$1" }]
 }
