@@ -11,9 +11,6 @@ export default interface Trophy {
   title: string;
   description: string;
   svgPath: string;
-  attributes: {
-    key: string;
-    text: string;
-  }[];
+  attributes: string[];
   check(props: CheckProps): boolean;
 }

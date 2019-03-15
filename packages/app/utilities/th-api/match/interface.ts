@@ -4,10 +4,15 @@ export interface Match {
   playerId: string;
   trophyNames: string[];
   participantStats: ParticipantStats;
+  generalStats: GeneralStats;
   createdAt: string;
   duration: number;
   mapName: string;
   participantCount: number;
+}
+
+export interface GeneralStats {
+  mostHeadshotKills: number;
 }
 
 export interface ParticipantStats {

@@ -83,7 +83,7 @@ const MatchTrophy: FunctionComponent<MatchTrophyProps> = ({ achieved, trophy, ma
             <Typography variant="subtitle2">{trophy.title}</Typography>
             {trophy.attributes.map(attribute => (
               <Typography key={attribute.key}>
-                {formatAttribute(getProperty(attribute.key, match))} {attribute.text}
+                {formatAttribute(getProperty(attribute.key, match))} {attribute.unit}
               </Typography>
             ))}
           </div>
