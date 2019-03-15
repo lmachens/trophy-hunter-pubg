@@ -8,7 +8,6 @@ import { Trophy } from 'utilities/th-api/trophies';
 import { Match } from 'utilities/th-api/match';
 
 interface MatchTrophyProps {
-  achieved: boolean;
   trophy: Trophy;
   match: Match;
 }
@@ -36,7 +35,9 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: theme.palette.secondary.main
   },
   details: {
-    padding: theme.spacing(1)
+    padding: theme.spacing(1),
+    maxHeight: '100%',
+    overflowY: 'auto'
   }
 }));
 
@@ -61,10 +62,11 @@ const getProperty = (propertyName: string, object: any) => {
   return property;
 };
 
-const MatchTrophy: FunctionComponent<MatchTrophyProps> = ({ achieved, trophy, match }) => {
+const MatchTrophy: FunctionComponent<MatchTrophyProps> = ({ trophy, match }) => {
   const classes = useStyles();
   const [details, setDetails] = useState(false);
 
+  const achieved = match.trophyNames.includes(trophy.name);
   const toggleDetails = () => {
     setDetails(!details);
   };

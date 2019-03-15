@@ -9,7 +9,9 @@ interface CheckProps {
 export default interface Trophy {
   name: string;
   title: string;
+  author: string;
   description: string;
+  src: string;
   svgPath: string;
   attributes: string[];
   check(props: CheckProps): boolean;

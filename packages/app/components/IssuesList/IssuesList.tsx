@@ -30,7 +30,7 @@ const IssuesList: FunctionComponent = () => {
       .then(({ data }) => {
         setIssues(data);
       });
-  });
+  }, []);
 
   return (
     <div className={classes.container}>

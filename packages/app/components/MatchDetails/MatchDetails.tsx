@@ -41,12 +41,7 @@ const MatchDetails: FunctionComponent<MatchPageProps> = ({ match, trophies }) =>
       <div className={classes.trophies}>
         <Grid container>
           {trophies.map(trophy => (
-            <MatchTrophy
-              key={trophy.name}
-              trophy={trophy}
-              achieved={match.trophyNames.includes(trophy.name)}
-              match={match}
-            />
+            <MatchTrophy key={trophy.name} trophy={trophy} match={match} />
           ))}
         </Grid>
       </div>

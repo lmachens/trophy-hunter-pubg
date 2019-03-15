@@ -3,6 +3,7 @@ import match from './endpoints/match';
 import player from './endpoints/player';
 import trophies from './endpoints/trophies';
 import attributes from './endpoints/attributes';
+import gameIcons from './endpoints/game-icons';
 import { parse } from 'url';
 
 console.log(process.env.PSModulePath);
@@ -18,7 +19,8 @@ const endpoints: Endpoints = {
   match,
   player,
   trophies,
-  attributes
+  attributes,
+  'game-icons': gameIcons
 };
 
 const hostname = '127.0.0.1';
