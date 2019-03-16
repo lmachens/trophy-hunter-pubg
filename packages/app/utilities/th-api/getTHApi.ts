@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const instance = axios.create({
-  baseURL: process.env.TH_PUBG_API || 'https://pubg-api.th.gl',
+  baseURL: process.env.TH_PUBG_API,
   timeout: 5000,
   headers: {
     Accept: 'application/json',
