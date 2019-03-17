@@ -1,6 +1,7 @@
 export interface Match {
   platform: string;
   matchId: string;
+  playerName: string;
   playerId: string;
   trophyNames: string[];
   playerStats: ParticipantStats;
@@ -9,7 +10,7 @@ export interface Match {
   minStats: ParticipantStats;
   createdAt: string;
   duration: number;
-  mapName: string;
+  mapName: 'Desert_Main' | 'Erangel_Main' | 'Range_Main' | 'Savage_Main';
   participantCount: number;
 }
 
@@ -31,8 +32,6 @@ export interface ParticipantStats {
   lastWinPoints: number;
   longestKill: number;
   mostDamage: number;
-  name: string;
-  playerId: string;
   rankPoints: number;
   revives: number;
   rideDistance: number;

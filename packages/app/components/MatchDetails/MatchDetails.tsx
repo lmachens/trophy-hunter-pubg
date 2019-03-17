@@ -1,11 +1,13 @@
 import React, { FunctionComponent, useState } from 'react';
 import { Grid, Divider, Typography, Tabs, Tab } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
-import { Match } from 'utilities/th-api/match';
+import { Match, MAPS } from 'utilities/th-api/match';
 import { Trophy } from 'utilities/th-api/trophies';
 import MatchTrophy from 'components/MatchTrophy';
 import MatchAttributes from 'components/MatchAttributes';
 import { Attributes } from 'utilities/th-api/attributes';
+import millisToMinutesAndSeconds from 'utilities/millisToMinutesAndSeconds';
+import timeSince from 'utilities/timeSince';
 
 interface MatchPageProps {
   attributes: Attributes;
@@ -28,6 +30,12 @@ const useStyles = makeStyles(theme => ({
   content: {
     flex: 1,
     marginTop: theme.spacing(1)
+  },
+  place: {
+    fontSize: '1.3rem'
+  },
+  placeCount: {
+    fontSize: '1rem'
   }
 }));
 
@@ -42,8 +50,16 @@ const MatchDetails: FunctionComponent<MatchPageProps> = ({ attributes, match, tr
   return (
     <div className={classes.container}>
       <div className={classes.score}>
+        <Typography className={classes.place}>
+          #{match.playerStats.winPlace}
+          <span className={classes.placeCount}>
+            /{match.participantCount} | {match.playerName}
+          </span>
+        </Typography>
         <Typography>
-          {match.trophyNames.length}/{trophies.length} Challenges Completed
+          {MAPS[match.mapName]} | {millisToMinutesAndSeconds(match.duration)} |{' '}
+          {timeSince(new Date(match.createdAt).getTime())} ago | {match.trophyNames.length}/
+          {trophies.length} Trophies
         </Typography>
       </div>
       <Divider />

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/camelcase */
 import getTHApi from '../getTHApi';
 import { Match } from './interface';
 
@@ -22,3 +23,11 @@ const getMatch = ({ platform, matchId, playerId }: GetMatchProps) => {
 
 export default getMatch;
 export * from './interface';
+
+export const MAPS = {
+  Desert_Main: 'Miramar',
+  DihorOtok_Main: 'Vikendi',
+  Erangel_Main: 'Erangel',
+  Range_Main: 'Camp Jackal',
+  Savage_Main: 'Sanhok'
+};

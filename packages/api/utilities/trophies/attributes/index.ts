@@ -1,116 +1,116 @@
 export interface Attributes {
   [attributeName: string]: {
     key: string;
+    subtitle: string;
     title: string;
-    unit: string;
   };
 }
 
 const attributes: Attributes = {
   DBNOs: {
     key: 'DBNOs',
-    title: 'Number of enemy players knocked',
-    unit: 'knocked'
+    subtitle: 'Number of enemy players knocked',
+    title: 'Knocked'
   },
   assists: {
     key: 'assists',
-    title: 'Number of enemy players this player damaged that were killed by teammates',
-    unit: 'assists'
+    subtitle: 'Number of enemy players this player damaged that were killed by teammates',
+    title: 'Assists'
   },
   boosts: {
     key: 'boosts',
-    title: 'Number of boost items used',
-    unit: 'boosters'
+    subtitle: 'Number of boost items used',
+    title: 'Boosters'
   },
   damageDealt: {
     key: 'damageDealt',
-    title: 'Total damage dealt. Note: Self inflicted damage is subtracted',
-    unit: 'damage'
+    subtitle: 'Total damage dealt. Note: Self inflicted damage is subtracted',
+    title: 'Damage'
   },
   deathType: {
     key: 'deathType',
-    title: "The way by which this player died, or alive if they didn't",
-    unit: ''
+    subtitle: "The way by which this player died, or alive if they didn't",
+    title: 'Death Type'
   },
   headshotKills: {
     key: 'headshotKills',
-    title: 'Number of enemy players killed with headshots',
-    unit: 'headshots'
+    subtitle: 'Number of enemy players killed with headshots',
+    title: 'Headshots'
   },
   heals: {
     key: 'heals',
-    title: 'Number of healing items used',
-    unit: 'healed'
+    subtitle: 'Number of healing items used',
+    title: 'Healed'
   },
   killPlace: {
     key: 'killPlace',
-    title: "This player's rank in the match based on kills",
-    unit: 'kill place'
+    subtitle: "This player's rank in the match based on kills",
+    title: 'Kill Place'
   },
   killStreaks: {
     key: 'killStreaks',
-    title: 'Total number of kill streaks',
-    unit: 'kill streaks'
+    subtitle: 'Total number of kill streaks',
+    title: 'Kill Streaks'
   },
   kills: {
     key: 'kills',
-    title: 'Number of enemy players killed',
-    unit: 'kills'
+    subtitle: 'Number of enemy players killed',
+    title: 'Kills'
   },
   longestKill: {
     key: 'longestKill',
-    title: 'Distance of players longest kill',
-    unit: 'longest kill'
+    subtitle: 'Distance of players longest kill',
+    title: 'Longest Kill'
   },
   revives: {
     key: 'revives',
-    title: 'Number of times this player revived teammates',
-    unit: 'revives'
+    subtitle: 'Number of times this player revived teammates',
+    title: 'Revives'
   },
   rideDistance: {
     key: 'rideDistance',
-    title: 'Total distance traveled in vehicles measured in meters',
-    unit: 'ride distance'
+    subtitle: 'Total distance traveled in vehicles measured in meters',
+    title: 'Ride Distance'
   },
   roadKills: {
     key: 'roadKills',
-    title: 'Number of kills while in a vehicle',
-    unit: 'road kills'
+    subtitle: 'Number of kills while in a vehicle',
+    title: 'Road Kills'
   },
   swimDistance: {
     key: 'swimDistance',
-    title: 'Total distance traveled while swimming measured in meters',
-    unit: 'm swam'
+    subtitle: 'Total distance traveled while swimming measured in meters',
+    title: 'Swim Distance'
   },
   teamKills: {
     key: 'teamKills',
-    title: 'Number of times this player killed a teammate',
-    unit: 'team kills'
+    subtitle: 'Number of times this player killed a teammate',
+    title: 'Team Kills'
   },
   timeSurvived: {
     key: 'timeSurvived',
-    title: 'Amount of time survived measured in seconds',
-    unit: 'seconds survided'
+    subtitle: 'Amount of time survived measured in seconds',
+    title: 'Time Survided'
   },
   vehicleDestroys: {
     key: 'vehicleDestroys',
-    title: 'Number of vehicles destroyed',
-    unit: 'vehicles destroyed'
+    subtitle: 'Number of vehicles destroyed',
+    title: 'Vehicles Destroyed'
   },
   walkDistance: {
     key: 'walkDistance',
-    title: 'Total distance traveled on foot measured in meters',
-    unit: 'm walked'
+    subtitle: 'Total distance traveled on foot measured in meters',
+    title: 'Walk Distance'
   },
   weaponsAcquired: {
     key: 'weaponsAcquired',
-    title: 'Number of weapons picked up',
-    unit: 'weapons picked up'
+    subtitle: 'Number of weapons picked up',
+    title: 'Weapons Acquired'
   },
   winPlace: {
     key: 'winPlace',
-    title: "This player's placement in the match",
-    unit: 'win place'
+    subtitle: "This player's placement in the match",
+    title: 'Win Place'
   }
 };
 

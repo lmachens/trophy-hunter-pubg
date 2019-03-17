@@ -70,8 +70,6 @@ export interface ParticipantStats {
   lastWinPoints: number;
   longestKill: number;
   mostDamage: number;
-  name: string;
-  playerId: string;
   rankPoints: number;
   revives: number;
   rideDistance: number;

@@ -9,7 +9,7 @@ interface NormalizedTrophy {
   attributes: {
     key: string;
     title: string;
-    unit: string;
+    subtitle: string;
   }[];
   src: string;
   svgPath: string;

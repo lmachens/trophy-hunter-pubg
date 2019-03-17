@@ -25,7 +25,8 @@ const useStyles = makeStyles(theme => ({
   frame: {
     display: 'flex',
     flexDirection: 'column',
-    height: '100vh'
+    height: '100vh',
+    userSelect: 'none'
   },
   appBar: {
     backgroundImage: 'url(/static/backgrounds/gun-metal.png)',
