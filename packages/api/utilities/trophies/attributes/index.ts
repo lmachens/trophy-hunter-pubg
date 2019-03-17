@@ -32,6 +32,11 @@ const attributes: Attributes = {
     title: 'Total distance traveled while swimming measured in meters',
     unit: 'm swam'
   },
+  'participantStats.roadKills': {
+    key: 'participantStats.roadKills',
+    title: 'Number of kills while in a vehicle',
+    unit: ' road kills'
+  },
   'generalStats.mostHeadshotKills': {
     key: 'generalStats.mostHeadshotKills',
     title: 'Maximum number of enemy players killed with headshots',
