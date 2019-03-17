@@ -69,13 +69,14 @@ const newTrophy: Trophy = {
 const CreateTrophyPage: NextFunctionComponent<CreateTrophyPageProps> = ({ match, trophies }) => {
   const classes = useStyles();
   const [trophy, setTrophy] = useState<Trophy>(newTrophy);
+  const [checkString, setCheckString] = useState(newTrophy.checkString);
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!loading) {
       setLoading(true);
-      createTrophyProposal(trophy).then(() => {
+      createTrophyProposal({ ...trophy, checkString }).then(() => {
         setLoading(false);
         setTrophy(newTrophy);
       });
@@ -105,11 +106,12 @@ const CreateTrophyPage: NextFunctionComponent<CreateTrophyPageProps> = ({ match,
     const templateTrophy = trophies.find(trophy => trophy.name === trophyName);
     if (templateTrophy) {
       setTrophy(templateTrophy);
+      setCheckString(templateTrophy.checkString);
     }
   };
 
   const handleCodeChange = (value: string) => {
-    setTrophy({ ...trophy, checkString: value });
+    setCheckString(value);
   };
 
   return (
@@ -198,7 +200,7 @@ const CreateTrophyPage: NextFunctionComponent<CreateTrophyPageProps> = ({ match,
               className={classes.editor}
               onChange={handleCodeChange}
               language="typescript"
-              value={trophy.checkString}
+              value={checkString}
               theme="vs-dark"
               minimap={{
                 enabled: false

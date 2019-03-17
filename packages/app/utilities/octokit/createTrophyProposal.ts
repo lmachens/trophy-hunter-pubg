@@ -1,7 +1,7 @@
 import { Trophy } from 'utilities/th-api/trophies';
 import octokit from './octokit';
 
-const createTrophyProposal = (trophy: Trophy) => {
+const createTrophyProposal = ({ checkString, ...trophy }: Trophy) => {
   return octokit.issues.create({
     owner: 'lmachens',
     repo: 'trophy-hunter-pubg',
@@ -11,6 +11,10 @@ const createTrophyProposal = (trophy: Trophy) => {
 
 \`\`\`json
 ${JSON.stringify(trophy, null, 2)}
+\`\`\`
+
+\`\`\`ts
+${checkString}
 \`\`\`
 `
   });

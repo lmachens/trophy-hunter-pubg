@@ -38,7 +38,7 @@ const MatchTrophy: FunctionComponent<MatchTrophyProps> = ({ trophy, match }) => 
   const achieved = match.trophyNames.includes(trophy.name);
 
   return (
-    <Tooltip title={trophy.description}>
+    <Tooltip title={`${trophy.title}: ${trophy.description}`}>
       <Grid item className={classes.item}>
         <TrophyIcon
           className={classes.trophy}
