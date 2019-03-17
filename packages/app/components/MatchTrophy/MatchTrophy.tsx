@@ -10,6 +10,7 @@ import { Match } from 'utilities/th-api/match';
 interface MatchTrophyProps {
   trophy: Trophy;
   match: Match;
+  defaultDetails?: boolean;
 }
 
 const useStyles = makeStyles(theme => ({
@@ -62,9 +63,13 @@ const getProperty = (propertyName: string, object: any) => {
   return property;
 };
 
-const MatchTrophy: FunctionComponent<MatchTrophyProps> = ({ trophy, match }) => {
+const MatchTrophy: FunctionComponent<MatchTrophyProps> = ({
+  trophy,
+  match,
+  defaultDetails = false
+}) => {
   const classes = useStyles();
-  const [details, setDetails] = useState(false);
+  const [details, setDetails] = useState(defaultDetails);
 
   const achieved = match.trophyNames.includes(trophy.name);
   const toggleDetails = () => {

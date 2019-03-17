@@ -12,7 +12,10 @@ import {
   InputLabel,
   Select,
   MenuItem,
-  Button
+  Button,
+  Divider,
+  Link as MuiLink,
+  FormHelperText
 } from '@material-ui/core';
 import getGameIconsSvgPath from 'utilities/th-api/game-icons';
 import getTrophies, { Trophy } from 'utilities/th-api/trophies';
@@ -20,6 +23,7 @@ import MatchTrophy from 'components/MatchTrophy';
 import getMatch, { Match } from 'utilities/th-api/match';
 import { createTrophyProposal } from 'utilities/octokit';
 import MonacoEditor, { ScriptLoad } from 'components/MonacoEditor';
+import Link from 'components/Link';
 
 interface CreateTrophyPageProps {
   attributes: Attributes;
@@ -38,13 +42,16 @@ const useStyles = makeStyles(theme => ({
     overflow: 'auto',
     flex: 1
   },
-  actions: {},
-  attributes: {
-    overflow: 'auto'
+  actions: {
+    display: 'flex',
+    alignItems: 'flex-end'
+  },
+  attributes: {},
+  grow: {
+    flex: 1
   },
   editor: {
     height: 200,
-    //width: '100%',
     marginTop: theme.spacing(2)
   }
 }));
@@ -109,10 +116,10 @@ const CreateTrophyPage: NextFunctionComponent<CreateTrophyPageProps> = ({
     if (src.startsWith('https://game-icons.net/')) {
       getGameIconsSvgPath({ url: src })
         .then(svgPath => {
-          setTrophy({ ...trophy, svgPath });
+          setTrophy({ ...trophy, src, svgPath });
         })
         .catch(() => {
-          setTrophy({ ...trophy, svgPath: '' });
+          setTrophy({ ...trophy, src, svgPath: '' });
         });
     }
   };
@@ -135,7 +142,7 @@ const CreateTrophyPage: NextFunctionComponent<CreateTrophyPageProps> = ({
   const handleCodeChange = (value: string) => {
     setTrophy({ ...trophy, checkString: value });
   };
-  console.log(trophy);
+
   return (
     <>
       <ScriptLoad />
@@ -169,6 +176,9 @@ const CreateTrophyPage: NextFunctionComponent<CreateTrophyPageProps> = ({
             onChange={handleTextChange('title')}
             margin="normal"
             fullWidth
+            placeholder="Addicted"
+            helperText="Select a meaningful title"
+            required
           />
           <TextField
             id="description"
@@ -177,6 +187,9 @@ const CreateTrophyPage: NextFunctionComponent<CreateTrophyPageProps> = ({
             onChange={handleTextChange('description')}
             margin="normal"
             fullWidth
+            placeholder="Boost yourself at least five times"
+            helperText="Describe what the player has to do to achieve this trophy"
+            required
           />
           <TextField
             id="author"
@@ -185,6 +198,8 @@ const CreateTrophyPage: NextFunctionComponent<CreateTrophyPageProps> = ({
             onChange={handleTextChange('author')}
             margin="normal"
             fullWidth
+            placeholder="Jon Doe"
+            helperText="What is your name?"
           />
           <TextField
             id="gameIconUrl"
@@ -193,9 +208,27 @@ const CreateTrophyPage: NextFunctionComponent<CreateTrophyPageProps> = ({
             onChange={handleSrcChange}
             margin="normal"
             fullWidth
+            placeholder="https://game-icons.net/1x1/lorc/syringe.html"
+            helperText={
+              <span>
+                Paste the url of an icon from{' '}
+                <MuiLink href="https://game-icons.net/" target="_blank">
+                  https://game-icons.net/
+                </MuiLink>
+              </span>
+            }
+            required
           />
           <FormControl margin="normal" className={classes.attributes} fullWidth>
-            <FormLabel>Related attributes</FormLabel>
+            <FormLabel>Select related attributes</FormLabel>
+            <FormHelperText>
+              Check all attributes which are important for this trophy. If you want to suggest a new
+              property, please{' '}
+              <Link href="/contribution/issues/create">
+                <span>create an issue</span>
+              </Link>
+              .
+            </FormHelperText>
             <FormGroup>
               {attributes
                 .sort((a, b) => a.title.localeCompare(b.title))
@@ -216,6 +249,10 @@ const CreateTrophyPage: NextFunctionComponent<CreateTrophyPageProps> = ({
           </FormControl>
           <FormControl margin="normal" fullWidth>
             <FormLabel>Check function</FormLabel>
+            <FormHelperText>
+              Write the check function in TypeScript. If you have no idea what to do, leave this
+              field like it is.
+            </FormHelperText>
             <MonacoEditor
               className={classes.editor}
               onChange={handleCodeChange}
@@ -228,13 +265,17 @@ const CreateTrophyPage: NextFunctionComponent<CreateTrophyPageProps> = ({
             />
           </FormControl>
         </div>
+        <Divider />
+
+        <FormControl margin="normal">
+          <FormLabel>Preview</FormLabel>
+        </FormControl>
         <div className={classes.actions}>
-          <FormControl margin="normal">
-            <FormLabel>Preview</FormLabel>
-            <MatchTrophy trophy={trophy} match={match} />
-          </FormControl>
+          <MatchTrophy trophy={trophy} match={match} />
+          <MatchTrophy trophy={trophy} match={match} defaultDetails />
+          <div className={classes.grow} />
           <Button onClick={handleSubmit} disabled={loading}>
-            Send Trophy Proposal
+            Submit Trophy Proposal
           </Button>
         </div>
       </div>

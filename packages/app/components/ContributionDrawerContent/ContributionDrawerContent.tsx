@@ -2,7 +2,6 @@ import React, { FunctionComponent } from 'react';
 import { RouterProps } from 'next/router';
 import Link from 'components/Link';
 import { Divider, ListItem, ListItemText } from '@material-ui/core';
-import IssuesList from 'components/IssuesList';
 
 interface ContributionDrawerContentProps {
   router: RouterProps;
@@ -13,6 +12,12 @@ const ContributionDrawerContent: FunctionComponent<ContributionDrawerContentProp
 }) => {
   return (
     <>
+      <Link href="/contribution">
+        <ListItem button selected={router.route === '/contribution'}>
+          <ListItemText primary="Requests" />
+        </ListItem>
+      </Link>
+      <Divider />
       <Link href="/contribution/trophies/create">
         <ListItem button selected={router.route === '/contribution/trophies/create'}>
           <ListItemText primary="Create Trophy" />
@@ -23,8 +28,6 @@ const ContributionDrawerContent: FunctionComponent<ContributionDrawerContentProp
           <ListItemText primary="Create Issue" />
         </ListItem>
       </Link>
-      <Divider />
-      <IssuesList />
     </>
   );
 };
