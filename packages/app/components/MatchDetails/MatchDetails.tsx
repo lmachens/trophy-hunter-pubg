@@ -1,5 +1,5 @@
-import React, { FunctionComponent } from 'react';
-import { Grid, Divider, Typography } from '@material-ui/core';
+import React, { FunctionComponent, useState } from 'react';
+import { Grid, Divider, Typography, Tabs, Tab } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import { Match } from 'utilities/th-api/match';
 import { Trophy } from 'utilities/th-api/trophies';
@@ -22,20 +22,22 @@ const useStyles = makeStyles(theme => ({
     flex: 1,
     overflow: 'auto'
   },
-  trophies: {
-    flex: 1,
-    marginTop: theme.spacing(1)
-  },
   score: {
     marginBottom: theme.spacing(1)
   },
-  attributes: {
+  content: {
+    flex: 1,
     marginTop: theme.spacing(1)
   }
 }));
 
 const MatchDetails: FunctionComponent<MatchPageProps> = ({ attributes, match, trophies }) => {
   const classes = useStyles();
+  const [tab, setTab] = useState(0);
+
+  const handleTabChange = (_event: React.ChangeEvent<{}>, value: any) => {
+    setTab(value);
+  };
 
   return (
     <div className={classes.container}>
@@ -45,17 +47,24 @@ const MatchDetails: FunctionComponent<MatchPageProps> = ({ attributes, match, tr
         </Typography>
       </div>
       <Divider />
-      <div className={classes.trophies}>
-        <Grid container>
-          {trophies.map(trophy => (
-            <MatchTrophy key={trophy.name} trophy={trophy} match={match} />
-          ))}
-        </Grid>
-      </div>
-      <Divider />
-      <div className={classes.attributes}>
-        <MatchAttributes attributes={attributes} match={match} />
-      </div>
+      <Tabs value={tab} onChange={handleTabChange} centered>
+        <Tab label="Trophies" />
+        <Tab label="Stats" />
+      </Tabs>
+      {tab === 0 && (
+        <div className={classes.content}>
+          <Grid container>
+            {trophies.map(trophy => (
+              <MatchTrophy key={trophy.name} trophy={trophy} match={match} />
+            ))}
+          </Grid>
+        </div>
+      )}
+      {tab === 1 && (
+        <div className={classes.content}>
+          <MatchAttributes attributes={attributes} match={match} />
+        </div>
+      )}
     </div>
   );
 };
