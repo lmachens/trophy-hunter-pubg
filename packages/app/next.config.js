@@ -9,36 +9,60 @@ const { PHASE_PRODUCTION_SERVER } =
 
 module.exports = phase => {
   const withTypescript = require('@zeit/next-typescript');
+  const withCSS = require('@zeit/next-css');
   const fs = require('fs');
   const { join } = require('path');
   const dotenv = require('dotenv');
+  const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
 
   dotenv.config();
 
-  return withTypescript({
-    env: {
-      TH_PUBG_API: process.env.TH_PUBG_API,
-      GITHUB_TOKEN: process.env.GITHUB_TOKEN
-    },
-    exportPathMap: (defaultPathMap, { dev, dir, outDir, distDir, buildId }) => {
-      if (dev || phase === PHASE_PRODUCTION_SERVER) {
+  return withTypescript(
+    withCSS({
+      env: {
+        TH_PUBG_API: process.env.TH_PUBG_API,
+        GITHUB_TOKEN: process.env.GITHUB_TOKEN
+      },
+      exportPathMap: (defaultPathMap, { dev, dir, outDir, distDir, buildId }) => {
+        if (dev || phase === PHASE_PRODUCTION_SERVER) {
+          return defaultPathMap;
+        }
+
+        const files = fs.readdirSync(join(dir, 'overwolf'));
+        files.forEach(file => {
+          fs.copyFileSync(join(dir, 'overwolf', file), join(outDir, file));
+        });
+
         return defaultPathMap;
-      }
+      },
+      webpack(config, options) {
+        config.plugins = [...config.plugins, new MonacoWebpackPlugin()];
+        const originalEntry = config.entry;
+        config.entry = () => {
+          return originalEntry().then(entry => {
+            entry = {
+              ...entry,
+              'static/editor.worker.js': 'monaco-editor/esm/vs/editor/editor.worker.js',
+              'static/json.worker.js': 'monaco-editor/esm/vs/language/json/json.worker',
+              'static/css.worker.js': 'monaco-editor/esm/vs/language/css/css.worker',
+              'static/html.worker.js': 'monaco-editor/esm/vs/language/html/html.worker',
+              'static/ts.worker.js': 'monaco-editor/esm/vs/language/typescript/ts.worker'
+            };
+            return entry;
+          });
+        };
+        config.output = {
+          ...config.output,
+          globalObject: 'self'
+        };
 
-      const files = fs.readdirSync(join(dir, 'overwolf'));
-      files.forEach(file => {
-        fs.copyFileSync(join(dir, 'overwolf', file), join(outDir, file));
-      });
-
-      return defaultPathMap;
-    },
-    webpack(config, options) {
-      if (phase === PHASE_PRODUCTION_SERVER) {
+        if (phase === PHASE_PRODUCTION_SERVER) {
+          return config;
+        }
+        config.resolve.modules.unshift(__dirname);
         return config;
-      }
-      config.resolve.modules.unshift(__dirname);
-      return config;
-    },
-    target: 'serverless'
-  });
+      },
+      target: 'serverless'
+    })
+  );
 };

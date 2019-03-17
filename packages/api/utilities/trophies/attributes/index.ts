@@ -1,4 +1,4 @@
-interface Attributes {
+export interface Attributes {
   [attributeName: string]: {
     key: string;
     title: string;

@@ -2,7 +2,7 @@ import { FunctionComponent, useEffect, useRef } from 'react';
 import getPlayer, { Player } from 'utilities/th-api/player';
 import { useStorage } from 'contexts/storage';
 
-const interval = 10000;
+const interval = 120000;
 const AutoRefresh: FunctionComponent = () => {
   const { storageValues, setItem } = useStorage(['th-pubg-player']);
   const timeout = useRef<NodeJS.Timeout | null>(null);

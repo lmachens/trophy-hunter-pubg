@@ -8,4 +8,5 @@ export interface Trophy {
   attributes: Attributes;
   src: string;
   svgPath: string;
+  checkString: string;
 }

@@ -18,7 +18,8 @@ import getGameIconsSvgPath from 'utilities/th-api/game-icons';
 import getTrophies, { Trophy } from 'utilities/th-api/trophies';
 import MatchTrophy from 'components/MatchTrophy';
 import getMatch, { Match } from 'utilities/th-api/match';
-import octokit from 'utilities/octokit';
+import { createTrophyProposal } from 'utilities/octokit';
+import MonacoEditor, { ScriptLoad } from 'components/MonacoEditor';
 
 interface CreateTrophyPageProps {
   attributes: Attributes;
@@ -30,15 +31,21 @@ const useStyles = makeStyles(theme => ({
   root: {
     flex: 1,
     display: 'flex',
-    flexDirection: 'column'
-  },
-  form: {
-    display: 'flex',
     flexDirection: 'column',
     margin: theme.spacing(2)
   },
+  form: {
+    overflow: 'auto',
+    flex: 1
+  },
+  actions: {},
   attributes: {
     overflow: 'auto'
+  },
+  editor: {
+    height: 200,
+    //width: '100%',
+    marginTop: theme.spacing(2)
   }
 }));
 
@@ -49,7 +56,11 @@ const newTrophy: Trophy = {
   description: '',
   attributes: [],
   src: '',
-  svgPath: ''
+  svgPath: '',
+  checkString: `const check: Check = ({ generalStats, participantStats }) => {
+  return true;
+}
+`
 };
 
 const CreateTrophyPage: NextFunctionComponent<CreateTrophyPageProps> = ({
@@ -67,23 +78,10 @@ const CreateTrophyPage: NextFunctionComponent<CreateTrophyPageProps> = ({
   const handleSubmit = () => {
     if (!loading) {
       setLoading(true);
-      octokit.issues
-        .create({
-          owner: 'lmachens',
-          repo: 'trophy-hunter-pubg',
-          labels: ['trophy proposal'],
-          title: `[Trophy]: ${trophy.title}`,
-          body: `${trophy.author} proposes to create ${trophy.title}:
-
-\`\`\`json
-${JSON.stringify(trophy, null, 2)}
-\`\`\`
-`
-        })
-        .then(() => {
-          setLoading(false);
-          setTrophy(newTrophy);
-        });
+      createTrophyProposal(trophy).then(() => {
+        setLoading(false);
+        setTrophy(newTrophy);
+      });
     }
   };
 
@@ -121,12 +119,12 @@ ${JSON.stringify(trophy, null, 2)}
 
   const handleTemplateChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const trophyName = event.target.value;
-    const trophy = trophies.find(trophy => trophy.name === trophyName);
-    if (trophy) {
-      setTrophy(trophy);
+    const templateTrophy = trophies.find(trophy => trophy.name === trophyName);
+    if (templateTrophy) {
+      setTrophy(templateTrophy);
       const newSelectedAttributes = { ...selectedAttributes };
       Object.keys(newSelectedAttributes).forEach(attributeKey => {
-        newSelectedAttributes[attributeKey] = !!trophy.attributes.find(
+        newSelectedAttributes[attributeKey] = !!templateTrophy.attributes.find(
           attribute => attribute.key === attributeKey
         );
       });
@@ -134,89 +132,113 @@ ${JSON.stringify(trophy, null, 2)}
     }
   };
 
+  const handleCodeChange = (value: string) => {
+    setTrophy({ ...trophy, checkString: value });
+  };
+  console.log(trophy);
   return (
-    <div className={classes.root}>
-      <div className={classes.form}>
-        <FormControl margin="normal">
-          <InputLabel htmlFor="template">Trophy Template</InputLabel>
-          <Select
-            value={''}
-            onChange={handleTemplateChange}
-            inputProps={{
-              id: 'template'
-            }}
-          >
-            <MenuItem value="">
-              <em>None</em>
-            </MenuItem>
-            {trophies
-              .sort((a, b) => a.title.localeCompare(b.title))
-              .map(trophy => (
-                <MenuItem key={trophy.name} value={trophy.name}>
-                  {trophy.title}
-                </MenuItem>
-              ))}
-          </Select>
-        </FormControl>
-        <TextField
-          id="title"
-          label="Title"
-          value={trophy.title}
-          onChange={handleTextChange('title')}
-          margin="normal"
-        />
-        <TextField
-          id="description"
-          label="Description"
-          value={trophy.description}
-          onChange={handleTextChange('description')}
-          margin="normal"
-        />
-        <TextField
-          id="author"
-          label="Author"
-          value={trophy.author}
-          onChange={handleTextChange('author')}
-          margin="normal"
-        />
-        <TextField
-          id="gameIconUrl"
-          label="Game Icon URL"
-          value={trophy.src}
-          onChange={handleSrcChange}
-          margin="normal"
-        />
-        <FormControl margin="normal" className={classes.attributes}>
-          <FormLabel>Related attributes</FormLabel>
-          <FormGroup>
-            {attributes
-              .sort((a, b) => a.title.localeCompare(b.title))
-              .map(attribute => (
-                <FormControlLabel
-                  key={attribute.key}
-                  control={
-                    <Checkbox
-                      checked={selectedAttributes[attribute.key]}
-                      onChange={handleAttributeChange(attribute.key)}
-                      value={attribute.key}
-                    />
-                  }
-                  label={attribute.title}
-                />
-              ))}
-          </FormGroup>
-        </FormControl>
+    <>
+      <ScriptLoad />
+      <div className={classes.root}>
+        <div className={classes.form}>
+          <FormControl margin="normal" fullWidth>
+            <InputLabel htmlFor="template">Trophy Template</InputLabel>
+            <Select
+              value={''}
+              onChange={handleTemplateChange}
+              inputProps={{
+                id: 'template'
+              }}
+            >
+              <MenuItem value="">
+                <em>None</em>
+              </MenuItem>
+              {trophies
+                .sort((a, b) => a.title.localeCompare(b.title))
+                .map(trophy => (
+                  <MenuItem key={trophy.name} value={trophy.name}>
+                    {trophy.title}
+                  </MenuItem>
+                ))}
+            </Select>
+          </FormControl>
+          <TextField
+            id="title"
+            label="Title"
+            value={trophy.title}
+            onChange={handleTextChange('title')}
+            margin="normal"
+            fullWidth
+          />
+          <TextField
+            id="description"
+            label="Description"
+            value={trophy.description}
+            onChange={handleTextChange('description')}
+            margin="normal"
+            fullWidth
+          />
+          <TextField
+            id="author"
+            label="Author"
+            value={trophy.author}
+            onChange={handleTextChange('author')}
+            margin="normal"
+            fullWidth
+          />
+          <TextField
+            id="gameIconUrl"
+            label="Game Icon URL"
+            value={trophy.src}
+            onChange={handleSrcChange}
+            margin="normal"
+            fullWidth
+          />
+          <FormControl margin="normal" className={classes.attributes} fullWidth>
+            <FormLabel>Related attributes</FormLabel>
+            <FormGroup>
+              {attributes
+                .sort((a, b) => a.title.localeCompare(b.title))
+                .map(attribute => (
+                  <FormControlLabel
+                    key={attribute.key}
+                    control={
+                      <Checkbox
+                        checked={selectedAttributes[attribute.key]}
+                        onChange={handleAttributeChange(attribute.key)}
+                        value={attribute.key}
+                      />
+                    }
+                    label={attribute.title}
+                  />
+                ))}
+            </FormGroup>
+          </FormControl>
+          <FormControl margin="normal" fullWidth>
+            <FormLabel>Check function</FormLabel>
+            <MonacoEditor
+              className={classes.editor}
+              onChange={handleCodeChange}
+              language="typescript"
+              value={trophy.checkString}
+              theme="vs-dark"
+              minimap={{
+                enabled: false
+              }}
+            />
+          </FormControl>
+        </div>
+        <div className={classes.actions}>
+          <FormControl margin="normal">
+            <FormLabel>Preview</FormLabel>
+            <MatchTrophy trophy={trophy} match={match} />
+          </FormControl>
+          <Button onClick={handleSubmit} disabled={loading}>
+            Send Trophy Proposal
+          </Button>
+        </div>
       </div>
-      <div className={classes.form}>
-        <FormControl margin="normal">
-          <FormLabel>Preview</FormLabel>
-          <MatchTrophy trophy={trophy} match={match} />
-        </FormControl>
-        <Button onClick={handleSubmit} disabled={loading}>
-          Send Trophy Proposal
-        </Button>
-      </div>
-    </div>
+    </>
   );
 };
 

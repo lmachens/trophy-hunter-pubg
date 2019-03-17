@@ -6,6 +6,8 @@ interface CheckProps {
   generalStats: GeneralStats;
 }
 
+type Check = (props: CheckProps) => boolean;
+
 export default interface Trophy {
   name: string;
   title: string;
@@ -14,5 +16,5 @@ export default interface Trophy {
   src: string;
   svgPath: string;
   attributes: string[];
-  check(props: CheckProps): boolean;
+  check: Check;
 }
