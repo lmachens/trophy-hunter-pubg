@@ -6,9 +6,6 @@ import {
   TextField,
   FormControl,
   FormLabel,
-  FormGroup,
-  FormControlLabel,
-  Checkbox,
   InputLabel,
   Select,
   MenuItem,
@@ -23,7 +20,6 @@ import MatchTrophy from 'components/MatchTrophy';
 import getMatch, { Match } from 'utilities/th-api/match';
 import { createTrophyProposal } from 'utilities/octokit';
 import MonacoEditor, { ScriptLoad } from 'components/MonacoEditor';
-import Link from 'components/Link';
 
 interface CreateTrophyPageProps {
   attributes: Attributes;
@@ -64,25 +60,19 @@ const newTrophy: Trophy = {
   attributes: [],
   src: '',
   svgPath: '',
-  checkString: `const check: Check = ({ generalStats, participantStats }) => {
+  checkString: `const check: Check = ({ playerStats, avgStats, maxStats, minStats }) => {
   return true;
 }
 `
 };
 
-const CreateTrophyPage: NextFunctionComponent<CreateTrophyPageProps> = ({
-  attributes,
-  match,
-  trophies
-}) => {
+const CreateTrophyPage: NextFunctionComponent<CreateTrophyPageProps> = ({ match, trophies }) => {
   const classes = useStyles();
   const [trophy, setTrophy] = useState<Trophy>(newTrophy);
-  const [selectedAttributes, setSelectedAttributes] = useState<any>(
-    attributes.reduce((attributes, attribute) => ({ ...attributes, [attribute.key]: false }), {})
-  );
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = () => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     if (!loading) {
       setLoading(true);
       createTrophyProposal(trophy).then(() => {
@@ -94,20 +84,6 @@ const CreateTrophyPage: NextFunctionComponent<CreateTrophyPageProps> = ({
 
   const handleTextChange = (key: string) => (event: any) => {
     setTrophy({ ...trophy, [key]: event.target.value });
-  };
-
-  const handleAttributeChange = (name: any) => (event: any) => {
-    setSelectedAttributes({ ...selectedAttributes, [name]: event.target.checked });
-    const newTrophy = { ...trophy };
-    if (event.target.checked) {
-      const attribute = attributes.find(attribute => attribute.key === name);
-      if (attribute) {
-        newTrophy.attributes.push(attribute);
-      }
-    } else {
-      newTrophy.attributes = newTrophy.attributes.filter(attribute => attribute.key !== name);
-    }
-    setTrophy(newTrophy);
   };
 
   const handleSrcChange = (event: any) => {
@@ -129,13 +105,6 @@ const CreateTrophyPage: NextFunctionComponent<CreateTrophyPageProps> = ({
     const templateTrophy = trophies.find(trophy => trophy.name === trophyName);
     if (templateTrophy) {
       setTrophy(templateTrophy);
-      const newSelectedAttributes = { ...selectedAttributes };
-      Object.keys(newSelectedAttributes).forEach(attributeKey => {
-        newSelectedAttributes[attributeKey] = !!templateTrophy.attributes.find(
-          attribute => attribute.key === attributeKey
-        );
-      });
-      setSelectedAttributes(newSelectedAttributes);
     }
   };
 
@@ -146,7 +115,7 @@ const CreateTrophyPage: NextFunctionComponent<CreateTrophyPageProps> = ({
   return (
     <>
       <ScriptLoad />
-      <div className={classes.root}>
+      <form className={classes.root} onSubmit={handleSubmit} autoComplete="off">
         <div className={classes.form}>
           <FormControl margin="normal" fullWidth>
             <InputLabel htmlFor="template">Trophy Template</InputLabel>
@@ -219,34 +188,6 @@ const CreateTrophyPage: NextFunctionComponent<CreateTrophyPageProps> = ({
             }
             required
           />
-          <FormControl margin="normal" className={classes.attributes} fullWidth>
-            <FormLabel>Select related attributes</FormLabel>
-            <FormHelperText>
-              Check all attributes which are important for this trophy. If you want to suggest a new
-              property, please{' '}
-              <Link href="/contribution/issues/create">
-                <span>create an issue</span>
-              </Link>
-              .
-            </FormHelperText>
-            <FormGroup>
-              {attributes
-                .sort((a, b) => a.title.localeCompare(b.title))
-                .map(attribute => (
-                  <FormControlLabel
-                    key={attribute.key}
-                    control={
-                      <Checkbox
-                        checked={selectedAttributes[attribute.key]}
-                        onChange={handleAttributeChange(attribute.key)}
-                        value={attribute.key}
-                      />
-                    }
-                    label={attribute.title}
-                  />
-                ))}
-            </FormGroup>
-          </FormControl>
           <FormControl margin="normal" fullWidth>
             <FormLabel>Check function</FormLabel>
             <FormHelperText>
@@ -272,13 +213,12 @@ const CreateTrophyPage: NextFunctionComponent<CreateTrophyPageProps> = ({
         </FormControl>
         <div className={classes.actions}>
           <MatchTrophy trophy={trophy} match={match} />
-          <MatchTrophy trophy={trophy} match={match} defaultDetails />
           <div className={classes.grow} />
-          <Button onClick={handleSubmit} disabled={loading}>
+          <Button type="submit" disabled={loading}>
             Submit Trophy Proposal
           </Button>
         </div>
-      </div>
+      </form>
     </>
   );
 };

@@ -39,6 +39,12 @@ const theme = createMuiTheme({
       message: {
         margin: '0 auto'
       }
+    },
+    MuiTableCell: {
+      root: {
+        padding: '2px 8px',
+        borderBottom: 'none'
+      }
     }
   }
 });

@@ -1,9 +1,10 @@
 import { ParticipantStats } from '../../pubg-api/match/interface';
-import { GeneralStats } from 'utilities/match/getGeneralStats';
 
 interface CheckProps {
-  participantStats: ParticipantStats;
-  generalStats: GeneralStats;
+  playerStats: ParticipantStats;
+  avgStats: ParticipantStats;
+  maxStats: ParticipantStats;
+  minStats: ParticipantStats;
 }
 
 type Check = (props: CheckProps) => boolean;

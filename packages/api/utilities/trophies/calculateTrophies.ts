@@ -1,16 +1,17 @@
 import definitions from './definitions';
 import { ParticipantStats } from '../pubg-api/match/interface';
-import { GeneralStats } from 'utilities/match/getGeneralStats';
 
 interface GetTrophiesProps {
-  participantStats: ParticipantStats;
-  generalStats: GeneralStats;
+  playerStats: ParticipantStats;
+  avgStats: ParticipantStats;
+  maxStats: ParticipantStats;
+  minStats: ParticipantStats;
 }
 
-const calculateTrophies = ({ participantStats, generalStats }: GetTrophiesProps) => {
+const calculateTrophies = ({ playerStats, avgStats, maxStats, minStats }: GetTrophiesProps) => {
   return Object.values(definitions)
     .filter(trophy => {
-      return trophy.check({ participantStats, generalStats });
+      return trophy.check({ playerStats, avgStats, maxStats, minStats });
     })
     .map(trophy => trophy.name);
 };

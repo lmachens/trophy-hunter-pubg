@@ -21,17 +21,19 @@ export default async (req: IncomingMessage, res: ServerResponse) => {
     const match = await getMatch({ platform, matchId });
     const participant = getParticipant({ match, playerId });
     // const team = getTeam({ match, participant });
-    const participantStats = participant.attributes.stats;
+    const playerStats = participant.attributes.stats;
     const participantCount = getParticipantCount({ match });
-    const generalStats = getGeneralStats({ match });
-    const trophyNames = calculateTrophies({ participantStats, generalStats });
+    const { avgStats, maxStats, minStats } = getGeneralStats({ playerStats, match });
+    const trophyNames = calculateTrophies({ playerStats, avgStats, maxStats, minStats });
     const result = {
       platform,
       matchId,
       playerId,
       trophyNames,
-      participantStats,
-      generalStats,
+      playerStats,
+      avgStats,
+      maxStats,
+      minStats,
       createdAt: match.data.attributes.createdAt,
       duration: match.data.attributes.duration,
       mapName: match.data.attributes.mapName,

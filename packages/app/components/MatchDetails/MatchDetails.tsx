@@ -4,8 +4,11 @@ import { makeStyles } from '@material-ui/styles';
 import { Match } from 'utilities/th-api/match';
 import { Trophy } from 'utilities/th-api/trophies';
 import MatchTrophy from 'components/MatchTrophy';
+import MatchAttributes from 'components/MatchAttributes';
+import { Attributes } from 'utilities/th-api/attributes';
 
 interface MatchPageProps {
+  attributes: Attributes;
   match: Match;
   trophies: Trophy[];
 }
@@ -16,7 +19,8 @@ const useStyles = makeStyles(theme => ({
     height: '100%',
     display: 'flex',
     flexDirection: 'column',
-    flex: 1
+    flex: 1,
+    overflow: 'auto'
   },
   trophies: {
     flex: 1,
@@ -24,10 +28,13 @@ const useStyles = makeStyles(theme => ({
   },
   score: {
     marginBottom: theme.spacing(1)
+  },
+  attributes: {
+    marginTop: theme.spacing(1)
   }
 }));
 
-const MatchDetails: FunctionComponent<MatchPageProps> = ({ match, trophies }) => {
+const MatchDetails: FunctionComponent<MatchPageProps> = ({ attributes, match, trophies }) => {
   const classes = useStyles();
 
   return (
@@ -44,6 +51,10 @@ const MatchDetails: FunctionComponent<MatchPageProps> = ({ match, trophies }) =>
             <MatchTrophy key={trophy.name} trophy={trophy} match={match} />
           ))}
         </Grid>
+      </div>
+      <Divider />
+      <div className={classes.attributes}>
+        <MatchAttributes attributes={attributes} match={match} />
       </div>
     </div>
   );

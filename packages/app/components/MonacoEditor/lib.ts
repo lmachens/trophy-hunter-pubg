@@ -1,7 +1,9 @@
 const lib = `
 interface CheckProps {
-  participantStats: ParticipantStats;
-  generalStats: GeneralStats;
+  playerStats: ParticipantStats;
+  avgStats: ParticipantStats;
+  maxStats: ParticipantStats;
+  minStats: ParticipantStats;
 }
 
 type Check = (props: CheckProps) => boolean;
@@ -38,10 +40,6 @@ interface ParticipantStats {
   winPlace: number;
   winPoints: number;
   winPointsDelta: number;
-}
-
-interface GeneralStats {
-  mostHeadshotKills: number;
 }
 `;
 
