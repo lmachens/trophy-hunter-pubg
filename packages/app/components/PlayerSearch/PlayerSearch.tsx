@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/styles';
 import { IconButton, InputBase, MenuItem, Paper, Select, Snackbar } from '@material-ui/core';
 import Search from '@material-ui/icons/Search';
 import getPlayer from 'utilities/th-api/player';
-import { setCookie } from 'nookies';
+import { useRefreshPlayer } from 'contexts/player';
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -58,6 +58,7 @@ const PlayerSearch: FunctionComponent = () => {
   const [platform, setPlatform] = useState('PC');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
+  const refreshPlayer = useRefreshPlayer();
 
   const handlePlayerNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPlayerName(event.target.value.trim());
@@ -76,7 +77,7 @@ const PlayerSearch: FunctionComponent = () => {
     setLoading(true);
     getPlayer({ platform, playerName })
       .then(() => {
-        setCookie(undefined, 'thPubg', `${platform} ${playerName}`);
+        refreshPlayer({ platform, playerName });
         setLoading(false);
       })
       .catch((error: Error) => {

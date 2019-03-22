@@ -1,14 +1,14 @@
 import { gameEnded, gameLaunched, gameRunning, setFeatures } from 'utilities/overwolf/games';
 import React, { FunctionComponent, useState, useEffect } from 'react';
 import { Snackbar } from '@material-ui/core';
-import { setCookie } from 'nookies';
-import { usePlayer } from 'contexts/player';
+import { usePlayer, useRefreshPlayer } from 'contexts/player';
 
 const interestedInFeatures = ['me'];
 
 const GameListener: FunctionComponent = () => {
   const [open, setOpen] = useState(false);
   const player = usePlayer();
+  const refreshPlayer = useRefreshPlayer();
 
   const handleClose = (_: any, reason: string) => {
     if (reason === 'clickaway') {
@@ -20,7 +20,7 @@ const GameListener: FunctionComponent = () => {
 
   const updatePlayer = (name: string) => {
     if (!player || player.name !== name) {
-      setCookie(undefined, 'thPubg', `PC ${name}`);
+      refreshPlayer({ platform, playerName });
     }
   };
   const handleInfoUpdate = (infoUpdate: any) => {
