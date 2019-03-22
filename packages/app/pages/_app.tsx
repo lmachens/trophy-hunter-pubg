@@ -26,6 +26,7 @@ interface PageProps {
   player?: Player;
 }
 
+let player: Player | undefined;
 export default class MyApp extends App<PageProps> {
   componentDidMount() {
     const style = document.getElementById('server-side-styles');
@@ -43,10 +44,13 @@ export default class MyApp extends App<PageProps> {
     const pageProps: PageProps = {};
     if (thPubg) {
       const [platform, playerName] = thPubg.split(' ');
-      pageProps.player = await getPlayer({ platform, playerName }).catch((error: Error) => {
-        console.error(error);
-        return undefined;
-      });
+      if (!player || player.platform !== platform || player.name !== playerName) {
+        player = await getPlayer({ platform, playerName }).catch((error: Error) => {
+          console.error(error);
+          return undefined;
+        });
+      }
+      pageProps.player = player;
     }
 
     return {
