@@ -18,9 +18,9 @@ const GameListener: FunctionComponent = () => {
     setOpen(false);
   };
 
-  const updatePlayer = (name: string) => {
+  const updatePlayer = (playerName: string) => {
     if (!player || player.name !== name) {
-      refreshPlayer({ platform, playerName });
+      refreshPlayer({ platform: 'PC', playerName });
     }
   };
   const handleInfoUpdate = (infoUpdate: any) => {
