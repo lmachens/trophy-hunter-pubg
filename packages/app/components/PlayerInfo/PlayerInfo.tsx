@@ -1,14 +1,14 @@
 import React, { FunctionComponent } from 'react';
 import { ListItem, ListItemText } from '@material-ui/core';
-import { Player } from 'utilities/th-api/player/interface';
 import Link from 'components/Link';
+import { usePlayer } from 'contexts/player';
 
 interface PlayerInfoProps {
   selected: boolean;
-  player?: Player;
 }
 
-const PlayerInfo: FunctionComponent<PlayerInfoProps> = ({ selected, player }) => {
+const PlayerInfo: FunctionComponent<PlayerInfoProps> = ({ selected }) => {
+  const player = usePlayer();
   return (
     <Link href="/">
       <ListItem button selected={selected}>

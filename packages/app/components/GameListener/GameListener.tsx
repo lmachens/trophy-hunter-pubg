@@ -1,14 +1,14 @@
 import { gameEnded, gameLaunched, gameRunning, setFeatures } from 'utilities/overwolf/games';
 import React, { FunctionComponent, useState, useEffect } from 'react';
 import { Snackbar } from '@material-ui/core';
-import { useStorage } from 'contexts/storage';
-import getPlayer, { Player } from 'utilities/th-api/player';
+import { setCookie } from 'nookies';
+import { usePlayer } from 'contexts/player';
 
 const interestedInFeatures = ['me'];
 
 const GameListener: FunctionComponent = () => {
-  const { storageValues, setItem } = useStorage(['th-pubg-player']);
   const [open, setOpen] = useState(false);
+  const player = usePlayer();
 
   const handleClose = (_: any, reason: string) => {
     if (reason === 'clickaway') {
@@ -19,15 +19,8 @@ const GameListener: FunctionComponent = () => {
   };
 
   const updatePlayer = (name: string) => {
-    const player: Player = storageValues['th-pubg-player'];
     if (!player || player.name !== name) {
-      getPlayer({ platform: 'PC', playerName: name })
-        .then((player: Player) => {
-          setItem('th-pubg-player', player);
-        })
-        .catch((error: Error) => {
-          console.error(error);
-        });
+      setCookie(undefined, 'thPubg', `PC ${name}`);
     }
   };
   const handleInfoUpdate = (infoUpdate: any) => {

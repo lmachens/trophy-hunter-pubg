@@ -7,7 +7,7 @@ const createTrophyProposal = ({ checkString, ...trophy }: Trophy) => {
     repo: 'trophy-hunter-pubg',
     labels: ['trophy proposal'],
     title: `[Trophy]: ${trophy.title}`,
-    body: `${trophy.author} proposes to create ${trophy.title}:
+    body: `**${trophy.author}** proposed to create **${trophy.title}**:
 
 \`\`\`json
 ${JSON.stringify(trophy, null, 2)}

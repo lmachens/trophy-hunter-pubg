@@ -1,15 +1,14 @@
 import React, { FunctionComponent, useEffect, useState, useRef } from 'react';
 import { ListItem, ListItemText, ListSubheader } from '@material-ui/core';
-import { Player } from 'utilities/th-api/player/interface';
 import { makeStyles } from '@material-ui/styles';
 import throttle from 'utilities/throttle';
 import MatchListItem from 'components/MatchListItem';
 import { RouterProps } from 'next/router';
 import Link from 'components/Link';
+import { usePlayer } from 'contexts/player';
 
 interface LastMatchesProps {
   router: RouterProps;
-  player?: Player;
 }
 
 const itemHeight = 46;
@@ -24,11 +23,12 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const LastMatches: FunctionComponent<LastMatchesProps> = ({ router, player }) => {
+const LastMatches: FunctionComponent<LastMatchesProps> = ({ router }) => {
   const classes = useStyles();
   const [items, setItems] = useState(0);
   const [maxItems, setMaxItems] = useState(0);
   const containerEl = useRef<HTMLDivElement>(null);
+  const player = usePlayer();
 
   const handleScroll = throttle(() => {
     if (containerEl.current) {

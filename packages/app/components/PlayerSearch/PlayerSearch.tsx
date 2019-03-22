@@ -2,8 +2,8 @@ import React, { FunctionComponent, useState } from 'react';
 import { makeStyles } from '@material-ui/styles';
 import { IconButton, InputBase, MenuItem, Paper, Select, Snackbar } from '@material-ui/core';
 import Search from '@material-ui/icons/Search';
-import getPlayer, { Player } from 'utilities/th-api/player';
-import { useStorage } from 'contexts/storage';
+import getPlayer from 'utilities/th-api/player';
+import { setCookie } from 'nookies';
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -58,7 +58,6 @@ const PlayerSearch: FunctionComponent = () => {
   const [platform, setPlatform] = useState('PC');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
-  const { setItem } = useStorage(['th-pubg-player']);
 
   const handlePlayerNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPlayerName(event.target.value.trim());
@@ -76,8 +75,8 @@ const PlayerSearch: FunctionComponent = () => {
     setError(null);
     setLoading(true);
     getPlayer({ platform, playerName })
-      .then((player: Player) => {
-        setItem('th-pubg-player', player);
+      .then(() => {
+        setCookie(undefined, 'thPubg', `${platform} ${playerName}`);
         setLoading(false);
       })
       .catch((error: Error) => {
