@@ -37,7 +37,10 @@ export default class MyApp extends App<PageProps> {
   }
 
   static async getInitialProps(appContext: NextAppContext) {
-    const { thPubg } = parseCookies(appContext.ctx);
+    const { thPubg = null } =
+      appContext.ctx.req && appContext.ctx.req.headers
+        ? parseCookies(appContext.ctx)
+        : parseCookies();
 
     const initialProps = await App.getInitialProps(appContext);
 

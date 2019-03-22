@@ -15,7 +15,9 @@ module.exports = phase => {
   const dotenv = require('dotenv');
   const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
 
-  dotenv.config();
+  dotenv.config({
+    path: `${process.env.NODE_ENV}.env`
+  });
 
   return withTypescript(
     withCSS({
@@ -24,14 +26,12 @@ module.exports = phase => {
         GITHUB_TOKEN: process.env.GITHUB_TOKEN
       },
       exportPathMap: (defaultPathMap, { dev, dir, outDir, distDir, buildId }) => {
-        if (dev || phase === PHASE_PRODUCTION_SERVER) {
-          return defaultPathMap;
+        if (!dev && phase !== PHASE_PRODUCTION_SERVER && !process.env.NOW_REGION) {
+          const files = fs.readdirSync(join(dir, 'overwolf'));
+          files.forEach(file => {
+            fs.copyFileSync(join(dir, 'overwolf', file), join(outDir, file));
+          });
         }
-
-        const files = fs.readdirSync(join(dir, 'overwolf'));
-        files.forEach(file => {
-          fs.copyFileSync(join(dir, 'overwolf', file), join(outDir, file));
-        });
 
         return defaultPathMap;
       },
@@ -62,7 +62,7 @@ module.exports = phase => {
         config.resolve.modules.unshift(__dirname);
         return config;
       },
-      target: 'serverless'
+      target: process.env.NOW_REGION ? 'serverless' : 'server'
     })
   );
 };
