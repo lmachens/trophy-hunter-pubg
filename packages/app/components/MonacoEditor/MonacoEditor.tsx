@@ -37,7 +37,7 @@ const MonacoEditor: FunctionComponent<any> = ({ className, onChange, value, ...o
         editor.current = null;
       }
     };
-  }, [!editor.current || value !== editor.current.getValue()]);
+  }, [!editor.current || value === editor.current.getValue()]);
 
   return <div ref={container} className={className} />;
 };
