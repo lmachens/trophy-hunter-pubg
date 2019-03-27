@@ -95,6 +95,9 @@ const useStyles = makeStyles(theme => ({
     position: 'absolute',
     zIndex: theme.zIndex.drawer + 2,
     cursor: 'se-resize'
+  },
+  avatar: {
+    borderRadius: 'unset'
   }
 }));
 
@@ -155,11 +158,13 @@ const App: FunctionComponent<AppLayout> = ({ children, router }) => {
                 <ListItem
                   button
                   className={classNames(classes.item, {
-                    [classes.selectedItem]: !router.route.startsWith('/contribution')
+                    [classes.selectedItem]:
+                      !router.route.startsWith('/contribution') &&
+                      !router.route.startsWith('/discord')
                   })}
                 >
                   <ListItemAvatar>
-                    <Avatar alt="Home" src="/static/icon.png" />
+                    <Avatar className={classes.avatar} alt="Home" src="/static/icon.png" />
                   </ListItemAvatar>
                 </ListItem>
               </Tooltip>
@@ -173,7 +178,25 @@ const App: FunctionComponent<AppLayout> = ({ children, router }) => {
                   })}
                 >
                   <ListItemAvatar>
-                    <Avatar alt="Contribution" src="/static/github.png" />
+                    <Avatar
+                      className={classes.avatar}
+                      alt="Contribution"
+                      src="/static/github.png"
+                    />
+                  </ListItemAvatar>
+                </ListItem>
+              </Tooltip>
+            </Link>
+            <Link href="/discord">
+              <Tooltip title="To Discord" placement="right" enterDelay={200}>
+                <ListItem
+                  button
+                  className={classNames(classes.item, {
+                    [classes.selectedItem]: router.route === '/discord'
+                  })}
+                >
+                  <ListItemAvatar>
+                    <Avatar className={classes.avatar} alt="Discord" src="/static/discord.png" />
                   </ListItemAvatar>
                 </ListItem>
               </Tooltip>

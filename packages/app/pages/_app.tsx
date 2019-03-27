@@ -68,11 +68,12 @@ export default class MyApp extends App<PageProps> {
   render() {
     const { Component, pageProps, router } = this.props;
 
-    const drawerContent = router.route.startsWith('/contribution') ? (
-      <ContributionDrawerContent router={router} />
-    ) : (
-      <AppDrawerContent router={router} {...pageProps} />
-    );
+    let drawerContent;
+    if (router.route.startsWith('/contribution')) {
+      drawerContent = <ContributionDrawerContent router={router} />;
+    } else if (!router.route.startsWith('/discord')) {
+      drawerContent = <AppDrawerContent router={router} {...pageProps} />;
+    }
     const content = (
       <Main drawerContent={drawerContent}>
         <Component {...pageProps} />

@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/styles';
 import SubDrawer from 'components/SubDrawer';
 
 interface MainProps {
-  drawerContent: React.ReactNode;
+  drawerContent?: React.ReactNode;
 }
 
 const useStyles = makeStyles({
@@ -18,7 +18,7 @@ const Main: FunctionComponent<MainProps> = ({ children, drawerContent }) => {
 
   return (
     <div className={classes.container}>
-      <SubDrawer>{drawerContent}</SubDrawer>
+      {drawerContent && <SubDrawer>{drawerContent}</SubDrawer>}
       {children}
     </div>
   );
