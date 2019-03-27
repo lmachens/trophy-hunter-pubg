@@ -12,11 +12,12 @@ import {
   Button,
   Divider,
   Link as MuiLink,
-  FormHelperText
+  FormHelperText,
+  Snackbar
 } from '@material-ui/core';
 import getGameIconsSvgPath from 'utilities/th-api/game-icons';
 import getTrophies, { Trophy } from 'utilities/th-api/trophies';
-import MatchTrophy from 'components/MatchTrophy';
+import TrophyProgress from 'components/TrophyProgress';
 import getMatch, { Match } from 'utilities/th-api/match';
 import { createTrophyProposal } from 'utilities/octokit';
 import MonacoEditor, { ScriptLoad } from 'components/MonacoEditor';
@@ -71,6 +72,7 @@ const CreateTrophyPage: NextFunctionComponent<CreateTrophyPageProps> = ({ match,
   const [trophy, setTrophy] = useState<Trophy>(newTrophy);
   const [checkString, setCheckString] = useState(newTrophy.checkString);
   const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -79,6 +81,7 @@ const CreateTrophyPage: NextFunctionComponent<CreateTrophyPageProps> = ({ match,
       createTrophyProposal({ ...trophy, checkString }).then(() => {
         setLoading(false);
         setTrophy(newTrophy);
+        setSuccess(true);
       });
     }
   };
@@ -112,6 +115,14 @@ const CreateTrophyPage: NextFunctionComponent<CreateTrophyPageProps> = ({ match,
 
   const handleCodeChange = (value: string) => {
     setCheckString(value);
+  };
+
+  const handleClose = (_event: React.SyntheticEvent, reason: string) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setSuccess(false);
   };
 
   return (
@@ -214,13 +225,26 @@ const CreateTrophyPage: NextFunctionComponent<CreateTrophyPageProps> = ({ match,
           <FormLabel>Preview</FormLabel>
         </FormControl>
         <div className={classes.actions}>
-          <MatchTrophy trophy={trophy} match={match} />
+          <TrophyProgress trophy={trophy} achieved={match.trophyNames.includes(trophy.name)} />
           <div className={classes.grow} />
           <Button type="submit" disabled={loading}>
             Submit Trophy Proposal
           </Button>
         </div>
       </form>
+      <Snackbar
+        anchorOrigin={{
+          vertical: 'top',
+          horizontal: 'right'
+        }}
+        open={success}
+        onClose={handleClose}
+        autoHideDuration={3000}
+        ContentProps={{
+          'aria-describedby': 'message-id'
+        }}
+        message={<span id="message-id">Thank you for your Trophy proposal</span>}
+      />
     </>
   );
 };
