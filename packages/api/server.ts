@@ -6,7 +6,6 @@ import attributes from './endpoints/attributes';
 import gameIcons from './endpoints/game-icons';
 import { parse } from 'url';
 
-console.log(process.env.PSModulePath);
 if (!process.env.PUBG_API_KEY) {
   throw new Error(`No process.env.PUBG_API_KEY set. Set env PUBG_API_KEY="xxx" first`);
 }

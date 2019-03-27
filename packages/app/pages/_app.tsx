@@ -15,7 +15,6 @@ import getPlayer, { Player } from 'utilities/th-api/player';
 import { PlayerProvider } from 'contexts/player';
 
 NProgress.configure({ parent: '#__next', showSpinner: false });
-
 Router.events.on('routeChangeStart', () => {
   NProgress.start();
 });

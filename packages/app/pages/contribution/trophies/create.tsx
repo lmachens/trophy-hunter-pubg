@@ -228,7 +228,7 @@ const CreateTrophyPage: NextFunctionComponent<CreateTrophyPageProps> = ({ match,
 CreateTrophyPage.getInitialProps = async () => {
   const attributesPromise = getAttributes();
   const matchPromise = getMatch({
-    platform: 'PC',
+    platform: 'Steam',
     matchId: 'a815b794-5d00-471d-896b-e1fd5e01a38c',
     playerId: 'account.2afdfa3cefad4cdd93217537d40dfd4e'
   });

@@ -20,7 +20,7 @@ export default async (req: IncomingMessage, res: ServerResponse) => {
       id: result.id,
       name: playerName,
       platform,
-      matches: result.relationships.matches.data
+      matches: result.relationships.matches.data.map(match => match.id)
     };
 
     res.end(JSON.stringify(player));

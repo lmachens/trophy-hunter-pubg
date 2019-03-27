@@ -54,16 +54,16 @@ const LastMatches: FunctionComponent<LastMatchesProps> = ({ router }) => {
     <div className={classes.container} onScroll={handleScroll} ref={containerEl}>
       <ListSubheader>Last Matches</ListSubheader>
       {player &&
-        player.matches.slice(0, Math.max(maxItems, items)).map(match => (
+        player.matches.slice(0, Math.max(maxItems, items)).map(matchId => (
           <Link
-            key={match.id}
-            href={`/match?platform=${player.platform}&matchId=${match.id}&playerId=${player.id}`}
+            key={matchId}
+            href={`/match?platform=${player.platform}&matchId=${matchId}&playerId=${player.id}`}
           >
             <MatchListItem
               className={classes.item}
-              matchId={match.id}
+              matchId={matchId}
               player={player}
-              selected={router.query && router.query.matchId === match.id}
+              selected={router.query && router.query.matchId === matchId}
             />
           </Link>
         ))}

@@ -50,12 +50,12 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const platforms = ['PC', 'XBOX'];
+const platforms = ['Steam', 'PSN', 'XBOX', 'Kakao'];
 
 const PlayerSearch: FunctionComponent = () => {
   const classes = useStyles();
   const [playerName, setPlayerName] = useState('');
-  const [platform, setPlatform] = useState('PC');
+  const [platform, setPlatform] = useState('Steam');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
   const refreshPlayer = useRefreshPlayer();

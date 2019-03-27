@@ -20,7 +20,7 @@ const GameListener: FunctionComponent = () => {
 
   const updatePlayer = (playerName: string) => {
     if (!player || player.name !== name) {
-      refreshPlayer({ platform: 'PC', playerName });
+      refreshPlayer({ platform: 'Steam', playerName });
     }
   };
   const handleInfoUpdate = (infoUpdate: any) => {
