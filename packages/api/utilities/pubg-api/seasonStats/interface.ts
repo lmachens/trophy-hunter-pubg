@@ -31,7 +31,7 @@ export default interface SeasonStats {
       matchesSquad: MatchList;
       matchesSquadFPP: MatchList;
     };
-  }[];
+  };
   links: {
     self: string;
   };
@@ -81,5 +81,5 @@ interface MatchList {
   data: {
     type: 'match';
     id: string;
-  };
+  }[];
 }

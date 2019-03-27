@@ -12,3 +12,9 @@ export default interface Seasons {
   };
   meta: {};
 }
+
+export interface Season {
+  isCurrentSeason: boolean;
+  isOffseason: boolean;
+  id: string;
+}

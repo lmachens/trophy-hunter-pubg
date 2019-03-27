@@ -4,6 +4,8 @@ import player from './endpoints/player';
 import trophies from './endpoints/trophies';
 import attributes from './endpoints/attributes';
 import gameIcons from './endpoints/game-icons';
+import seasons from './endpoints/seasons';
+import seasonStats from './endpoints/season-stats';
 import { parse } from 'url';
 
 if (!process.env.PUBG_API_KEY) {
@@ -19,7 +21,9 @@ const endpoints: Endpoints = {
   player,
   trophies,
   attributes,
-  'game-icons': gameIcons
+  'game-icons': gameIcons,
+  seasons,
+  'season-stats': seasonStats
 };
 
 const hostname = '127.0.0.1';
