@@ -3,7 +3,7 @@ import { Grid, Divider, Typography, Tabs, Tab } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import { Match, MAPS } from 'utilities/th-api/match';
 import { Trophy } from 'utilities/th-api/trophies';
-import MatchTrophy from 'components/MatchTrophy';
+import TrophyProgress from 'components/TrophyProgress';
 import MatchAttributes from 'components/MatchAttributes';
 import { Attributes } from 'utilities/th-api/attributes';
 import millisToMinutesAndSeconds from 'utilities/millisToMinutesAndSeconds';
@@ -71,7 +71,11 @@ const MatchDetails: FunctionComponent<MatchPageProps> = ({ attributes, match, tr
         <div className={classes.content}>
           <Grid container>
             {trophies.map(trophy => (
-              <MatchTrophy key={trophy.name} trophy={trophy} match={match} />
+              <TrophyProgress
+                key={trophy.name}
+                trophy={trophy}
+                achieved={match.trophyNames.includes(trophy.name)}
+              />
             ))}
           </Grid>
         </div>

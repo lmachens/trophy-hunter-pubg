@@ -9,7 +9,8 @@ interface MainProps {
 const useStyles = makeStyles({
   container: {
     flex: 1,
-    display: 'flex'
+    display: 'flex',
+    height: 0
   }
 });
 

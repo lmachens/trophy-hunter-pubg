@@ -5,6 +5,7 @@ import getMatch from '../../utilities/pubg-api/match';
 import { getParticipant, getGeneralStats } from '../../utilities/match';
 // import getTeam from '../../utilities/match/getTeam';
 import { calculateTrophies } from '../../utilities/trophies';
+import getSeasons from '../../utilities/pubg-api/seasons';
 
 interface Trophies {
   [trophyName: string]: number;
@@ -15,11 +16,7 @@ export default async (req: IncomingMessage, res: ServerResponse) => {
   res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
 
   const { platform, playerId, seasonId } = parse(req.url!, true).query;
-  if (
-    typeof platform !== 'string' ||
-    typeof playerId !== 'string' ||
-    typeof seasonId !== 'string'
-  ) {
+  if (typeof platform !== 'string' || typeof playerId !== 'string') {
     res.writeHead(400);
     return res.end('Invalid query');
   }
@@ -27,7 +24,14 @@ export default async (req: IncomingMessage, res: ServerResponse) => {
   res.setHeader('Cache-Control', 's-maxage=6000, maxage=0');
 
   try {
-    const seasonStats = await getSeasonStats({ platform, playerId, seasonId });
+    let season = seasonId;
+    if (typeof season !== 'string') {
+      const seasons = await getSeasons({ platform });
+      const currentSeason = seasons.find(season => season.isCurrentSeason);
+      season = currentSeason!.id;
+    }
+
+    const seasonStats = await getSeasonStats({ platform, playerId, seasonId: season });
 
     const matches = [
       ...seasonStats.matchesSolo,

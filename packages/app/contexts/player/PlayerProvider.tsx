@@ -19,7 +19,7 @@ const PlayerProvider: FunctionComponent<PlayerProviderProps> = ({ children, defa
   const timeout = useRef<NodeJS.Timeout | null>(null);
 
   const refreshPlayer = ({ platform, playerName }: RefreshPlayerProps) => {
-    setCookie(undefined, 'thPubg', `${platform} ${playerName}`, {
+    setCookie(undefined, 'thPubg', `${platform};${playerName}`, {
       path: '/'
     });
     getPlayer({ platform, playerName })

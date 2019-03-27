@@ -4,6 +4,7 @@ import { IconButton, InputBase, MenuItem, Paper, Select, Snackbar } from '@mater
 import Search from '@material-ui/icons/Search';
 import getPlayer from 'utilities/th-api/player';
 import { useRefreshPlayer } from 'contexts/player';
+import Router from 'next/router';
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -76,9 +77,9 @@ const PlayerSearch: FunctionComponent = () => {
     setError(null);
     setLoading(true);
     getPlayer({ platform, playerName })
-      .then(() => {
+      .then(player => {
         refreshPlayer({ platform, playerName });
-        setLoading(false);
+        Router.push(`/trophies?platform=${player.platform}&playerId=${player.id}`);
       })
       .catch((error: Error) => {
         console.error(error);

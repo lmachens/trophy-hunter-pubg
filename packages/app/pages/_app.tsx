@@ -45,7 +45,7 @@ export default class MyApp extends App<PageProps> {
 
     const pageProps: PageProps = {};
     if (thPubg) {
-      const [platform, playerName] = thPubg.split(' ');
+      const [platform, playerName] = thPubg.split(';');
       if (!player || player.platform !== platform || player.name !== playerName) {
         player = await getPlayer({ platform, playerName }).catch((error: Error) => {
           console.error(error);

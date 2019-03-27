@@ -1,19 +1,39 @@
 import React, { FunctionComponent } from 'react';
-import { Divider } from '@material-ui/core';
-import PlayerInfo from 'components/PlayerInfo';
-import LastMatches from 'components/LastMatches';
 import { RouterProps } from 'next/router';
+import { Divider, ListItem, ListItemText, ListSubheader, ListItemIcon } from '@material-ui/core';
+import Link from 'components/Link';
+import { usePlayer } from 'contexts/player';
+import Search from '@material-ui/icons/Search';
+import LastMatches from 'components/LastMatches';
 
 interface AppDrawerContentProps {
   router: RouterProps;
 }
 
 const AppDrawerContent: FunctionComponent<AppDrawerContentProps> = ({ router }) => {
+  const player = usePlayer();
+
   return (
     <>
-      <PlayerInfo selected={router.route === '/'} />
+      <Link href="/">
+        <ListItem button selected={router.route === '/'}>
+          <ListItemIcon>
+            <Search />
+          </ListItemIcon>
+          <ListItemText primary="Player Search" />
+        </ListItem>
+      </Link>
       <Divider />
-      <LastMatches router={router} />
+      {player && (
+        <>
+          <Link href={`/trophies?platform=${player.platform}&playerId=${player.id}`}>
+            <ListItem button selected={router.route === '/trophies'}>
+              <ListItemText primary={player.name} />
+            </ListItem>
+          </Link>
+          <LastMatches router={router} />
+        </>
+      )}
     </>
   );
 };

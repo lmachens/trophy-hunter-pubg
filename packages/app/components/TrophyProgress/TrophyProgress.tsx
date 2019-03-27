@@ -4,11 +4,10 @@ import { makeStyles } from '@material-ui/styles';
 import TrophyIcon from 'components/TrophyIcon';
 import DoneIcon from '@material-ui/icons/Done';
 import { Trophy } from 'utilities/th-api/trophies';
-import { Match } from 'utilities/th-api/match';
 
-interface MatchTrophyProps {
+interface TrophyProgressProps {
+  achieved?: boolean;
   trophy: Trophy;
-  match: Match;
 }
 
 const useStyles = makeStyles(theme => ({
@@ -33,9 +32,8 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const MatchTrophy: FunctionComponent<MatchTrophyProps> = ({ trophy, match }) => {
+const TrophyProgress: FunctionComponent<TrophyProgressProps> = ({ achieved, trophy }) => {
   const classes = useStyles();
-  const achieved = match.trophyNames.includes(trophy.name);
 
   return (
     <Tooltip title={`${trophy.title}: ${trophy.description}`}>
@@ -51,4 +49,4 @@ const MatchTrophy: FunctionComponent<MatchTrophyProps> = ({ trophy, match }) => 
   );
 };
 
-export default MatchTrophy;
+export default TrophyProgress;
