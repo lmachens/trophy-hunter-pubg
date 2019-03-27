@@ -3,16 +3,16 @@ import SeasonStats from './interface';
 
 interface GetSeasonStatsProps {
   platform: string;
-  accountId: string;
+  playerId: string;
   seasonId: string;
 }
 
 const mapMatch = (match: { type: 'match'; id: string }) => match.id;
 
-const getSeasonStats = ({ platform, accountId, seasonId }: GetSeasonStatsProps) => {
+const getSeasonStats = ({ platform, playerId, seasonId }: GetSeasonStatsProps) => {
   return getPUBGApi<SeasonStats>({
     platform,
-    endpoint: `players/${accountId}/seasons/${seasonId}`
+    endpoint: `players/${playerId}/seasons/${seasonId}`
   }).then(seasonStats => ({
     gameModeStats: seasonStats.data.attributes.gameModeStats,
     matchesSolo: seasonStats.data.relationships.matchesSolo.data.map(mapMatch),
