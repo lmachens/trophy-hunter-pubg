@@ -26,8 +26,8 @@ const AppDrawerContent: FunctionComponent<AppDrawerContentProps> = ({ router }) 
       <Divider />
       {player && (
         <>
-          <Link href={`/trophies?platform=${player.platform}&playerId=${player.id}`}>
-            <ListItem button selected={router.route === '/trophies'}>
+          <Link href={`/player?platform=${player.platform}&playerId=${player.id}`}>
+            <ListItem button selected={router.route === '/player'}>
               <ListItemText primary={player.name} />
             </ListItem>
           </Link>

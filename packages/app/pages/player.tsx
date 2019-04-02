@@ -9,7 +9,7 @@ import { usePlayer } from 'contexts/player';
 import PlayerStats from 'components/PlayerStats';
 import Error from 'next/error';
 
-interface TrophiesPageProps {
+interface PlayerPageProps {
   seasonStats?: SeasonStats;
   trophies?: Trophy[];
 }
@@ -33,7 +33,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const TrophiesPage: NextFunctionComponent<TrophiesPageProps> = ({ seasonStats, trophies }) => {
+const PlayerPage: NextFunctionComponent<PlayerPageProps> = ({ seasonStats, trophies }) => {
   const classes = useStyles();
   const player = usePlayer();
 
@@ -59,16 +59,16 @@ const TrophiesPage: NextFunctionComponent<TrophiesPageProps> = ({ seasonStats, t
   );
 };
 
-TrophiesPage.getInitialProps = async ({ query }) => {
-  const { platform, playerId } = query;
-  if (typeof platform !== 'string' || typeof playerId !== 'string') {
+PlayerPage.getInitialProps = async ({ query }) => {
+  const { platform, playerId, seasonId } = query;
+  if (typeof platform !== 'string' || typeof playerId !== 'string' || Array.isArray(seasonId)) {
     return {};
   }
 
-  const seasonStatsPromise = getSeasonStats({ platform, playerId });
+  const seasonStatsPromise = getSeasonStats({ platform, playerId, seasonId });
   const trophiesPromise = getTrophies();
   const [seasonStats, trophies] = await Promise.all([seasonStatsPromise, trophiesPromise]);
   return { seasonStats, trophies };
 };
 
-export default TrophiesPage;
+export default PlayerPage;

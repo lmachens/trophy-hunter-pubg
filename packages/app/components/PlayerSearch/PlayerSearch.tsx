@@ -79,7 +79,7 @@ const PlayerSearch: FunctionComponent = () => {
     getPlayer({ platform, playerName })
       .then(player => {
         refreshPlayer({ platform, playerName });
-        Router.push(`/trophies?platform=${player.platform}&playerId=${player.id}`);
+        Router.push(`/player?platform=${player.platform}&playerId=${player.id}`);
       })
       .catch((error: Error) => {
         console.error(error);

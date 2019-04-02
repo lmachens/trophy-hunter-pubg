@@ -6,6 +6,7 @@ import { getParticipant, getGeneralStats } from '../../utilities/match';
 // import getTeam from '../../utilities/match/getTeam';
 import { calculateTrophies } from '../../utilities/trophies';
 import getSeasons from '../../utilities/pubg-api/seasons';
+import { GameModeStats } from 'utilities/pubg-api/seasonStats/interface';
 
 interface Trophies {
   [trophyName: string]: number;
@@ -33,7 +34,7 @@ export default async (req: IncomingMessage, res: ServerResponse) => {
 
     const seasonStats = await getSeasonStats({ platform, playerId, seasonId: season });
 
-    const matches = [
+    const matchIds = [
       ...seasonStats.matchesSolo,
       ...seasonStats.matchesSoloFPP,
       ...seasonStats.matchesDuo,
@@ -41,25 +42,46 @@ export default async (req: IncomingMessage, res: ServerResponse) => {
       ...seasonStats.matchesSquad,
       ...seasonStats.matchesSquadFPP
     ];
-    const trophiesByMatch = await Promise.all(
-      matches.map(async matchId => {
-        const match = await getMatch({ platform, matchId });
+    const matches = await Promise.all(matchIds.map(matchId => getMatch({ platform, matchId })));
+
+    Object.values(seasonStats.gameModeStats).forEach(gameModeStats => {
+      gameModeStats.avgRank = 0;
+      gameModeStats.roundsAnalysed = 0;
+    });
+    const { trophies } = matches.reduce<{
+      trophies: Trophies;
+    }>(
+      (res, match) => {
         const participant = getParticipant({ match, playerId });
         // const team = getTeam({ match, participant });
         const playerStats = participant.attributes.stats;
         const { avgStats, maxStats, minStats } = getGeneralStats({ playerStats, match });
         const trophyNames = calculateTrophies({ playerStats, avgStats, maxStats, minStats });
-        return trophyNames;
-      })
-    );
 
-    const trophies = trophiesByMatch.reduce<Trophies>((res, cur) => {
-      const trophies = { ...res };
-      cur.forEach(trophy => {
-        trophies[trophy] = trophies[trophy] ? trophies[trophy] + 1 : 1;
-      });
-      return trophies;
-    }, {});
+        const trophies = { ...res.trophies };
+        trophyNames.forEach(trophy => {
+          trophies[trophy] = trophies[trophy] ? trophies[trophy] + 1 : 1;
+        });
+        if (match.data.attributes.gameMode in seasonStats.gameModeStats) {
+          // @ts-ignore
+          const gameModeStats = seasonStats.gameModeStats[
+            match.data.attributes.gameMode
+          ] as GameModeStats;
+          gameModeStats.roundsAnalysed++;
+          gameModeStats.avgRank += playerStats.winPlace;
+        }
+
+        return {
+          trophies
+        };
+      },
+      {
+        trophies: {}
+      }
+    );
+    Object.values(seasonStats.gameModeStats).forEach(gameModeStats => {
+      gameModeStats.avgRank = gameModeStats.avgRank / gameModeStats.roundsAnalysed || 0;
+    });
 
     const result = {
       trophies,

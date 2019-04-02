@@ -78,7 +78,7 @@ const PlayerStatsCard: FunctionComponent<PlayerStatsCardProps> = ({
             </TableRow>
             <TableRow className={classes.row}>
               <TableCell className={classes.caption}>Avg. Rank</TableCell>
-              <TableCell className={classes.colBorder}>TBA</TableCell>
+              <TableCell className={classes.colBorder}>#{stats.avgRank.toFixed(1)}</TableCell>
               <TableCell className={classes.caption}>Avg. survived time</TableCell>
               <TableCell>
                 {millisToMinutesAndSeconds(stats.timeSurvived / stats.roundsPlayed)}

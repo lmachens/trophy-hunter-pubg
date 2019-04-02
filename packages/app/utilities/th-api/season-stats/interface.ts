@@ -56,4 +56,6 @@ export interface GameModeStats {
   weeklyWins: number;
   winPoints: number;
   wins: number;
+  avgRank: number;
+  roundsAnalysed: number;
 }

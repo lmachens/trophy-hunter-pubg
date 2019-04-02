@@ -38,7 +38,7 @@ export default interface SeasonStats {
   meta: {};
 }
 
-interface GameModeStats {
+export interface GameModeStats {
   assists: number;
   bestRankPoint: number;
   boosts: number;
@@ -75,6 +75,8 @@ interface GameModeStats {
   weeklyWins: number;
   winPoints: number;
   wins: number;
+  avgRank: number;
+  roundsAnalysed: number;
 }
 
 interface MatchList {
