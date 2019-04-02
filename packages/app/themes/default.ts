@@ -13,6 +13,11 @@ const theme = createMuiTheme({
       paper: '#1d1c1d'
     }
   },
+  typography: {
+    caption: {
+      color: `#c4c4c4`
+    }
+  },
   overrides: {
     MuiAppBar: {
       colorPrimary: {
@@ -44,6 +49,11 @@ const theme = createMuiTheme({
       root: {
         padding: '2px 8px',
         borderBottom: 'none'
+      }
+    },
+    MuiCardHeader: {
+      root: {
+        padding: '8px 16px'
       }
     }
   }

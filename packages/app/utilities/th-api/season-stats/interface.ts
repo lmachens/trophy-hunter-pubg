@@ -19,7 +19,7 @@ export interface SeasonStats {
   matchesSquadFPP: string[];
 }
 
-interface GameModeStats {
+export interface GameModeStats {
   assists: number;
   bestRankPoint: number;
   boosts: number;

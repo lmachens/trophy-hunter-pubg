@@ -5,7 +5,9 @@ import { Typography, Grid, Divider } from '@material-ui/core';
 import getSeasonStats, { SeasonStats } from 'utilities/th-api/season-stats';
 import TrophyProgress from 'components/TrophyProgress';
 import { makeStyles } from '@material-ui/styles';
-import { PlayerContext, usePlayer } from 'contexts/player';
+import { usePlayer } from 'contexts/player';
+import PlayerStats from 'components/PlayerStats';
+import Error from 'next/error';
 
 interface TrophiesPageProps {
   seasonStats?: SeasonStats;
@@ -27,8 +29,8 @@ const useStyles = makeStyles(theme => ({
   },
   content: {
     flex: 1,
-    marginTop: theme.spacing(1),
-  },
+    marginTop: theme.spacing(1)
+  }
 }));
 
 const TrophiesPage: NextFunctionComponent<TrophiesPageProps> = ({ seasonStats, trophies }) => {
@@ -36,17 +38,14 @@ const TrophiesPage: NextFunctionComponent<TrophiesPageProps> = ({ seasonStats, t
   const player = usePlayer();
 
   if (!seasonStats || !trophies || !player) {
-    return <Typography>Trophies not found</Typography>;
+    return <Error statusCode={400} />;
   }
   return (
     <div className={classes.container}>
-      <Typography className={classes.header}>
-       {player.name}
-      </Typography>
-      <Typography variant="caption">
-          Note: Analysed 100 matches of current season
-      </Typography>
+      <Typography className={classes.header}>{player.name}</Typography>
+      <Typography variant="caption">Note: Analysed 100 matches of current season</Typography>
       <Divider />
+      <PlayerStats seasonStats={seasonStats} />
       <Grid container className={classes.content} alignContent="flex-start">
         {trophies.map(trophy => (
           <TrophyProgress
