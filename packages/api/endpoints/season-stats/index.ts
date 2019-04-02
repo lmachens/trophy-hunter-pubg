@@ -45,8 +45,8 @@ export default async (req: IncomingMessage, res: ServerResponse) => {
     const matches = await Promise.all(matchIds.map(matchId => getMatch({ platform, matchId })));
 
     Object.values(seasonStats.gameModeStats).forEach(gameModeStats => {
-      gameModeStats.avgRank = 0;
       gameModeStats.roundsAnalysed = 0;
+      gameModeStats.avgRank = 0;
     });
     const { trophies } = matches.reduce<{
       trophies: Trophies;
