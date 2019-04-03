@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { NextFunctionComponent } from 'next';
 import { makeStyles } from '@material-ui/styles';
-import getAttributes, { Attributes } from 'utilities/th-api/attributes';
 import {
   TextField,
   FormControl,
@@ -18,13 +17,10 @@ import {
 import getGameIconsSvgPath from 'utilities/th-api/game-icons';
 import getTrophies, { Trophy } from 'utilities/th-api/trophies';
 import TrophyProgress from 'components/TrophyProgress';
-import getMatch, { Match } from 'utilities/th-api/match';
 import { createTrophyProposal } from 'utilities/octokit';
 import MonacoEditor, { ScriptLoad } from 'components/MonacoEditor';
 
 interface CreateTrophyPageProps {
-  attributes: Attributes;
-  match: Match;
   trophies: Trophy[];
 }
 
@@ -67,7 +63,7 @@ const newTrophy: Trophy = {
 `
 };
 
-const CreateTrophyPage: NextFunctionComponent<CreateTrophyPageProps> = ({ match, trophies }) => {
+const CreateTrophyPage: NextFunctionComponent<CreateTrophyPageProps> = ({ trophies }) => {
   const classes = useStyles();
   const [trophy, setTrophy] = useState<Trophy>(newTrophy);
   const [checkString, setCheckString] = useState(newTrophy.checkString);
@@ -225,7 +221,7 @@ const CreateTrophyPage: NextFunctionComponent<CreateTrophyPageProps> = ({ match,
           <FormLabel>Preview</FormLabel>
         </FormControl>
         <div className={classes.actions}>
-          <TrophyProgress trophy={trophy} achieved={match.trophyNames.includes(trophy.name)} />
+          <TrophyProgress trophy={trophy} achieved={true} />
           <div className={classes.grow} />
           <Button type="submit" disabled={loading}>
             Submit Trophy Proposal
@@ -250,20 +246,9 @@ const CreateTrophyPage: NextFunctionComponent<CreateTrophyPageProps> = ({ match,
 };
 
 CreateTrophyPage.getInitialProps = async () => {
-  const attributesPromise = getAttributes();
-  const matchPromise = getMatch({
-    platform: 'Steam',
-    matchId: 'a815b794-5d00-471d-896b-e1fd5e01a38c',
-    playerId: 'account.2afdfa3cefad4cdd93217537d40dfd4e'
-  });
-  const trophiesPromise = getTrophies();
-  const [attributes, match, trophies] = await Promise.all([
-    attributesPromise,
-    matchPromise,
-    trophiesPromise
-  ]);
+  const trophies = await getTrophies();
 
-  return { attributes, match, trophies };
+  return { trophies };
 };
 
 export default CreateTrophyPage;
