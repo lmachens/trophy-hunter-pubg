@@ -55,6 +55,11 @@ const theme = createMuiTheme({
       root: {
         padding: '8px 16px'
       }
+    },
+    MuiCardContent: {
+      root: {
+        background: '#303030'
+      }
     }
   }
 });

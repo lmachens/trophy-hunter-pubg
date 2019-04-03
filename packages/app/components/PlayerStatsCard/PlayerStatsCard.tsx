@@ -65,7 +65,7 @@ const PlayerStatsCard: FunctionComponent<PlayerStatsCardProps> = ({
             <TableRow className={classes.row}>
               <TableCell className={classes.caption}>Win %</TableCell>
               <TableCell className={classes.colBorder}>
-                {((stats.wins / stats.roundsPlayed) * 100).toFixed(1)}%
+                {((stats.wins / stats.roundsPlayed) * 100 || 0).toFixed(1)}%
               </TableCell>
               <TableCell className={classes.caption}>Top 10%</TableCell>
               <TableCell>{stats.top10s.toFixed(1)}%</TableCell>
@@ -79,10 +79,10 @@ const PlayerStatsCard: FunctionComponent<PlayerStatsCardProps> = ({
             <TableRow className={classes.row}>
               <TableCell className={classes.caption}>Avg. Damage</TableCell>
               <TableCell className={classes.colBorder}>
-                {(stats.damageDealt / stats.roundsPlayed).toFixed(1)}
+                {(stats.damageDealt / stats.roundsPlayed || 0).toFixed(1)}
               </TableCell>
               <TableCell className={classes.caption}>Avg. Boosts</TableCell>
-              <TableCell> {(stats.boosts / stats.roundsPlayed).toFixed(1)}</TableCell>
+              <TableCell> {(stats.boosts / stats.roundsPlayed || 0).toFixed(1)}</TableCell>
             </TableRow>
             <TableRow className={classes.row}>
               <TableCell className={classes.caption}>Avg. Rank</TableCell>
@@ -95,9 +95,9 @@ const PlayerStatsCard: FunctionComponent<PlayerStatsCardProps> = ({
             <TableRow className={classes.row}>
               <TableCell className={classes.caption}>KDA</TableCell>
               <TableCell className={classes.colBorder}>
-                {(Math.round(((stats.kills + stats.assists) / stats.losses) * 100) / 100).toFixed(
-                  2
-                )}
+                {(
+                  Math.round(((stats.kills + stats.assists) / stats.losses) * 100) / 100 || 0
+                ).toFixed(2)}
               </TableCell>
               <TableCell className={classes.caption}>Most Kills</TableCell>
               <TableCell>{stats.roundMostKills}</TableCell>

@@ -1,13 +1,13 @@
 import React from 'react';
 import { NextFunctionComponent } from 'next';
 import getTrophies, { Trophy } from 'utilities/th-api/trophies';
-import { Typography, Grid, Divider } from '@material-ui/core';
+import { Typography, Divider } from '@material-ui/core';
 import getSeasonStats, { SeasonStats } from 'utilities/th-api/season-stats';
-import TrophyProgress from 'components/TrophyProgress';
 import { makeStyles } from '@material-ui/styles';
 import { usePlayer } from 'contexts/player';
 import PlayerStats from 'components/PlayerStats';
 import Error from 'next/error';
+import PlayerTrophiesCard from 'components/PlayerTrophiesCard';
 
 interface PlayerPageProps {
   seasonStats?: SeasonStats;
@@ -45,16 +45,7 @@ const PlayerPage: NextFunctionComponent<PlayerPageProps> = ({ seasonStats, troph
       <Typography className={classes.header}>{player.name}</Typography>
       <Typography variant="caption">Note: Analysed 100 matches of current season</Typography>
       <Divider />
-      <PlayerStats seasonStats={seasonStats} />
-      <Grid container className={classes.content} alignContent="flex-start">
-        {trophies.map(trophy => (
-          <TrophyProgress
-            key={trophy.name}
-            trophy={trophy}
-            achieved={!!seasonStats.trophies[trophy.name]}
-          />
-        ))}
-      </Grid>
+      <PlayerStats seasonStats={seasonStats} trophies={trophies} />
     </div>
   );
 };

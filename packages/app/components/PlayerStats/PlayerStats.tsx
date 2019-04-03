@@ -4,9 +4,12 @@ import { makeStyles } from '@material-ui/styles';
 import DirectionsRun from '@material-ui/icons/DirectionsRun';
 import { SeasonStats } from 'utilities/th-api/season-stats';
 import PlayerStatsCard from 'components/PlayerStatsCard';
+import PlayerTrophiesCard from 'components/PlayerTrophiesCard';
+import { Trophy } from 'utilities/th-api/trophies';
 
 interface PlayerStatsProps {
   seasonStats: SeasonStats;
+  trophies: Trophy[];
   fpp?: boolean;
 }
 
@@ -20,11 +23,14 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const PlayerStats: FunctionComponent<PlayerStatsProps> = ({ seasonStats, fpp }) => {
+const PlayerStats: FunctionComponent<PlayerStatsProps> = ({ trophies, seasonStats, fpp }) => {
   const classes = useStyles();
 
   return (
     <Grid className={classes.container} container spacing={1}>
+      <Grid item xs={12}>
+        <PlayerTrophiesCard trophies={trophies} achievedTrophies={seasonStats.trophies} />
+      </Grid>
       <Grid item xs>
         <PlayerStatsCard
           title="Solo"
