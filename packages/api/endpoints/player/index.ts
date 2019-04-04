@@ -6,8 +6,13 @@ export default async (req: IncomingMessage, res: ServerResponse) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
 
-  const { platform, playerName } = parse(req.url!, true).query;
-  if (typeof platform !== 'string' || typeof playerName !== 'string') {
+  const { platform, playerName, playerId } = parse(req.url!, true).query;
+  if (
+    typeof platform !== 'string' ||
+    ((typeof playerName !== 'string' && typeof playerId !== 'string') ||
+      Array.isArray(playerName) ||
+      Array.isArray(playerId))
+  ) {
     res.writeHead(400);
     return res.end('Invalid query');
   }
@@ -15,10 +20,10 @@ export default async (req: IncomingMessage, res: ServerResponse) => {
   res.setHeader('Cache-Control', 's-maxage=31536000, maxage=0');
 
   try {
-    const result = await getPlayer({ platform, playerName });
+    const result = await getPlayer({ platform, playerName, playerId });
     const player = {
       id: result.id,
-      name: playerName,
+      name: result.attributes.name,
       platform,
       matches: result.relationships.matches.data.map(match => match.id)
     };

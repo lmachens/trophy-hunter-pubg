@@ -13,11 +13,12 @@ import {
 } from '@material-ui/core';
 import getSeasonStats, { SeasonStats } from 'utilities/th-api/season-stats';
 import { makeStyles } from '@material-ui/styles';
-import { usePlayer } from 'contexts/player';
 import PlayerStats from 'components/PlayerStats';
 import Error from 'next/error';
 import getSeasons, { Season } from 'utilities/th-api/seasons';
 import Router from 'next/router';
+import PlayerMatchesCard from 'components/PlayerMatchesCard';
+import getPlayer, { Player } from 'utilities/th-api/player';
 
 interface PlayerPageProps {
   fpp: boolean;
@@ -25,15 +26,12 @@ interface PlayerPageProps {
   seasonStats?: SeasonStats;
   trophies?: Trophy[];
   seasonId?: string;
+  player?: Player;
 }
 
 const useStyles = makeStyles(theme => ({
   container: {
     padding: theme.spacing(3),
-    height: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-    flex: 1,
     overflow: 'auto'
   },
   header: {
@@ -71,10 +69,10 @@ const PlayerPage: NextFunctionComponent<PlayerPageProps> = ({
   seasons,
   seasonStats,
   trophies,
-  seasonId
+  seasonId,
+  player
 }) => {
   const classes = useStyles();
-  const player = usePlayer();
 
   if (!seasons || !seasonStats || !trophies || !player) {
     return <Error statusCode={400} />;
@@ -128,6 +126,7 @@ const PlayerPage: NextFunctionComponent<PlayerPageProps> = ({
       <Typography variant="caption">Note: Analysed 100 matches of current season</Typography>
       <Divider />
       <PlayerStats seasonStats={seasonStats} trophies={trophies} fpp={fpp} />
+      <PlayerMatchesCard player={player} />
     </div>
   );
 };
@@ -138,10 +137,12 @@ PlayerPage.getInitialProps = async ({ query }) => {
     return { fpp: !!fpp };
   }
 
+  const playerPromise = getPlayer({ platform, playerId });
   const seasonsPromise = getSeasons({ platform });
   const seasonStatsPromise = getSeasonStats({ platform, playerId, seasonId });
   const trophiesPromise = getTrophies();
-  const [seasons, seasonStats, trophies] = await Promise.all([
+  const [player, seasons, seasonStats, trophies] = await Promise.all([
+    playerPromise,
     seasonsPromise,
     seasonStatsPromise,
     trophiesPromise
@@ -150,6 +151,7 @@ PlayerPage.getInitialProps = async ({ query }) => {
 
   return {
     fpp: !!fpp,
+    player,
     seasons,
     seasonStats,
     trophies,

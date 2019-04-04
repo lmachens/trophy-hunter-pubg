@@ -7,9 +7,7 @@ import timeSince from 'utilities/timeSince';
 import millisToMinutesAndSeconds from 'utilities/millisToMinutesAndSeconds';
 
 interface MatchListItemProps {
-  className?: string;
   matchId: string;
-  selected?: boolean;
   player: Player;
 }
 
@@ -32,12 +30,7 @@ const useStyles = makeStyles({
   }
 });
 
-const MatchListItem: FunctionComponent<MatchListItemProps> = ({
-  className,
-  matchId,
-  selected,
-  player
-}) => {
+const MatchListItem: FunctionComponent<MatchListItemProps> = ({ matchId, player }) => {
   const classes = useStyles();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
@@ -68,12 +61,7 @@ const MatchListItem: FunctionComponent<MatchListItemProps> = ({
   }, [matchId]);
 
   return (
-    <ListItem
-      button
-      className={className}
-      selected={selected}
-      onClick={error ? handleRefresh(matchId) : undefined}
-    >
+    <ListItem button onClick={error ? handleRefresh(matchId) : undefined}>
       {loading && <ListItemText primary="Loading..." />}
       {!loading && error && <ListItemText primary="Click to refresh" />}
       {!loading && !error && match && (

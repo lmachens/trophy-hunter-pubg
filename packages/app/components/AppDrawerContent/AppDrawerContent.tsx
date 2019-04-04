@@ -1,10 +1,9 @@
 import React, { FunctionComponent } from 'react';
 import { RouterProps } from 'next/router';
-import { Divider, ListItem, ListItemText, ListSubheader, ListItemIcon } from '@material-ui/core';
+import { Divider, ListItem, ListItemText, ListItemIcon } from '@material-ui/core';
 import Link from 'components/Link';
 import { usePlayer } from 'contexts/player';
 import Search from '@material-ui/icons/Search';
-import LastMatches from 'components/LastMatches';
 
 interface AppDrawerContentProps {
   router: RouterProps;
@@ -31,7 +30,6 @@ const AppDrawerContent: FunctionComponent<AppDrawerContentProps> = ({ router }) 
               <ListItemText primary={player.name} />
             </ListItem>
           </Link>
-          <LastMatches router={router} />
         </>
       )}
     </>

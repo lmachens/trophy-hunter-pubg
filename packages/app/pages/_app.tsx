@@ -44,14 +44,14 @@ export default class MyApp extends App<PageProps> {
     const initialProps = await App.getInitialProps(appContext);
 
     const pageProps: PageProps = {};
-    if (thPubg) {
+    /*if (thPubg) {
       const [platform, playerName] = thPubg.split(';');
       if (!player || player.platform !== platform || player.name !== playerName) {
         console.log('getPlayer app', appContext.ctx.req && appContext.ctx.req.url);
         player = await getPlayer({ platform, playerName });
       }
       pageProps.player = player;
-    }
+    }*/
 
     return {
       ...initialProps,

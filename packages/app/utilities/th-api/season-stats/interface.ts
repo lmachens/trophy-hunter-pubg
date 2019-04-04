@@ -2,7 +2,6 @@ export interface SeasonStats {
   trophies: {
     [trophyName: string]: number;
   };
-  matchesCount: number;
   gameModeStats: {
     duo: GameModeStats;
     'duo-fpp': GameModeStats;
@@ -11,12 +10,6 @@ export interface SeasonStats {
     squad: GameModeStats;
     'squad-fpp': GameModeStats;
   };
-  matchesSolo: string[];
-  matchesSoloFPP: string[];
-  matchesDuo: string[];
-  matchesDuoFPP: string[];
-  matchesSquad: string[];
-  matchesSquadFPP: string[];
 }
 
 export interface GameModeStats {

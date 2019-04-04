@@ -85,8 +85,7 @@ export default async (req: IncomingMessage, res: ServerResponse) => {
 
     const result = {
       trophies,
-      matchesCount: matches.length,
-      ...seasonStats
+      gameModeStats: seasonStats.gameModeStats
     };
     res.end(JSON.stringify(result));
   } catch (error) {
