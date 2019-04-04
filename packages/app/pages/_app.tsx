@@ -47,10 +47,8 @@ export default class MyApp extends App<PageProps> {
     if (thPubg) {
       const [platform, playerName] = thPubg.split(';');
       if (!player || player.platform !== platform || player.name !== playerName) {
-        player = await getPlayer({ platform, playerName }).catch((error: Error) => {
-          console.error(error);
-          return undefined;
-        });
+        console.log('getPlayer app', appContext.ctx.req && appContext.ctx.req.url);
+        player = await getPlayer({ platform, playerName });
       }
       pageProps.player = player;
     }

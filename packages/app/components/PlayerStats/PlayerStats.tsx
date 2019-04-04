@@ -10,7 +10,7 @@ import { Trophy } from 'utilities/th-api/trophies';
 interface PlayerStatsProps {
   seasonStats: SeasonStats;
   trophies: Trophy[];
-  fpp?: boolean;
+  fpp: boolean;
 }
 
 const useStyles = makeStyles(theme => ({

@@ -10,7 +10,7 @@ interface GetSeasonStatsProps {
 const getSeasonStats = ({ platform, playerId, seasonId }: GetSeasonStatsProps) => {
   let url = `season-stats?platform=${platform}&playerId=${playerId}`;
   if (seasonId) {
-    url += '&seasonId=${seasonId}';
+    url += `&seasonId=${seasonId}`;
   }
   return getTHApi<SeasonStats>(url);
 };

@@ -12,7 +12,7 @@ export default async (req: IncomingMessage, res: ServerResponse) => {
     return res.end('Invalid query');
   }
 
-  res.setHeader('Cache-Control', 's-maxage=31536000, maxage=0');
+  res.setHeader('Cache-Control', 's-maxage=31536000, maxage=60');
 
   try {
     const result = await getSeasons({ platform });

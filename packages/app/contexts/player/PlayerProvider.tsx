@@ -20,8 +20,10 @@ const PlayerProvider: FunctionComponent<PlayerProviderProps> = ({ children, defa
 
   const refreshPlayer = ({ platform, playerName }: RefreshPlayerProps) => {
     setCookie(undefined, 'thPubg', `${platform};${playerName}`, {
+      maxAge: 365 * 24 * 60 * 60,
       path: '/'
     });
+    console.log('getPlayer provider');
     getPlayer({ platform, playerName })
       .then((player: Player) => {
         setPlayer(player);
