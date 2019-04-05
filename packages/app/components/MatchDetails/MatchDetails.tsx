@@ -36,7 +36,7 @@ const MatchDetails: FunctionComponent<MatchPageProps> = ({ attributes, match, tr
   }, {});
   const date = new Date(match.createdAt);
   return (
-    <Grid container spacing={2} className={classes.container}>
+    <Grid container spacing={2} className={classes.container} alignContent="flex-start">
       <Grid item xs={12}>
         <Breadcrumbs aria-label="Breadcrumb">
           <Link color="inherit" href="/search">
