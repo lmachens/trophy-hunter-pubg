@@ -15,8 +15,6 @@ export default async (req: IncomingMessage, res: ServerResponse) => {
     return res.end('Invalid query');
   }
 
-  res.setHeader('Cache-Control', 's-maxage=31536000, maxage=0');
-
   try {
     const match = await getMatch({ platform, matchId });
     const participant = getParticipant({ match, playerId });
@@ -41,6 +39,7 @@ export default async (req: IncomingMessage, res: ServerResponse) => {
       mapName: match.data.attributes.mapName,
       participantCount
     };
+    res.setHeader('Cache-Control', 's-maxage=31536000, maxage=0');
     res.end(JSON.stringify(result));
   } catch (error) {
     console.error(error.message);

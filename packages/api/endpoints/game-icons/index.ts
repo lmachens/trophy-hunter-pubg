@@ -12,8 +12,6 @@ export default async (req: IncomingMessage, res: ServerResponse) => {
     return res.end('Invalid query');
   }
 
-  res.setHeader('Cache-Control', 's-maxage=31536000, maxage=0');
-
   try {
     const pageData = await axios.get(url).then(response => {
       return response.data;
@@ -31,6 +29,7 @@ export default async (req: IncomingMessage, res: ServerResponse) => {
       throw new Error('Can not find image');
     }
 
+    res.setHeader('Cache-Control', 's-maxage=31536000, maxage=0');
     res.end(iconResult[1]);
   } catch (error) {
     console.error(error.message);

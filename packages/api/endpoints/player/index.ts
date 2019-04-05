@@ -17,8 +17,6 @@ export default async (req: IncomingMessage, res: ServerResponse) => {
     return res.end('Invalid query');
   }
 
-  res.setHeader('Cache-Control', 's-maxage=3600, maxage=0');
-
   try {
     const result = await getPlayer({ platform, playerName, playerId });
     const player = {
@@ -28,6 +26,7 @@ export default async (req: IncomingMessage, res: ServerResponse) => {
       matches: result.relationships.matches.data.map(match => match.id)
     };
 
+    res.setHeader('Cache-Control', 's-maxage=3600, maxage=0');
     res.end(JSON.stringify(player));
   } catch (error) {
     console.error(error.message);
