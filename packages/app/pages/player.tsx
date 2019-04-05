@@ -150,7 +150,7 @@ const PlayerPage: NextFunctionComponent<PlayerPageProps> = ({
         <PlayerStats seasonStats={seasonStats} trophies={trophies} fpp={fpp} />
       </Grid>
       <Grid item xs={12}>
-        <PlayerMatchesCard player={player} />
+        <PlayerMatchesCard player={player} trophies={trophies} />
       </Grid>
     </Grid>
   );

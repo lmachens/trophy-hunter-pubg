@@ -6,18 +6,21 @@ import { Trophy } from 'utilities/th-api/trophies';
 
 interface TrophyProgressProps {
   achieved?: boolean;
-  trophy: Trophy;
+  trophy?: Trophy;
 }
 
 const useStyles = makeStyles(theme => ({
   trophy: {
     margin: theme.spacing(1),
-    width: 60,
-    height: 60
+    width: 30,
+    height: 30
   }
 }));
 
 const TrophyProgress: FunctionComponent<TrophyProgressProps> = ({ achieved, trophy }) => {
+  if (!trophy) {
+    return null;
+  }
   const classes = useStyles();
 
   return (

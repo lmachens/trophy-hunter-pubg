@@ -6,9 +6,11 @@ import { Player } from 'utilities/th-api/player';
 import Link from 'components/Link';
 import MatchListItem from 'components/MatchListItem';
 import CardComponent from 'components/CardComponent';
+import { Trophy } from 'utilities/th-api/trophies';
 
 interface PlayerMatchesCardProps {
   player: Player;
+  trophies: Trophy[];
 }
 
 const useStyles = makeStyles({
@@ -17,7 +19,7 @@ const useStyles = makeStyles({
   }
 });
 
-const PlayerMatchesCard: FunctionComponent<PlayerMatchesCardProps> = ({ player }) => {
+const PlayerMatchesCard: FunctionComponent<PlayerMatchesCardProps> = ({ player, trophies }) => {
   const classes = useStyles();
   const [maxItems, setMaxItems] = useState(5);
 
@@ -33,7 +35,7 @@ const PlayerMatchesCard: FunctionComponent<PlayerMatchesCardProps> = ({ player }
               key={matchId}
               href={`/match?platform=${player.platform}&matchId=${matchId}&playerId=${player.id}`}
             >
-              <MatchListItem matchId={matchId} player={player} />
+              <MatchListItem matchId={matchId} player={player} trophies={trophies} />
             </Link>
           ))}
           <Button fullWidth onClick={handleMore}>

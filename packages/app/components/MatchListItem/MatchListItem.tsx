@@ -5,13 +5,16 @@ import { ListItem, ListItemText, Typography, Divider } from '@material-ui/core';
 import { Player } from 'utilities/th-api/player';
 import timeSince from 'utilities/timeSince';
 import millisToMinutesAndSeconds from 'utilities/millisToMinutesAndSeconds';
+import TrophyProgress from 'components/TrophyProgress';
+import { Trophy } from 'utilities/th-api/trophies';
 
 interface MatchListItemProps {
   matchId: string;
   player: Player;
+  trophies: Trophy[];
 }
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
   container: {
     display: 'flex',
     alignItems: 'center',
@@ -27,10 +30,17 @@ const useStyles = makeStyles({
   },
   placeCount: {
     fontSize: '0.8rem'
+  },
+  trophies: {
+    color: theme.palette.common.white,
+    overflowX: 'auto',
+    display: 'flex',
+    flex: 1,
+    justifyContent: 'center'
   }
-});
+}));
 
-const MatchListItem: FunctionComponent<MatchListItemProps> = ({ matchId, player }) => {
+const MatchListItem: FunctionComponent<MatchListItemProps> = ({ matchId, player, trophies }) => {
   const classes = useStyles();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
@@ -74,6 +84,15 @@ const MatchListItem: FunctionComponent<MatchListItemProps> = ({ matchId, player 
             <Typography className={classes.duration}>
               {millisToMinutesAndSeconds(match.duration)}
             </Typography>
+          </div>
+          <div className={classes.trophies}>
+            {match.trophyNames.map(trophyName => (
+              <TrophyProgress
+                key={trophyName}
+                trophy={trophies.find(trophy => trophy.name === trophyName)}
+                achieved={true}
+              />
+            ))}
           </div>
           <Typography className={classes.place}>
             #{match.playerStats.winPlace}
