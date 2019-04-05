@@ -1,9 +1,9 @@
 import React, { FunctionComponent } from 'react';
-import { Card, CardHeader, CardContent, Grid } from '@material-ui/core';
-import { makeStyles } from '@material-ui/styles';
+import { Grid } from '@material-ui/core';
 import { Trophy } from 'utilities/th-api/trophies';
 import Grade from '@material-ui/icons/Grade';
 import TrophyProgress from 'components/TrophyProgress';
+import CardComponent from 'components/CardComponent';
 
 interface PlayerTrophiesCardProps {
   trophies: Trophy[];
@@ -12,39 +12,22 @@ interface PlayerTrophiesCardProps {
   };
 }
 
-const useStyles = makeStyles({
-  header: {
-    background: '#7930e1'
-  },
-  content: {
-    padding: 0,
-    '&:last-child': {
-      padding: 0
-    }
-  }
-});
-
 const PlayerTrophiesCard: FunctionComponent<PlayerTrophiesCardProps> = ({
   trophies,
   achievedTrophies
 }) => {
-  const classes = useStyles();
-
   return (
-    <Card>
-      <CardHeader title="Trophies" className={classes.header} avatar={<Grade />} />
-      <CardContent className={classes.content}>
-        <Grid container justify="center">
-          {trophies.map(trophy => (
-            <TrophyProgress
-              key={trophy.name}
-              trophy={trophy}
-              achieved={!!achievedTrophies[trophy.name]}
-            />
-          ))}
-        </Grid>
-      </CardContent>
-    </Card>
+    <CardComponent headerBackgroundColor="#418c3e" title="Trophies" icon={<Grade />}>
+      <Grid container justify="center">
+        {trophies.map(trophy => (
+          <TrophyProgress
+            key={trophy.name}
+            trophy={trophy}
+            achieved={!!achievedTrophies[trophy.name]}
+          />
+        ))}
+      </Grid>
+    </CardComponent>
   );
 };
 

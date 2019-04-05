@@ -1,17 +1,11 @@
 import React, { FunctionComponent } from 'react';
 import { Attributes, Attribute } from 'utilities/th-api/attributes';
-import {
-  Paper,
-  Table,
-  TableHead,
-  TableRow,
-  TableCell,
-  TableBody,
-  Tooltip
-} from '@material-ui/core';
+import { Table, TableHead, TableRow, TableCell, TableBody, Tooltip } from '@material-ui/core';
 import { Match } from 'utilities/th-api/match';
 import formatAttribute from 'utilities/formatAttribute';
 import { makeStyles } from '@material-ui/styles';
+import Grade from '@material-ui/icons/Grade';
+import CardComponent from 'components/CardComponent';
 
 interface MatchAttributesProps {
   attributes: Attributes;
@@ -37,7 +31,7 @@ const MatchAttributes: FunctionComponent<MatchAttributesProps> = ({ attributes, 
   const classes = useStyles();
 
   return (
-    <Paper>
+    <CardComponent headerBackgroundColor="#3094be" title="Stats" icon={<Grade />}>
       <Table>
         <TableHead>
           <TableRow>
@@ -72,7 +66,7 @@ const MatchAttributes: FunctionComponent<MatchAttributesProps> = ({ attributes, 
           ))}
         </TableBody>
       </Table>
-    </Paper>
+    </CardComponent>
   );
 };
 

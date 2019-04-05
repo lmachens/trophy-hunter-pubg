@@ -35,7 +35,7 @@ const PlayerStats: FunctionComponent<PlayerStatsProps> = ({ trophies, seasonStat
         <PlayerStatsCard
           title="Solo"
           headerBackgroundColor="#d07812"
-          avatar={<DirectionsRun className={classes.icon} />}
+          icon={<DirectionsRun className={classes.icon} />}
           stats={fpp ? seasonStats.gameModeStats['solo-fpp'] : seasonStats.gameModeStats.solo}
         />
       </Grid>
@@ -43,7 +43,7 @@ const PlayerStats: FunctionComponent<PlayerStatsProps> = ({ trophies, seasonStat
         <PlayerStatsCard
           title="Duo"
           headerBackgroundColor="#426682"
-          avatar={
+          icon={
             <>
               <DirectionsRun className={classes.icon} />
               <DirectionsRun className={classes.icon} />
@@ -56,7 +56,7 @@ const PlayerStats: FunctionComponent<PlayerStatsProps> = ({ trophies, seasonStat
         <PlayerStatsCard
           title="Squad"
           headerBackgroundColor="#12d097"
-          avatar={
+          icon={
             <>
               <DirectionsRun className={classes.icon} />
               <DirectionsRun className={classes.icon} />

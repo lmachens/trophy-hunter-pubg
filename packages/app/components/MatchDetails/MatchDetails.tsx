@@ -1,14 +1,14 @@
-import React, { FunctionComponent, useState } from 'react';
-import { Grid, Divider, Typography, Tabs, Tab, Breadcrumbs } from '@material-ui/core';
+import React, { FunctionComponent } from 'react';
+import { Divider, Typography, Breadcrumbs, Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import { Match, MAPS } from 'utilities/th-api/match';
 import { Trophy } from 'utilities/th-api/trophies';
-import TrophyProgress from 'components/TrophyProgress';
 import MatchAttributes from 'components/MatchAttributes';
 import { Attributes } from 'utilities/th-api/attributes';
 import millisToMinutesAndSeconds from 'utilities/millisToMinutesAndSeconds';
 import timeSince from 'utilities/timeSince';
 import Link from 'components/Link';
+import PlayerTrophiesCard from 'components/PlayerTrophiesCard';
 
 interface MatchPageProps {
   attributes: Attributes;
@@ -25,13 +25,6 @@ const useStyles = makeStyles(theme => ({
     flex: 1,
     overflow: 'auto'
   },
-  score: {
-    marginBottom: theme.spacing(1)
-  },
-  content: {
-    flex: 1,
-    marginTop: theme.spacing(1)
-  },
   place: {
     fontSize: '1.3rem'
   },
@@ -42,12 +35,11 @@ const useStyles = makeStyles(theme => ({
 
 const MatchDetails: FunctionComponent<MatchPageProps> = ({ attributes, match, trophies }) => {
   const classes = useStyles();
-  const [tab, setTab] = useState(0);
 
-  const handleTabChange = (_event: React.ChangeEvent<{}>, value: any) => {
-    setTab(value);
-  };
-
+  const achievedTrophies = match.trophyNames.reduce((acc, trophyName) => {
+    return { ...acc, [trophyName]: 1 };
+  }, {});
+  const date = new Date(match.createdAt);
   return (
     <div className={classes.container}>
       <Breadcrumbs aria-label="Breadcrumb">
@@ -58,43 +50,28 @@ const MatchDetails: FunctionComponent<MatchPageProps> = ({ attributes, match, tr
           {match.playerName}
         </Link>
         <Link color="textPrimary" aria-current="page" href="#">
-          Match
+          {date.toLocaleDateString()} {date.toLocaleTimeString()}
         </Link>
       </Breadcrumbs>
-      <div className={classes.score}>
+      <div>
         <Typography className={classes.place}>
           #{match.playerStats.winPlace}
           <span className={classes.placeCount}>/{match.participantCount}</span>
         </Typography>
         <Typography>
           {MAPS[match.mapName]} | {millisToMinutesAndSeconds(match.duration)} |{' '}
-          {timeSince(new Date(match.createdAt).getTime())} ago | {match.trophyNames.length}/
-          {trophies.length} Trophies
+          {timeSince(date.getTime())} ago | {match.trophyNames.length}/{trophies.length} Trophies
         </Typography>
       </div>
       <Divider />
-      <Tabs value={tab} onChange={handleTabChange} centered>
-        <Tab label="Trophies" />
-        <Tab label="Stats" />
-      </Tabs>
-      {tab === 0 && (
-        <div className={classes.content}>
-          <Grid container>
-            {trophies.map(trophy => (
-              <TrophyProgress
-                key={trophy.name}
-                trophy={trophy}
-                achieved={match.trophyNames.includes(trophy.name)}
-              />
-            ))}
-          </Grid>
-        </div>
-      )}
-      {tab === 1 && (
-        <div className={classes.content}>
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <PlayerTrophiesCard trophies={trophies} achievedTrophies={achievedTrophies} />
+        </Grid>
+        <Grid item xs={12}>
           <MatchAttributes attributes={attributes} match={match} />
-        </div>
-      )}
+        </Grid>
+      </Grid>
     </div>
   );
 };
