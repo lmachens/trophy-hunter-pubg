@@ -1,9 +1,3 @@
-import React from 'react';
-import PlayerSearch from 'components/PlayerSearch';
-import { NextFunctionComponent } from 'next';
+import PlayerPage from './player';
 
-const IndexPage: NextFunctionComponent = () => {
-  return <PlayerSearch />;
-};
-
-export default IndexPage;
+export default PlayerPage;

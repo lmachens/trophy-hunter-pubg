@@ -1,10 +1,19 @@
 import React, { FunctionComponent, useState } from 'react';
 import { makeStyles } from '@material-ui/styles';
-import { IconButton, InputBase, MenuItem, Paper, Select, Snackbar } from '@material-ui/core';
+import {
+  IconButton,
+  InputBase,
+  MenuItem,
+  Paper,
+  Select,
+  Snackbar,
+  Button
+} from '@material-ui/core';
 import Search from '@material-ui/icons/Search';
 import getPlayer from 'utilities/th-api/player';
-import { useChangeAccount } from 'contexts/account';
+import { useChangeAccount, useAccount } from 'contexts/account';
 import Router from 'next/router';
+import Link from 'next/link';
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -20,7 +29,8 @@ const useStyles = makeStyles(theme => ({
     flex: 1
   },
   form: {
-    position: 'relative'
+    position: 'relative',
+    textAlign: 'center'
   },
   logo: {
     maxWidth: 350,
@@ -48,6 +58,9 @@ const useStyles = makeStyles(theme => ({
   error: {
     backgroundColor: theme.palette.error.dark,
     color: theme.palette.common.white
+  },
+  latest: {
+    margin: theme.spacing(2)
   }
 }));
 
@@ -60,6 +73,7 @@ const PlayerSearch: FunctionComponent = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
   const changeAccount = useChangeAccount();
+  const account = useAccount();
 
   const handlePlayerNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPlayerName(event.target.value.trim());
@@ -128,6 +142,13 @@ const PlayerSearch: FunctionComponent = () => {
             <Search />
           </IconButton>
         </Paper>
+        {account && (
+          <Link href="/">
+            <Button className={classes.latest} variant="contained">
+              {account.playerName}
+            </Button>
+          </Link>
+        )}
         <Snackbar
           anchorOrigin={{
             vertical: 'top',

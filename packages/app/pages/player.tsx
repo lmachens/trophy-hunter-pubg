@@ -9,7 +9,8 @@ import {
   MenuItem,
   FormControlLabel,
   Checkbox,
-  Grid
+  Grid,
+  Breadcrumbs
 } from '@material-ui/core';
 import getSeasonStats, { SeasonStats } from 'utilities/th-api/season-stats';
 import { makeStyles } from '@material-ui/styles';
@@ -19,6 +20,9 @@ import getSeasons, { Season } from 'utilities/th-api/seasons';
 import Router from 'next/router';
 import PlayerMatchesCard from 'components/PlayerMatchesCard';
 import getPlayer, { Player } from 'utilities/th-api/player';
+import PlayerSearch from 'components/PlayerSearch';
+import { parseCookies } from 'nookies';
+import Link from 'components/Link';
 
 interface PlayerPageProps {
   fpp: boolean;
@@ -27,6 +31,7 @@ interface PlayerPageProps {
   trophies?: Trophy[];
   seasonId?: string;
   player?: Player;
+  showPlayerSearch: boolean;
 }
 
 const useStyles = makeStyles(theme => ({
@@ -70,8 +75,12 @@ const PlayerPage: NextFunctionComponent<PlayerPageProps> = ({
   seasonStats,
   trophies,
   seasonId,
-  player
+  player,
+  showPlayerSearch
 }) => {
+  if (showPlayerSearch) {
+    return <PlayerSearch />;
+  }
   const classes = useStyles();
 
   if (!seasons || !seasonStats || !trophies || !player) {
@@ -98,7 +107,15 @@ const PlayerPage: NextFunctionComponent<PlayerPageProps> = ({
 
   return (
     <div className={classes.container}>
-      <Typography className={classes.header}>{player.name}</Typography>
+      <Breadcrumbs aria-label="Breadcrumb">
+        <Link color="inherit" href="/search">
+          Search
+        </Link>
+        <Link color="textPrimary" aria-current="page" href="#">
+          {player.name}
+        </Link>
+      </Breadcrumbs>
+      <Typography className={classes.header} />
       <Grid container spacing={2} alignItems="center">
         <Grid item>
           <Select
@@ -131,10 +148,27 @@ const PlayerPage: NextFunctionComponent<PlayerPageProps> = ({
   );
 };
 
-PlayerPage.getInitialProps = async ({ query }) => {
-  const { fpp, platform, playerId, seasonId } = query;
-  if (typeof platform !== 'string' || typeof playerId !== 'string' || Array.isArray(seasonId)) {
-    return { fpp: !!fpp };
+PlayerPage.getInitialProps = async ctx => {
+  let platform: string;
+  let playerId: string;
+  const { fpp, platform: platformQuery, playerId: playerIdQuery, seasonId } = ctx.query;
+  if (
+    typeof platformQuery !== 'string' ||
+    typeof playerIdQuery !== 'string' ||
+    Array.isArray(seasonId)
+  ) {
+    const { thPubg = null } = ctx.req && ctx.req.headers ? parseCookies(ctx) : parseCookies();
+
+    if (!thPubg || Array.isArray(seasonId)) {
+      return { fpp: !!fpp, showPlayerSearch: true };
+    }
+
+    const [cookiePlatform, , cookieId] = thPubg.split(';');
+    platform = cookiePlatform;
+    playerId = cookieId;
+  } else {
+    platform = platformQuery;
+    playerId = playerIdQuery;
   }
 
   const playerPromise = getPlayer({ platform, playerId });
@@ -155,7 +189,8 @@ PlayerPage.getInitialProps = async ({ query }) => {
     seasons,
     seasonStats,
     trophies,
-    seasonId: seasonId || (currentSeason && currentSeason.id)
+    seasonId: seasonId || (currentSeason && currentSeason.id),
+    showPlayerSearch: false
   };
 };
 

@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useState } from 'react';
-import { Grid, Divider, Typography, Tabs, Tab } from '@material-ui/core';
+import { Grid, Divider, Typography, Tabs, Tab, Breadcrumbs } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import { Match, MAPS } from 'utilities/th-api/match';
 import { Trophy } from 'utilities/th-api/trophies';
@@ -8,6 +8,7 @@ import MatchAttributes from 'components/MatchAttributes';
 import { Attributes } from 'utilities/th-api/attributes';
 import millisToMinutesAndSeconds from 'utilities/millisToMinutesAndSeconds';
 import timeSince from 'utilities/timeSince';
+import Link from 'components/Link';
 
 interface MatchPageProps {
   attributes: Attributes;
@@ -49,12 +50,21 @@ const MatchDetails: FunctionComponent<MatchPageProps> = ({ attributes, match, tr
 
   return (
     <div className={classes.container}>
+      <Breadcrumbs aria-label="Breadcrumb">
+        <Link color="inherit" href="/search">
+          Search
+        </Link>
+        <Link color="inherit" href={`/`}>
+          {match.playerName}
+        </Link>
+        <Link color="textPrimary" aria-current="page" href="#">
+          Match
+        </Link>
+      </Breadcrumbs>
       <div className={classes.score}>
         <Typography className={classes.place}>
           #{match.playerStats.winPlace}
-          <span className={classes.placeCount}>
-            /{match.participantCount} | {match.playerName}
-          </span>
+          <span className={classes.placeCount}>/{match.participantCount}</span>
         </Typography>
         <Typography>
           {MAPS[match.mapName]} | {millisToMinutesAndSeconds(match.duration)} |{' '}

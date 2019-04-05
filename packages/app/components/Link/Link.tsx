@@ -3,10 +3,19 @@ import NextLink, { LinkProps as NextLinkProps } from 'next/link';
 import React, { FunctionComponent } from 'react';
 
 import { makeStyles } from '@material-ui/styles';
+import { LinkProps as MuiLinkProps } from '@material-ui/core/Link';
+
+type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
+interface LinkProps
+  extends Omit<NextLinkProps, 'children'>,
+    Omit<MuiLinkProps, 'href' | 'onError'> {
+  children: React.ReactNode;
+}
 
 const useStyles = makeStyles({
   link: {
     cursor: 'pointer',
+    userSelect: 'auto',
     textDecoration: 'none',
     '&:hover': {
       textDecoration: 'none'
@@ -14,12 +23,14 @@ const useStyles = makeStyles({
   }
 });
 
-const Link: FunctionComponent<NextLinkProps> = ({ children, href, ...other }) => {
+const Link: FunctionComponent<LinkProps> = ({ children, href, ...other }) => {
   const classes = useStyles();
 
   return (
-    <NextLink href={href} {...other}>
-      <MuiLink className={classes.link}>{children}</MuiLink>
+    <NextLink href={href}>
+      <MuiLink className={classes.link} {...other}>
+        {children}
+      </MuiLink>
     </NextLink>
   );
 };

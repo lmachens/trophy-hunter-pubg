@@ -40,13 +40,13 @@ export default class MyApp extends App<PageProps> {
         ? parseCookies(appContext.ctx)
         : parseCookies();
 
-    const initialProps = await App.getInitialProps(appContext);
-
     const pageProps: PageProps = {};
     if (thPubg) {
       const [platform, playerName, id] = thPubg.split(';');
       pageProps.account = { platform, playerName, id };
     }
+
+    const initialProps = await App.getInitialProps(appContext);
 
     return {
       ...initialProps,
@@ -63,8 +63,6 @@ export default class MyApp extends App<PageProps> {
     let drawerContent;
     if (router.route.startsWith('/contribution')) {
       drawerContent = <ContributionDrawerContent router={router} />;
-    } else if (!router.route.startsWith('/discord')) {
-      drawerContent = <AppDrawerContent router={router} {...pageProps} />;
     }
     const content = (
       <Main drawerContent={drawerContent}>
