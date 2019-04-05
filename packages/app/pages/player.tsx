@@ -111,7 +111,11 @@ const PlayerPage: NextFunctionComponent<PlayerPageProps> = ({
           <Link color="inherit" href="/search">
             Search
           </Link>
-          <Link color="textPrimary" aria-current="page" href="#">
+          <Link
+            color="textPrimary"
+            aria-current="page"
+            href={`/player?platform=${player.platform}&playerId=${player.id}`}
+          >
             {player.name}
           </Link>
         </Breadcrumbs>

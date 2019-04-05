@@ -14,6 +14,8 @@ interface MatchPageProps {
   attributes: Attributes;
   match: Match;
   trophies: Trophy[];
+  platform: string;
+  playerId: string;
 }
 
 const useStyles = makeStyles(theme => ({
@@ -28,7 +30,13 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const MatchDetails: FunctionComponent<MatchPageProps> = ({ attributes, match, trophies }) => {
+const MatchDetails: FunctionComponent<MatchPageProps> = ({
+  attributes,
+  match,
+  trophies,
+  platform,
+  playerId
+}) => {
   const classes = useStyles();
   const [hoveredTrophy, setHoveredTrophy] = useState<Trophy | undefined>();
 
@@ -51,10 +59,14 @@ const MatchDetails: FunctionComponent<MatchPageProps> = ({ attributes, match, tr
           <Link color="inherit" href="/search">
             Search
           </Link>
-          <Link color="inherit" href={`/`}>
+          <Link color="inherit" href={`/player?platform=${platform}&playerId=${playerId}`}>
             {match.playerName}
           </Link>
-          <Link color="textPrimary" aria-current="page" href="#">
+          <Link
+            color="textPrimary"
+            aria-current="page"
+            href={`/match?platform=${platform}&matchId=${match.matchId}&playerId=${playerId}`}
+          >
             {date.toLocaleDateString()} {date.toLocaleTimeString()}
           </Link>
         </Breadcrumbs>

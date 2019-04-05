@@ -10,19 +10,35 @@ interface MatchPageProps {
   attributes?: Attributes;
   match?: Match;
   trophies?: Trophy[];
+  platform: string;
+  playerId: string;
 }
 
-const MatchPage: NextFunctionComponent<MatchPageProps> = ({ attributes, match, trophies }) => {
+const MatchPage: NextFunctionComponent<MatchPageProps> = ({
+  attributes,
+  match,
+  trophies,
+  platform,
+  playerId
+}) => {
   if (!attributes || !match || !trophies) {
     return <Typography>Match not found</Typography>;
   }
-  return <MatchDetails attributes={attributes} match={match} trophies={trophies} />;
+  return (
+    <MatchDetails
+      attributes={attributes}
+      match={match}
+      trophies={trophies}
+      platform={platform}
+      playerId={playerId}
+    />
+  );
 };
 
 MatchPage.getInitialProps = async ({ query }) => {
   const { platform, matchId, playerId } = query;
   if (typeof platform !== 'string' || typeof matchId !== 'string' || typeof playerId !== 'string') {
-    return {};
+    return { platform: '', playerId: '' };
   }
 
   const attributesPromise = getAttributes();
@@ -37,7 +53,7 @@ MatchPage.getInitialProps = async ({ query }) => {
     trophiesPromise,
     matchPromise
   ]);
-  return { attributes, match, trophies };
+  return { attributes, match, trophies, platform, playerId };
 };
 
 export default MatchPage;
