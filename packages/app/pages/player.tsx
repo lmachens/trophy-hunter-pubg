@@ -36,8 +36,7 @@ interface PlayerPageProps {
 
 const useStyles = makeStyles(theme => ({
   container: {
-    padding: theme.spacing(3),
-    overflow: 'auto'
+    margin: theme.spacing(2)
   },
   header: {
     marginBottom: theme.spacing(1),
@@ -106,45 +105,54 @@ const PlayerPage: NextFunctionComponent<PlayerPageProps> = ({
   };
 
   return (
-    <div className={classes.container}>
-      <Breadcrumbs aria-label="Breadcrumb">
-        <Link color="inherit" href="/search">
-          Search
-        </Link>
-        <Link color="textPrimary" aria-current="page" href="#">
-          {player.name}
-        </Link>
-      </Breadcrumbs>
-      <Typography className={classes.header} />
-      <Grid container spacing={2} alignItems="center">
-        <Grid item>
-          <Select
-            value={seasonId}
-            onChange={handleSeasonChange}
-            input={<Input name="seasonId" id="season-id" />}
-          >
-            {seasons
-              .filter(filterSeasons)
-              .sort(sortSeasons)
-              .map(season => (
-                <MenuItem key={season.id} value={season.id}>
-                  {formatSeason(season)}
-                </MenuItem>
-              ))}
-          </Select>
-        </Grid>
-        <Grid item>
-          <FormControlLabel
-            control={<Checkbox checked={fpp} onChange={handleFppChange} color="primary" />}
-            label="FPP"
-          />
-        </Grid>
+    <Grid container spacing={2} className={classes.container}>
+      <Grid item xs={12}>
+        <Breadcrumbs aria-label="Breadcrumb">
+          <Link color="inherit" href="/search">
+            Search
+          </Link>
+          <Link color="textPrimary" aria-current="page" href="#">
+            {player.name}
+          </Link>
+        </Breadcrumbs>
       </Grid>
-      <Typography variant="caption">Note: Analysed 100 matches of current season</Typography>
-      <Divider />
-      <PlayerStats seasonStats={seasonStats} trophies={trophies} fpp={fpp} />
-      <PlayerMatchesCard player={player} />
-    </div>
+      <Grid item xs={12}>
+        <Grid container spacing={2} alignItems="center">
+          <Grid item>
+            <Select
+              value={seasonId}
+              onChange={handleSeasonChange}
+              input={<Input name="seasonId" id="season-id" />}
+            >
+              {seasons
+                .filter(filterSeasons)
+                .sort(sortSeasons)
+                .map(season => (
+                  <MenuItem key={season.id} value={season.id}>
+                    {formatSeason(season)}
+                  </MenuItem>
+                ))}
+            </Select>
+          </Grid>
+          <Grid item>
+            <FormControlLabel
+              control={<Checkbox checked={fpp} onChange={handleFppChange} color="primary" />}
+              label="FPP"
+            />
+          </Grid>
+        </Grid>
+        <Typography variant="caption">Note: Analysed 100 matches of current season</Typography>
+      </Grid>
+      <Grid item xs={12}>
+        <Divider />
+      </Grid>
+      <Grid item xs={12}>
+        <PlayerStats seasonStats={seasonStats} trophies={trophies} fpp={fpp} />
+      </Grid>
+      <Grid item xs={12}>
+        <PlayerMatchesCard player={player} />
+      </Grid>
+    </Grid>
   );
 };
 

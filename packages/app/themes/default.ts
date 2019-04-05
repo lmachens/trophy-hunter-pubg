@@ -60,11 +60,6 @@ const theme = createMuiTheme({
       root: {
         background: '#303030'
       }
-    },
-    MuiDivider: {
-      root: {
-        margin: '16px 0px'
-      }
     }
   }
 });

@@ -26,9 +26,9 @@ const PlayerMatchesCard: FunctionComponent<PlayerMatchesCardProps> = ({ player }
   };
   return (
     <CardComponent headerBackgroundColor="#903737" title="Matches (Total)" icon={<Games />}>
-      <div className={classes.container}>
-        {player &&
-          player.matches.slice(0, maxItems).map(matchId => (
+      {player.matches.length > 0 && (
+        <div className={classes.container}>
+          {player.matches.slice(0, maxItems).map(matchId => (
             <Link
               key={matchId}
               href={`/match?platform=${player.platform}&matchId=${matchId}&playerId=${player.id}`}
@@ -36,11 +36,12 @@ const PlayerMatchesCard: FunctionComponent<PlayerMatchesCardProps> = ({ player }
               <MatchListItem matchId={matchId} player={player} />
             </Link>
           ))}
-        <Button fullWidth onClick={handleMore}>
-          Load more
-        </Button>
-      </div>
-      {player && player.matches.length === 0 && (
+          <Button fullWidth onClick={handleMore}>
+            Load more
+          </Button>
+        </div>
+      )}
+      {player.matches.length === 0 && (
         <ListItem>
           <ListItemText>No matches found</ListItemText>
         </ListItem>

@@ -18,12 +18,7 @@ interface MatchPageProps {
 
 const useStyles = makeStyles(theme => ({
   container: {
-    padding: theme.spacing(3),
-    height: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-    flex: 1,
-    overflow: 'auto'
+    margin: theme.spacing(2)
   },
   place: {
     fontSize: '1.3rem'
@@ -41,19 +36,21 @@ const MatchDetails: FunctionComponent<MatchPageProps> = ({ attributes, match, tr
   }, {});
   const date = new Date(match.createdAt);
   return (
-    <div className={classes.container}>
-      <Breadcrumbs aria-label="Breadcrumb">
-        <Link color="inherit" href="/search">
-          Search
-        </Link>
-        <Link color="inherit" href={`/`}>
-          {match.playerName}
-        </Link>
-        <Link color="textPrimary" aria-current="page" href="#">
-          {date.toLocaleDateString()} {date.toLocaleTimeString()}
-        </Link>
-      </Breadcrumbs>
-      <div>
+    <Grid container spacing={2} className={classes.container}>
+      <Grid item xs={12}>
+        <Breadcrumbs aria-label="Breadcrumb">
+          <Link color="inherit" href="/search">
+            Search
+          </Link>
+          <Link color="inherit" href={`/`}>
+            {match.playerName}
+          </Link>
+          <Link color="textPrimary" aria-current="page" href="#">
+            {date.toLocaleDateString()} {date.toLocaleTimeString()}
+          </Link>
+        </Breadcrumbs>
+      </Grid>
+      <Grid item xs={12}>
         <Typography className={classes.place}>
           #{match.playerStats.winPlace}
           <span className={classes.placeCount}>/{match.participantCount}</span>
@@ -62,17 +59,17 @@ const MatchDetails: FunctionComponent<MatchPageProps> = ({ attributes, match, tr
           {MAPS[match.mapName]} | {millisToMinutesAndSeconds(match.duration)} |{' '}
           {timeSince(date.getTime())} ago | {match.trophyNames.length}/{trophies.length} Trophies
         </Typography>
-      </div>
-      <Divider />
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <PlayerTrophiesCard trophies={trophies} achievedTrophies={achievedTrophies} />
-        </Grid>
-        <Grid item xs={12}>
-          <MatchAttributes attributes={attributes} match={match} />
-        </Grid>
       </Grid>
-    </div>
+      <Grid item xs={12}>
+        <Divider />
+      </Grid>
+      <Grid item xs={12}>
+        <PlayerTrophiesCard trophies={trophies} achievedTrophies={achievedTrophies} />
+      </Grid>
+      <Grid item xs={12}>
+        <MatchAttributes attributes={attributes} match={match} />
+      </Grid>
+    </Grid>
   );
 };
 

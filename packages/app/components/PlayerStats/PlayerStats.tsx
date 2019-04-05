@@ -13,21 +13,17 @@ interface PlayerStatsProps {
   fpp: boolean;
 }
 
-const useStyles = makeStyles(theme => ({
-  container: {
-    marginBottom: theme.spacing(1),
-    marginTop: theme.spacing(1)
-  },
+const useStyles = makeStyles({
   icon: {
     margin: -5
   }
-}));
+});
 
 const PlayerStats: FunctionComponent<PlayerStatsProps> = ({ trophies, seasonStats, fpp }) => {
   const classes = useStyles();
 
   return (
-    <Grid className={classes.container} container spacing={1}>
+    <Grid container spacing={2}>
       <Grid item xs={12}>
         <PlayerTrophiesCard trophies={trophies} achievedTrophies={seasonStats.trophies} />
       </Grid>
