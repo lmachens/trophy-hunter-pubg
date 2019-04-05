@@ -6,10 +6,12 @@ import formatAttribute from 'utilities/formatAttribute';
 import { makeStyles } from '@material-ui/styles';
 import Grade from '@material-ui/icons/Grade';
 import CardComponent from 'components/CardComponent';
+import { Trophy } from 'utilities/th-api/trophies';
 
 interface MatchAttributesProps {
   attributes: Attributes;
   match: Match;
+  trophy?: Trophy;
 }
 
 const useStyles = makeStyles(theme => ({
@@ -27,7 +29,11 @@ const handleSort = (a: Attribute, b: Attribute) => {
   return 0;
 };
 
-const MatchAttributes: FunctionComponent<MatchAttributesProps> = ({ attributes, match }) => {
+const MatchAttributes: FunctionComponent<MatchAttributesProps> = ({
+  attributes,
+  match,
+  trophy
+}) => {
   const classes = useStyles();
 
   return (
@@ -47,7 +53,7 @@ const MatchAttributes: FunctionComponent<MatchAttributesProps> = ({ attributes, 
         <TableBody>
           {attributes.sort(handleSort).map(attribute => (
             <Tooltip key={attribute.key} title={attribute.subtitle} enterDelay={200}>
-              <TableRow hover>
+              <TableRow hover selected={trophy && trophy.attributes.includes(attribute.key)}>
                 <TableCell>{attribute.title}</TableCell>
                 <TableCell className={classes.player} align="right">
                   {formatAttribute(match.playerStats[attribute.key])}

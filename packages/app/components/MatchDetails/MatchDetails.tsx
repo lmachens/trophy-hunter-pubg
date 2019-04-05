@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useState } from 'react';
 import { Divider, Typography, Breadcrumbs, Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import { Match, MAPS } from 'utilities/th-api/match';
@@ -30,6 +30,15 @@ const useStyles = makeStyles(theme => ({
 
 const MatchDetails: FunctionComponent<MatchPageProps> = ({ attributes, match, trophies }) => {
   const classes = useStyles();
+  const [hoveredTrophy, setHoveredTrophy] = useState<Trophy | undefined>();
+
+  const handleHoverStart = (trophy: Trophy) => {
+    setHoveredTrophy(trophy);
+  };
+
+  const handleHoverEnd = () => {
+    setHoveredTrophy(undefined);
+  };
 
   const achievedTrophies = match.trophyNames.reduce((acc, trophyName) => {
     return { ...acc, [trophyName]: 1 };
@@ -64,10 +73,15 @@ const MatchDetails: FunctionComponent<MatchPageProps> = ({ attributes, match, tr
         <Divider />
       </Grid>
       <Grid item xs={12}>
-        <PlayerTrophiesCard trophies={trophies} achievedTrophies={achievedTrophies} />
+        <PlayerTrophiesCard
+          trophies={trophies}
+          achievedTrophies={achievedTrophies}
+          onHoverStart={handleHoverStart}
+          onHoverEnd={handleHoverEnd}
+        />
       </Grid>
       <Grid item xs={12}>
-        <MatchAttributes attributes={attributes} match={match} />
+        <MatchAttributes attributes={attributes} match={match} trophy={hoveredTrophy} />
       </Grid>
     </Grid>
   );

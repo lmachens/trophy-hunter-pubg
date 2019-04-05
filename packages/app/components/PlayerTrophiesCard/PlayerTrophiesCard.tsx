@@ -10,21 +10,35 @@ interface PlayerTrophiesCardProps {
   achievedTrophies: {
     [trophyName: string]: number;
   };
+  onHoverStart?(trophy: Trophy): void;
+  onHoverEnd?(): void;
 }
 
 const PlayerTrophiesCard: FunctionComponent<PlayerTrophiesCardProps> = ({
   trophies,
-  achievedTrophies
+  achievedTrophies,
+  onHoverStart,
+  onHoverEnd
 }) => {
+  const handleMouseEnter = (trophy: Trophy) => () => {
+    if (onHoverStart) onHoverStart(trophy);
+  };
+
+  const handleMouseLeave = () => {
+    if (onHoverEnd) onHoverEnd();
+  };
+
   return (
     <CardComponent headerBackgroundColor="#418c3e" title="Trophies" icon={<Grade />}>
       <Grid container justify="center">
         {trophies.map(trophy => (
-          <TrophyProgress
+          <div
             key={trophy.name}
-            trophy={trophy}
-            achieved={!!achievedTrophies[trophy.name]}
-          />
+            onMouseEnter={onHoverStart && handleMouseEnter(trophy)}
+            onMouseLeave={onHoverEnd && handleMouseLeave}
+          >
+            <TrophyProgress trophy={trophy} achieved={!!achievedTrophies[trophy.name]} />
+          </div>
         ))}
       </Grid>
     </CardComponent>

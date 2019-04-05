@@ -1,16 +1,11 @@
 import trophies from './definitions';
-import attributesMap from './attributes';
 
 interface NormalizedTrophy {
   name: string;
   title: string;
   author: string;
   description: string;
-  attributes: {
-    key: string;
-    title: string;
-    subtitle: string;
-  }[];
+  attributes: string[];
   src: string;
   svgPath: string;
   checkString: string;
@@ -18,10 +13,9 @@ interface NormalizedTrophy {
 
 const getNormalizedTrophies = () => {
   return Object.values(trophies).map<NormalizedTrophy>(trophy => {
-    const { attributes, check, ...other } = trophy;
-    const normalizedAttributes = attributes.map(attribute => attributesMap[attribute]);
+    const { check, ...other } = trophy;
     const checkString = `const check: Check = ${check.toString()}`;
-    return { ...other, attributes: normalizedAttributes, checkString };
+    return { ...other, checkString };
   });
 };
 
