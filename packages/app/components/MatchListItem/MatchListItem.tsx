@@ -1,7 +1,7 @@
 import { makeStyles } from '@material-ui/styles';
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import getMatch, { Match } from 'utilities/th-api/match';
-import { ListItem, ListItemText, Typography, Divider } from '@material-ui/core';
+import { ListItem, ListItemText, Typography } from '@material-ui/core';
 import { Player } from 'utilities/th-api/player';
 import timeSince from 'utilities/timeSince';
 import millisToMinutesAndSeconds from 'utilities/millisToMinutesAndSeconds';
@@ -26,10 +26,15 @@ const useStyles = makeStyles(theme => ({
   },
   duration: {},
   place: {
-    fontSize: '1.2rem'
+    fontSize: '1.2rem',
+    minWidth: 80,
+    textAlign: 'right'
   },
   placeCount: {
     fontSize: '0.8rem'
+  },
+  general: {
+    minWidth: 100
   },
   trophies: {
     color: theme.palette.common.white,
@@ -76,11 +81,10 @@ const MatchListItem: FunctionComponent<MatchListItemProps> = ({ matchId, player,
       {!loading && error && <ListItemText primary="Click to refresh" />}
       {!loading && !error && match && (
         <div className={classes.container}>
-          <div>
+          <div className={classes.general}>
             <Typography className={classes.timeSince}>
               {timeSince(new Date(match.createdAt).getTime())} ago
             </Typography>
-            <Divider />
             <Typography className={classes.duration}>
               {millisToMinutesAndSeconds(match.duration)}
             </Typography>
