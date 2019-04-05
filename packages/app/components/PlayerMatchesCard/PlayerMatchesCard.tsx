@@ -34,7 +34,7 @@ const PlayerMatchesCard: FunctionComponent<PlayerMatchesCardProps> = ({ player }
   };
   return (
     <Card>
-      <CardHeader title="Matches" className={classes.header} avatar={<Games />} />
+      <CardHeader title="Matches (Total)" className={classes.header} avatar={<Games />} />
       <CardContent className={classes.content}>
         <div className={classes.container}>
           {player &&

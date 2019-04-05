@@ -19,6 +19,7 @@ import getTrophies, { Trophy } from 'utilities/th-api/trophies';
 import TrophyProgress from 'components/TrophyProgress';
 import { createTrophyProposal } from 'utilities/octokit';
 import MonacoEditor, { ScriptLoad } from 'components/MonacoEditor';
+import { useAccount } from 'contexts/account';
 
 interface CreateTrophyPageProps {
   trophies: Trophy[];
@@ -64,8 +65,12 @@ const newTrophy: Trophy = {
 };
 
 const CreateTrophyPage: NextFunctionComponent<CreateTrophyPageProps> = ({ trophies }) => {
+  const account = useAccount();
   const classes = useStyles();
-  const [trophy, setTrophy] = useState<Trophy>(newTrophy);
+  const [trophy, setTrophy] = useState<Trophy>({
+    ...newTrophy,
+    author: account ? account.playerName : ''
+  });
   const [checkString, setCheckString] = useState(newTrophy.checkString);
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);

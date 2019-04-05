@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/styles';
 import { IconButton, InputBase, MenuItem, Paper, Select, Snackbar } from '@material-ui/core';
 import Search from '@material-ui/icons/Search';
 import getPlayer from 'utilities/th-api/player';
-import { useRefreshPlayer } from 'contexts/player';
+import { useChangeAccount } from 'contexts/account';
 import Router from 'next/router';
 
 const useStyles = makeStyles(theme => ({
@@ -59,7 +59,7 @@ const PlayerSearch: FunctionComponent = () => {
   const [platform, setPlatform] = useState('Steam');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
-  const refreshPlayer = useRefreshPlayer();
+  const changeAccount = useChangeAccount();
 
   const handlePlayerNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPlayerName(event.target.value.trim());
@@ -78,7 +78,7 @@ const PlayerSearch: FunctionComponent = () => {
     setLoading(true);
     getPlayer({ platform, playerName })
       .then(player => {
-        refreshPlayer({ platform, playerName });
+        changeAccount({ platform, playerName, id: player.id });
         Router.push(`/player?platform=${player.platform}&playerId=${player.id}`);
       })
       .catch((error: Error) => {

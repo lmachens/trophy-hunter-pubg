@@ -11,8 +11,8 @@ import AppLayout from 'layouts/App';
 import AppDrawerContent from 'components/AppDrawerContent';
 import ContributionDrawerContent from 'components/ContributionDrawerContent';
 import { parseCookies } from 'nookies';
-import getPlayer, { Player } from 'utilities/th-api/player';
-import { PlayerProvider } from 'contexts/player';
+import { AccountProvider } from 'contexts/account';
+import { Account } from 'contexts/account';
 
 NProgress.configure({ parent: '#__next', showSpinner: false });
 Router.events.on('routeChangeStart', () => {
@@ -22,10 +22,9 @@ Router.events.on('routeChangeComplete', () => NProgress.done());
 Router.events.on('routeChangeError', () => NProgress.done());
 
 interface PageProps {
-  player?: Player;
+  account?: Account;
 }
 
-let player: Player | undefined;
 export default class MyApp extends App<PageProps> {
   componentDidMount() {
     const style = document.getElementById('server-side-styles');
@@ -44,14 +43,10 @@ export default class MyApp extends App<PageProps> {
     const initialProps = await App.getInitialProps(appContext);
 
     const pageProps: PageProps = {};
-    /*if (thPubg) {
-      const [platform, playerName] = thPubg.split(';');
-      if (!player || player.platform !== platform || player.name !== playerName) {
-        console.log('getPlayer app', appContext.ctx.req && appContext.ctx.req.url);
-        player = await getPlayer({ platform, playerName });
-      }
-      pageProps.player = player;
-    }*/
+    if (thPubg) {
+      const [platform, playerName, id] = thPubg.split(';');
+      pageProps.account = { platform, playerName, id };
+    }
 
     return {
       ...initialProps,
@@ -89,7 +84,7 @@ export default class MyApp extends App<PageProps> {
     return (
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <PlayerProvider defaultValue={pageProps.player}>{container}</PlayerProvider>
+        <AccountProvider defaultAccount={pageProps.account}>{container}</AccountProvider>
       </ThemeProvider>
     );
   }

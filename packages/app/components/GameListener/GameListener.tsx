@@ -1,14 +1,16 @@
 import { gameEnded, gameLaunched, gameRunning, setFeatures } from 'utilities/overwolf/games';
 import React, { FunctionComponent, useState, useEffect } from 'react';
 import { Snackbar } from '@material-ui/core';
-import { usePlayer, useRefreshPlayer } from 'contexts/player';
+import { useAccount, useChangeAccount } from 'contexts/account';
+import getPlayer from 'utilities/th-api/player';
+import Router from 'next/router';
 
 const interestedInFeatures = ['me'];
 
 const GameListener: FunctionComponent = () => {
   const [open, setOpen] = useState(false);
-  const player = usePlayer();
-  const refreshPlayer = useRefreshPlayer();
+  const account = useAccount();
+  const changeAccount = useChangeAccount();
 
   const handleClose = (_: any, reason: string) => {
     if (reason === 'clickaway') {
@@ -19,8 +21,11 @@ const GameListener: FunctionComponent = () => {
   };
 
   const updatePlayer = (playerName: string) => {
-    if (!player || player.name !== name) {
-      refreshPlayer({ platform: 'Steam', playerName });
+    if (!account || account.playerName !== playerName) {
+      getPlayer({ platform: 'Steam', playerName }).then(player => {
+        changeAccount({ platform: 'Steam', playerName, id: player.id });
+        Router.push(`/player?platform=${player.platform}&playerId=${player.id}`);
+      });
     }
   };
   const handleInfoUpdate = (infoUpdate: any) => {

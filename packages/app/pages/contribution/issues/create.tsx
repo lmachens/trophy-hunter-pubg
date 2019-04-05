@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/styles';
 import { TextField, Button, Divider } from '@material-ui/core';
 import { createIssue } from 'utilities/octokit';
 import { Issue } from 'utilities/octokit/interface';
+import { useAccount } from 'contexts/account';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -37,8 +38,12 @@ const newIssue: Issue = {
 };
 
 const CreateIssuePage: NextFunctionComponent = () => {
+  const account = useAccount();
   const classes = useStyles();
-  const [issue, setIssue] = useState<Issue>(newIssue);
+  const [issue, setIssue] = useState<Issue>({
+    ...newIssue,
+    author: account ? account.playerName : ''
+  });
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = () => {

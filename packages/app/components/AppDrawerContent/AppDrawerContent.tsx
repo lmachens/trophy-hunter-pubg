@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { RouterProps } from 'next/router';
 import { Divider, ListItem, ListItemText, ListItemIcon } from '@material-ui/core';
 import Link from 'components/Link';
-import { usePlayer } from 'contexts/player';
+import { useAccount } from 'contexts/account';
 import Search from '@material-ui/icons/Search';
 
 interface AppDrawerContentProps {
@@ -10,7 +10,7 @@ interface AppDrawerContentProps {
 }
 
 const AppDrawerContent: FunctionComponent<AppDrawerContentProps> = ({ router }) => {
-  const player = usePlayer();
+  const account = useAccount();
 
   return (
     <>
@@ -23,11 +23,11 @@ const AppDrawerContent: FunctionComponent<AppDrawerContentProps> = ({ router }) 
         </ListItem>
       </Link>
       <Divider />
-      {player && (
+      {account && (
         <>
-          <Link href={`/player?platform=${player.platform}&playerId=${player.id}`}>
+          <Link href={`/player?platform=${account.platform}&playerId=${account.id}`}>
             <ListItem button selected={router.route === '/player'}>
-              <ListItemText primary={player.name} />
+              <ListItemText primary={account.playerName} />
             </ListItem>
           </Link>
         </>
