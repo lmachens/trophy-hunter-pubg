@@ -8,7 +8,6 @@ import theme from 'themes/default';
 import { CssBaseline } from '@material-ui/core';
 import Main from 'layouts/Main';
 import AppLayout from 'layouts/App';
-import AppDrawerContent from 'components/AppDrawerContent';
 import ContributionDrawerContent from 'components/ContributionDrawerContent';
 import { parseCookies } from 'nookies';
 import { AccountProvider } from 'contexts/account';
