@@ -2,22 +2,13 @@ import React, { FunctionComponent } from 'react';
 import { makeStyles } from '@material-ui/styles';
 import Close from '@material-ui/icons/Close';
 import Minimize from '@material-ui/icons/Minimize';
-import {
-  IconButton,
-  List,
-  ListItem,
-  AppBar,
-  Toolbar,
-  ListItemAvatar,
-  Avatar,
-  Tooltip
-} from '@material-ui/core';
+import { IconButton, AppBar, Toolbar } from '@material-ui/core';
 import Link from 'components/Link';
 import GameListener from 'components/GameListener';
+import Navigation from 'components/Navigation';
 import { RouterProps } from 'next/router';
-import classNames from 'classnames';
 
-interface AppLayout {
+interface AppLayoutProps {
   router: RouterProps;
 }
 
@@ -58,12 +49,6 @@ const useStyles = makeStyles(theme => ({
     flex: 1,
     display: 'flex'
   },
-  nav: {
-    backgroundColor: theme.palette.common.black,
-    backgroundImage: 'url(/static/backgrounds/dark-mosaic.png)',
-    width: theme.spacing(9) + 1,
-    zIndex: theme.zIndex.drawer + 1
-  },
   main: {
     flexGrow: 1,
     display: 'flex',
@@ -71,12 +56,6 @@ const useStyles = makeStyles(theme => ({
     backgroundImage: 'url(/static/backgrounds/dark-mosaic.png)',
     position: 'relative',
     overflow: 'auto'
-  },
-  item: {
-    borderLeft: `3px solid transparent`
-  },
-  selectedItem: {
-    borderLeft: `3px solid ${theme.palette.secondary.dark}`
   },
   bottomLeft: {
     width: 20,
@@ -95,9 +74,6 @@ const useStyles = makeStyles(theme => ({
     position: 'absolute',
     zIndex: theme.zIndex.drawer + 2,
     cursor: 'se-resize'
-  },
-  avatar: {
-    borderRadius: 'unset'
   }
 }));
 
@@ -126,7 +102,7 @@ const dragResize = (edge: string) => () => {
 };
 
 const isOverwolfApp = typeof overwolf !== 'undefined';
-const App: FunctionComponent<AppLayout> = ({ children, router }) => {
+const App: FunctionComponent<AppLayoutProps> = ({ children, router }) => {
   const classes = useStyles();
 
   return (
@@ -151,58 +127,7 @@ const App: FunctionComponent<AppLayout> = ({ children, router }) => {
         </Toolbar>
       </AppBar>
       <div className={classes.container}>
-        <nav className={classes.nav}>
-          <List>
-            <Link href="/">
-              <Tooltip title="To the Trophy Hunter App" placement="right" enterDelay={200}>
-                <ListItem
-                  button
-                  className={classNames(classes.item, {
-                    [classes.selectedItem]:
-                      !router.route.startsWith('/contribution') &&
-                      !router.route.startsWith('/discord')
-                  })}
-                >
-                  <ListItemAvatar>
-                    <Avatar className={classes.avatar} alt="Home" src="/static/icon.png" />
-                  </ListItemAvatar>
-                </ListItem>
-              </Tooltip>
-            </Link>
-            <Link href="/contribution">
-              <Tooltip title="To the Contribution section" placement="right" enterDelay={200}>
-                <ListItem
-                  button
-                  className={classNames(classes.item, {
-                    [classes.selectedItem]: router.route === '/contribution'
-                  })}
-                >
-                  <ListItemAvatar>
-                    <Avatar
-                      className={classes.avatar}
-                      alt="Contribution"
-                      src="/static/github.png"
-                    />
-                  </ListItemAvatar>
-                </ListItem>
-              </Tooltip>
-            </Link>
-            <Link href="/discord">
-              <Tooltip title="To Discord" placement="right" enterDelay={200}>
-                <ListItem
-                  button
-                  className={classNames(classes.item, {
-                    [classes.selectedItem]: router.route === '/discord'
-                  })}
-                >
-                  <ListItemAvatar>
-                    <Avatar className={classes.avatar} alt="Discord" src="/static/discord.png" />
-                  </ListItemAvatar>
-                </ListItem>
-              </Tooltip>
-            </Link>
-          </List>
-        </nav>
+        <Navigation router={router} />
         <main className={classes.main}>{children}</main>
       </div>
       <GameListener />
