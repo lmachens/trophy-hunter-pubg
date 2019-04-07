@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useState } from 'react';
 import { makeStyles } from '@material-ui/styles';
 import Close from '@material-ui/icons/Close';
 import Minimize from '@material-ui/icons/Minimize';
@@ -7,6 +7,7 @@ import Link from 'components/Link';
 import GameListener from 'components/GameListener';
 import Navigation from 'components/Navigation';
 import { RouterProps } from 'next/router';
+import MenuIcon from '@material-ui/icons/Menu';
 
 interface AppLayoutProps {
   router: RouterProps;
@@ -74,6 +75,12 @@ const useStyles = makeStyles(theme => ({
     position: 'absolute',
     zIndex: theme.zIndex.drawer + 2,
     cursor: 'se-resize'
+  },
+  menuButton: {
+    marginRight: 20,
+    [theme.breakpoints.up('sm')]: {
+      display: 'none'
+    }
   }
 }));
 
@@ -104,11 +111,24 @@ const dragResize = (edge: string) => () => {
 const isOverwolfApp = typeof overwolf !== 'undefined';
 const App: FunctionComponent<AppLayoutProps> = ({ children, router }) => {
   const classes = useStyles();
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  const handleDrawerToggle = () => {
+    setMobileOpen(!mobileOpen);
+  };
 
   return (
     <div className={classes.frame}>
       <AppBar position="sticky" className={classes.appBar}>
         <Toolbar className={classes.toolbar}>
+          <IconButton
+            color="inherit"
+            aria-label="Open drawer"
+            onClick={handleDrawerToggle}
+            className={classes.menuButton}
+          >
+            <MenuIcon />
+          </IconButton>
           <Link href="/">
             <img className={classes.logo} src="/static/text.png" />
           </Link>
@@ -127,7 +147,7 @@ const App: FunctionComponent<AppLayoutProps> = ({ children, router }) => {
         </Toolbar>
       </AppBar>
       <div className={classes.container}>
-        <Navigation router={router} />
+        <Navigation mobileOpen={mobileOpen} router={router} onClose={handleDrawerToggle} />
         <main className={classes.main}>{children}</main>
       </div>
       <GameListener />
