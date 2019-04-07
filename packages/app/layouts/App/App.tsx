@@ -40,7 +40,8 @@ const useStyles = makeStyles(theme => ({
   },
   button: {
     padding: '2px 8px',
-    borderRadius: 0
+    borderRadius: 0,
+    zIndex: 1
   },
   container: {
     flex: 1,
@@ -76,7 +77,26 @@ const useStyles = makeStyles(theme => ({
     marginRight: 20,
     [theme.breakpoints.up('sm')]: {
       display: 'none'
-    }
+    },
+    zIndex: 1
+  },
+  move: {
+    position: 'absolute',
+    left: 0,
+    zIndex: 0,
+    width: '100%',
+    height: '100%'
+  },
+  playerSearch: {
+    zIndex: 1
+  },
+  buttons: {
+    position: 'absolute',
+    right: 0,
+    top: 0
+  },
+  buttonsMargin: {
+    width: 60
   }
 }));
 
@@ -129,21 +149,24 @@ const App: FunctionComponent<AppLayoutProps> = ({ children, router }) => {
             <img className={classes.logo} src="/static/text.png" />
           </Link>
           <img className={classes.game} src="/static/pubg.png" />
-          {isOverwolfApp && (
-            <>
-              <div className={classes.grow} onMouseDown={handleMouseDown} />
-              <IconButton className={classes.button} disableRipple onClick={handleMinimize}>
-                <Minimize />
-              </IconButton>
-              <IconButton className={classes.button} disableRipple onClick={handleClose}>
-                <Close />
-              </IconButton>
-            </>
-          )}
           <div className={classes.grow} />
           <Hidden xsDown implementation="css">
-            <PlayerSearch />
+            <PlayerSearch className={classes.playerSearch} />
           </Hidden>
+          {isOverwolfApp && (
+            <>
+              <div className={classes.move} onMouseDown={handleMouseDown} />
+              <div className={classes.buttonsMargin} />
+              <div className={classes.buttons}>
+                <IconButton className={classes.button} disableRipple onClick={handleMinimize}>
+                  <Minimize />
+                </IconButton>
+                <IconButton className={classes.button} disableRipple onClick={handleClose}>
+                  <Close />
+                </IconButton>
+              </div>
+            </>
+          )}
         </Toolbar>
       </AppBar>
       <div className={classes.container}>
