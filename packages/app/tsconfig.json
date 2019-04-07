@@ -17,5 +17,6 @@
     "strict": true,
     "target": "esnext",
     "typeRoots": ["./typings"]
-  }
+  },
+  "exclude": [".next", "out", "node_modules"]
 }
