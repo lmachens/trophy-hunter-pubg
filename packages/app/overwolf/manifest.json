@@ -3,7 +3,7 @@
   "type": "WebApp",
   "meta": {
     "name": "Trophy Hunter PUBG",
-    "version": "1.0.1",
+    "version": "1.1.0",
     "minimum-overwolf-version": "0.108.209.0",
     "author": "Leon Machens",
     "icon": "IconMouseOver.png",
@@ -19,6 +19,13 @@
     "game_targeting": {
       "type": "dedicated",
       "game_ids": [10906]
+    },
+    "hotkeys": {
+      "th_pubg": {
+        "title": "Show App",
+        "action-type": "custom",
+        "default": "Shift+F1"
+      }
     },
     "launch_events": [
       {
@@ -44,7 +51,7 @@
         "show_in_taskbar": true,
         "keep_window_location": true,
         "in_game_only": false,
-        "desktop_only": true,
+        "desktop_only": false,
         "native_window": true,
         "use_os_windowing": true,
         "popup_blocker": true,
