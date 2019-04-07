@@ -1,79 +1,50 @@
 import React, { FunctionComponent, useState } from 'react';
 import { makeStyles } from '@material-ui/styles';
-import {
-  IconButton,
-  InputBase,
-  MenuItem,
-  Paper,
-  Select,
-  Snackbar,
-  Button
-} from '@material-ui/core';
+import { IconButton, InputBase, MenuItem, Paper, Select, Snackbar } from '@material-ui/core';
 import Search from '@material-ui/icons/Search';
 import getPlayer from 'utilities/th-api/player';
-import { useChangeAccount, useAccount } from 'contexts/account';
+import { useChangeAccount } from 'contexts/account';
 import Router from 'next/router';
-import Link from 'next/link';
+import classNames from 'classnames';
+
+interface PlayerSearchProps {
+  autoFocus?: boolean;
+  className?: string;
+}
 
 const useStyles = makeStyles(theme => ({
-  container: {
-    backgroundImage: 'url(/static/backgrounds/main.jpg)',
-    backgroundPosition: 'center right',
-    backgroundSize: 'cover',
-    padding: theme.spacing(3),
-    height: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    flex: 1
-  },
-  form: {
-    position: 'relative',
-    textAlign: 'center'
-  },
-  logo: {
-    maxWidth: 350,
-    position: 'absolute',
-    top: -140,
-    left: 0,
-    right: 0,
-    margin: '0 auto'
-  },
   paper: {
     padding: '2px 4px',
     display: 'flex',
     alignItems: 'center',
-    width: 400,
-    maxWidth: '90vw',
-    backgroundColor: '#1d1c1dc7'
+    backgroundColor: '#1d1c1dc7',
+    border: '1px solid rgba(255, 255, 255, 0.23)'
   },
   input: {
     marginLeft: 8,
     flex: 1
   },
   iconButton: {
-    padding: 10
+    padding: 0
   },
   error: {
     backgroundColor: theme.palette.error.dark,
     color: theme.palette.common.white
   },
-  latest: {
-    margin: theme.spacing(2)
+  select: {
+    marginLeft: theme.spacing(1)
   }
 }));
 
 const platforms = ['Steam', 'PSN', 'XBOX', 'Kakao'];
 
-const PlayerSearch: FunctionComponent = () => {
+const PlayerSearch: FunctionComponent<PlayerSearchProps> = ({ autoFocus, className }) => {
   const classes = useStyles();
   const [playerName, setPlayerName] = useState('');
   const [platform, setPlatform] = useState('Steam');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
   const changeAccount = useChangeAccount();
-  const account = useAccount();
 
   const handlePlayerNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPlayerName(event.target.value.trim());
@@ -111,60 +82,51 @@ const PlayerSearch: FunctionComponent = () => {
   };
 
   return (
-    <div className={classes.container}>
-      <form onSubmit={handleSubmit} className={classes.form}>
-        <img className={classes.logo} src="/static/logo.png" />
-        <Paper className={classes.paper} elevation={1}>
-          <Select
-            value={platform}
-            onChange={handlePlatformChange}
-            input={<InputBase name="platform" id="platform-select" />}
-          >
-            {platforms.map(platform => (
-              <MenuItem value={platform} key={platform}>
-                {platform}
-              </MenuItem>
-            ))}
-          </Select>
-          <InputBase
-            autoFocus
-            className={classes.input}
-            placeholder="Player Name"
-            value={playerName}
-            onChange={handlePlayerNameChange}
-          />
-          <IconButton
-            className={classes.iconButton}
-            aria-label="Search"
-            disabled={playerName.length === 0 || loading}
-            type="submit"
-          >
-            <Search />
-          </IconButton>
-        </Paper>
-        {account && (
-          <Link href="/">
-            <Button className={classes.latest} variant="contained">
-              {account.playerName}
-            </Button>
-          </Link>
-        )}
-        <Snackbar
-          anchorOrigin={{
-            vertical: 'top',
-            horizontal: 'right'
-          }}
-          open={!!error}
-          onClose={handleClose}
-          autoHideDuration={3000}
-          ContentProps={{
-            'aria-describedby': 'message-id',
-            className: classes.error
-          }}
-          message={<span id="message-id">{error && error.message}</span>}
+    <form onSubmit={handleSubmit}>
+      <Paper className={classNames(classes.paper, className)} elevation={1}>
+        <Select
+          className={classes.select}
+          value={platform}
+          onChange={handlePlatformChange}
+          input={<InputBase name="platform" id="platform-select" />}
+        >
+          {platforms.map(platform => (
+            <MenuItem value={platform} key={platform}>
+              {platform}
+            </MenuItem>
+          ))}
+        </Select>
+        <InputBase
+          autoFocus={autoFocus}
+          className={classes.input}
+          placeholder="Player Name"
+          value={playerName}
+          onChange={handlePlayerNameChange}
         />
-      </form>
-    </div>
+        <IconButton
+          className={classes.iconButton}
+          aria-label="Search"
+          disabled={playerName.length === 0 || loading}
+          type="submit"
+        >
+          <Search />
+        </IconButton>
+      </Paper>
+      <Snackbar
+        anchorOrigin={{
+          vertical: 'top',
+          horizontal: 'right'
+        }}
+        open={!!error}
+        onClose={handleClose}
+        autoHideDuration={3000}
+        ContentProps={{
+          'aria-describedby': 'message-id',
+          className: classes.error
+        }}
+        message={<span id="message-id">{error && error.message}</span>}
+      />
+    </form>
   );
 };
 

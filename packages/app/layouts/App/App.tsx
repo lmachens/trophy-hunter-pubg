@@ -2,12 +2,13 @@ import React, { FunctionComponent, useState } from 'react';
 import { makeStyles } from '@material-ui/styles';
 import Close from '@material-ui/icons/Close';
 import Minimize from '@material-ui/icons/Minimize';
-import { IconButton, AppBar, Toolbar } from '@material-ui/core';
+import { IconButton, AppBar, Toolbar, Hidden } from '@material-ui/core';
 import Link from 'components/Link';
 import GameListener from 'components/GameListener';
 import Navigation from 'components/Navigation';
 import { RouterProps } from 'next/router';
 import MenuIcon from '@material-ui/icons/Menu';
+import PlayerSearch from 'components/PlayerSearch';
 
 interface AppLayoutProps {
   router: RouterProps;
@@ -24,13 +25,8 @@ const useStyles = makeStyles(theme => ({
     backgroundImage: 'url(/static/backgrounds/gun-metal.png)',
     zIndex: theme.zIndex.drawer + 2
   },
-  toolbar: {
-    minHeight: 0,
-    padding: 0,
-    height: 30
-  },
   logo: {
-    height: 30,
+    height: 40,
     verticalAlign: 'middle',
     pointerEvents: 'none'
   },
@@ -120,7 +116,7 @@ const App: FunctionComponent<AppLayoutProps> = ({ children, router }) => {
   return (
     <div className={classes.frame}>
       <AppBar position="sticky" className={classes.appBar}>
-        <Toolbar className={classes.toolbar}>
+        <Toolbar>
           <IconButton
             color="inherit"
             aria-label="Open drawer"
@@ -144,6 +140,10 @@ const App: FunctionComponent<AppLayoutProps> = ({ children, router }) => {
               </IconButton>
             </>
           )}
+          <div className={classes.grow} />
+          <Hidden xsDown implementation="css">
+            <PlayerSearch />
+          </Hidden>
         </Toolbar>
       </AppBar>
       <div className={classes.container}>
