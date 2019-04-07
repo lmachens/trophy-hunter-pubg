@@ -24,12 +24,24 @@ interface PageProps {
   account?: Account;
 }
 
-export default class MyApp extends App<PageProps> {
+interface MyAppProps {
+  clientNeedsProps: boolean;
+}
+
+export default class MyApp extends App<MyAppProps> {
+  state = { gotInitialProps: !this.props.clientNeedsProps };
+
   componentDidMount() {
     const style = document.getElementById('server-side-styles');
 
     if (style && style.parentNode) {
       style.parentNode.removeChild(style);
+    }
+
+    if (this.props.clientNeedsProps) {
+      Router.replace(Router.pathname + location.search).then(() => {
+        this.setState({ gotInitialProps: true });
+      });
     }
   }
 
@@ -47,17 +59,22 @@ export default class MyApp extends App<PageProps> {
 
     const initialProps = await App.getInitialProps(appContext);
 
+    const clientNeedsProps =
+      !process.browser && !(appContext.ctx.req && appContext.ctx.req.headers);
+
     return {
       ...initialProps,
       pageProps: {
         ...initialProps.pageProps,
         ...pageProps
-      }
+      },
+      clientNeedsProps
     };
   }
 
   render() {
     const { Component, pageProps, router } = this.props;
+    const { gotInitialProps } = this.state;
 
     let drawerContent;
     if (router.route.startsWith('/contribution')) {
@@ -81,7 +98,9 @@ export default class MyApp extends App<PageProps> {
     return (
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <AccountProvider defaultAccount={pageProps.account}>{container}</AccountProvider>
+        {gotInitialProps && (
+          <AccountProvider defaultAccount={pageProps.account}>{container}</AccountProvider>
+        )}
       </ThemeProvider>
     );
   }
