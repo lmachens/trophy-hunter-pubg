@@ -32,6 +32,7 @@ export default async (req: IncomingMessage, res: ServerResponse) => {
     res.setHeader('Cache-Control', 's-maxage=31536000, maxage=0');
     res.end(iconResult[1]);
   } catch (error) {
+    res.setHeader('Cache-Control', 'max-age=600, s-maxage=60, maxage=0');
     console.error(error.message);
     if (!error.response) {
       error.response = {

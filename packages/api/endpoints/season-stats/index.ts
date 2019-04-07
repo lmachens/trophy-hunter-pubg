@@ -88,6 +88,7 @@ export default async (req: IncomingMessage, res: ServerResponse) => {
     res.setHeader('Cache-Control', 's-maxage=3600, maxage=0');
     res.end(JSON.stringify(result));
   } catch (error) {
+    res.setHeader('Cache-Control', 'max-age=600, s-maxage=60, maxage=0');
     console.error(error.message);
     if (!error.response) {
       error.response = {
