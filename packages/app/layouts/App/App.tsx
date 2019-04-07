@@ -28,7 +28,8 @@ const useStyles = makeStyles(theme => ({
   logo: {
     height: 40,
     verticalAlign: 'middle',
-    pointerEvents: 'none'
+    pointerEvents: 'none',
+    zIndex: 1
   },
   game: {
     height: 20,
@@ -87,9 +88,6 @@ const useStyles = makeStyles(theme => ({
     width: '100%',
     height: '100%'
   },
-  playerSearch: {
-    zIndex: 1
-  },
   buttons: {
     position: 'absolute',
     right: 0,
@@ -97,6 +95,9 @@ const useStyles = makeStyles(theme => ({
   },
   buttonsMargin: {
     width: 60
+  },
+  playerSearch: {
+    zIndex: 1
   }
 }));
 
@@ -150,8 +151,8 @@ const App: FunctionComponent<AppLayoutProps> = ({ children, router }) => {
           </Link>
           <img className={classes.game} src="/static/pubg.png" />
           <div className={classes.grow} />
-          <Hidden xsDown implementation="css">
-            <PlayerSearch className={classes.playerSearch} />
+          <Hidden xsDown implementation="css" className={classes.playerSearch}>
+            <PlayerSearch />
           </Hidden>
           {isOverwolfApp && (
             <>
