@@ -20,7 +20,7 @@ import getSeasons, { Season } from 'utilities/th-api/seasons';
 import Router from 'next/router';
 import PlayerMatchesCard from 'components/PlayerMatchesCard';
 import getPlayer, { Player } from 'utilities/th-api/player';
-import PlayerSearch from 'components/PlayerSearch';
+import SearchPage from './search';
 import { parseCookies } from 'nookies';
 import Link from 'components/Link';
 
@@ -78,7 +78,7 @@ const PlayerPage: NextFunctionComponent<PlayerPageProps> = ({
   showPlayerSearch
 }) => {
   if (showPlayerSearch) {
-    return <PlayerSearch />;
+    return <SearchPage />;
   }
   const classes = useStyles();
 
