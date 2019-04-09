@@ -108,9 +108,6 @@ const PlayerPage: NextFunctionComponent<PlayerPageProps> = ({
     <Grid container spacing={2} className={classes.container} alignContent="flex-start">
       <Grid item xs={12}>
         <Breadcrumbs aria-label="Breadcrumb">
-          <Link color="inherit" href="/search">
-            Search
-          </Link>
           <Link
             color="textPrimary"
             aria-current="page"
