@@ -1,24 +1,28 @@
-import { gameEnded, gameLaunched, gameRunning, setFeatures } from 'utilities/overwolf/games';
-import React, { FunctionComponent, useState, useEffect } from 'react';
-import { Snackbar } from '@material-ui/core';
+import React, { FunctionComponent, useEffect, useState } from 'react';
+import LiveContext from './LiveContext';
 import { useAccount, useChangeAccount } from 'contexts/account';
 import getPlayer from 'utilities/th-api/player';
 import Router from 'next/router';
+import { gameEnded, gameLaunched, gameRunning, setFeatures } from 'utilities/overwolf/games';
+import { Game } from './interface';
 
-const interestedInFeatures = ['me'];
+const interestedInFeatures = [
+  'me',
+  'kill',
+  'match',
+  'rank',
+  'phase',
+  'map',
+  'revived',
+  'death',
+  'killer'
+];
 
-const GameListener: FunctionComponent = () => {
-  const [open, setOpen] = useState(false);
+const LiveProvider: FunctionComponent = ({ children }) => {
   const account = useAccount();
   const changeAccount = useChangeAccount();
-
-  const handleClose = (_: any, reason: string) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-
-    setOpen(false);
-  };
+  const [game, setGame] = useState<Game>();
+  const [match, setMatch] = useState();
 
   const updatePlayer = (playerName: string) => {
     if (!account || account.playerName !== playerName) {
@@ -29,13 +33,19 @@ const GameListener: FunctionComponent = () => {
     }
   };
   const handleInfoUpdate = (infoUpdate: any) => {
-    if (infoUpdate.info.me) {
+    console.log('handleInfoUpdate', infoUpdate);
+    if (infoUpdate.info && infoUpdate.info.me) {
       updatePlayer(infoUpdate.info.me.name);
+      setMatch({
+        ...match,
+        playerName: infoUpdate.info.me.name
+      });
     }
   };
 
   const handleInfo = ({ status, res }: any) => {
-    if (status === 'success' && res.me) {
+    console.log('handleInfo', status, res);
+    if (status === 'success' && res && res.me) {
       updatePlayer(res.me.name);
     }
   };
@@ -46,21 +56,35 @@ const GameListener: FunctionComponent = () => {
     overwolf.games.events.getInfo(handleInfo);
   };
 
+  const stopListening = () => {
+    overwolf.games.events.onInfoUpdates2.removeListener(handleInfoUpdate);
+  };
+
   const handleGameInfoUpdated = (gameInfoResult: any) => {
+    console.log('handleGameInfoUpdated', gameInfoResult);
     if (gameLaunched(gameInfoResult)) {
-      setOpen(true);
       startListening();
+      setGame({
+        startedAt: new Date(),
+        displayName: gameInfoResult.gameInfo.displayName
+      });
     } else if (gameEnded(gameInfoResult)) {
-      setOpen(false);
+      stopListening();
+      setGame(undefined);
     }
   };
 
   const handleRunningGameInfo = (gameInfo: any) => {
+    console.log('handleRunningGameInfo', gameInfo);
     if (gameRunning(gameInfo)) {
-      setOpen(true);
       startListening();
+      setGame({
+        startedAt: new Date(),
+        displayName: gameInfo.displayName
+      });
     } else if (gameInfo) {
-      setOpen(false);
+      stopListening();
+      setGame(undefined);
     }
   };
 
@@ -85,26 +109,16 @@ const GameListener: FunctionComponent = () => {
 
       return () => {
         overwolf.games.onGameInfoUpdated.removeListener(handleGameInfoUpdated);
-        overwolf.games.events.onInfoUpdates2.removeListener(handleInfoUpdate);
+        stopListening();
       };
     }
   }, []);
 
-  return (
-    <Snackbar
-      anchorOrigin={{
-        vertical: 'top',
-        horizontal: 'right'
-      }}
-      open={open}
-      autoHideDuration={6000}
-      onClose={handleClose}
-      ContentProps={{
-        'aria-describedby': 'message-id'
-      }}
-      message={<span id="message-id">Have fun playing PUBG!</span>}
-    />
-  );
+  const value = {
+    match,
+    game
+  };
+  return <LiveContext.Provider value={value}>{children}</LiveContext.Provider>;
 };
 
-export default GameListener;
+export default LiveProvider;

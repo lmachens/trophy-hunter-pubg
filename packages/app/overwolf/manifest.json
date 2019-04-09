@@ -50,8 +50,8 @@
         "resizable": false,
         "show_in_taskbar": true,
         "keep_window_location": true,
-        "in_game_only": false,
-        "desktop_only": false,
+        "in_game_only": true,
+        "desktop_only": true,
         "native_window": true,
         "use_os_windowing": true,
         "popup_blocker": true,
@@ -67,6 +67,11 @@
         "mute": true,
         "enable_top_isolation": true
       }
+    },
+    "developer": {
+      "enable_auto_refresh": true,
+      "reload_delay": 3000,
+      "filter": "*.*"
     }
   }
 }

@@ -12,6 +12,7 @@ import ContributionDrawerContent from 'components/ContributionDrawerContent';
 import { parseCookies } from 'nookies';
 import { AccountProvider } from 'contexts/account';
 import { Account } from 'contexts/account';
+import { LiveProvider } from 'contexts/live';
 
 NProgress.configure({ parent: '#__next', showSpinner: false });
 Router.events.on('routeChangeStart', () => {
@@ -32,6 +33,7 @@ export default class MyApp extends App<MyAppProps> {
   state = { gotInitialProps: !this.props.clientNeedsProps };
 
   componentDidMount() {
+    console.log('Welcome to Trophy Hunter PUBG!');
     const style = document.getElementById('server-side-styles');
 
     if (style && style.parentNode) {
@@ -99,7 +101,9 @@ export default class MyApp extends App<MyAppProps> {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         {gotInitialProps && (
-          <AccountProvider defaultAccount={pageProps.account}>{container}</AccountProvider>
+          <AccountProvider defaultAccount={pageProps.account}>
+            <LiveProvider>{container}</LiveProvider>
+          </AccountProvider>
         )}
       </ThemeProvider>
     );

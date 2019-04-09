@@ -9,7 +9,7 @@ export interface Attributes {
 const attributes: Attributes = {
   DBNOs: {
     key: 'DBNOs',
-    subtitle: 'Number of enemy players knocked',
+    subtitle: 'Number of enemy players knocked out',
     title: 'Knocked'
   },
   assists: {

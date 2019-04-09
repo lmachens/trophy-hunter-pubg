@@ -4,7 +4,6 @@ import Close from '@material-ui/icons/Close';
 import Minimize from '@material-ui/icons/Minimize';
 import { IconButton, AppBar, Toolbar, Hidden } from '@material-ui/core';
 import Link from 'components/Link';
-import GameListener from 'components/GameListener';
 import Navigation from 'components/Navigation';
 import { RouterProps } from 'next/router';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -174,7 +173,6 @@ const App: FunctionComponent<AppLayoutProps> = ({ children, router }) => {
         <Navigation mobileOpen={mobileOpen} router={router} onClose={handleDrawerToggle} />
         <main className={classes.main}>{children}</main>
       </div>
-      <GameListener />
       {isOverwolfApp && (
         <>
           <div className={classes.bottomLeft} onMouseDown={dragResize('BottomLeft')} />

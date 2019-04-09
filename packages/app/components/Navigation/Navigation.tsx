@@ -50,11 +50,12 @@ const Navigation: FunctionComponent<NavigationProps> = ({ router, mobileOpen, on
   const drawer = (
     <List>
       <Link href="/">
-        <Tooltip title="To the Trophy Hunter app" placement="right" enterDelay={200}>
+        <Tooltip title="Profile" placement="right" enterDelay={200}>
           <ListItem
             button
             className={classNames(classes.item, {
               [classes.selectedItem]:
+                !router.route.startsWith('/live') &&
                 !router.route.startsWith('/search') &&
                 !router.route.startsWith('/contribution') &&
                 !router.route.startsWith('/discord')
@@ -67,7 +68,7 @@ const Navigation: FunctionComponent<NavigationProps> = ({ router, mobileOpen, on
         </Tooltip>
       </Link>
       <Link href="/search">
-        <Tooltip title="To the Search page" placement="right" enterDelay={200}>
+        <Tooltip title="Player Search" placement="right" enterDelay={200}>
           <ListItem
             button
             className={classNames(classes.item, {
@@ -82,8 +83,22 @@ const Navigation: FunctionComponent<NavigationProps> = ({ router, mobileOpen, on
           </ListItem>
         </Tooltip>
       </Link>
+      <Link href="/live">
+        <Tooltip title="Live Match" placement="right" enterDelay={200}>
+          <ListItem
+            button
+            className={classNames(classes.item, {
+              [classes.selectedItem]: router.route.startsWith('/live')
+            })}
+          >
+            <ListItemAvatar>
+              <Avatar className={classes.avatar} alt="Live" src="/static/overwolf.png" />
+            </ListItemAvatar>
+          </ListItem>
+        </Tooltip>
+      </Link>
       <Link href="/contribution">
-        <Tooltip title="To the Contribution section" placement="right" enterDelay={200}>
+        <Tooltip title="Contribution" placement="right" enterDelay={200}>
           <ListItem
             button
             className={classNames(classes.item, {
@@ -97,7 +112,7 @@ const Navigation: FunctionComponent<NavigationProps> = ({ router, mobileOpen, on
         </Tooltip>
       </Link>
       <Link href="/discord">
-        <Tooltip title="To Discord" placement="right" enterDelay={200}>
+        <Tooltip title="Discord" placement="right" enterDelay={200}>
           <ListItem
             button
             className={classNames(classes.item, {

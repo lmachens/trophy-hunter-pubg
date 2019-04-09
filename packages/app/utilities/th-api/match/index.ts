@@ -31,3 +31,4 @@ export const MAPS = {
   Range_Main: 'Camp Jackal',
   Savage_Main: 'Sanhok'
 };
+export { default as emptyMatch } from './emptyMatch';

@@ -4,13 +4,13 @@ import { Table, TableHead, TableRow, TableCell, TableBody, Tooltip } from '@mate
 import { Match } from 'utilities/th-api/match';
 import formatAttribute from 'utilities/formatAttribute';
 import { makeStyles } from '@material-ui/styles';
-import Grade from '@material-ui/icons/Grade';
+import BarChart from '@material-ui/icons/BarChart';
 import CardComponent from 'components/CardComponent';
 import { Trophy } from 'utilities/th-api/trophies';
 
 interface MatchAttributesProps {
   attributes: Attributes;
-  match: Match;
+  match?: Match;
   trophy?: Trophy;
 }
 
@@ -37,7 +37,7 @@ const MatchAttributes: FunctionComponent<MatchAttributesProps> = ({
   const classes = useStyles();
 
   return (
-    <CardComponent headerBackgroundColor="#3094be" title="Stats" icon={<Grade />}>
+    <CardComponent headerBackgroundColor="#3094be" title="Stats" icon={<BarChart />}>
       <Table>
         <TableHead>
           <TableRow>
@@ -56,16 +56,16 @@ const MatchAttributes: FunctionComponent<MatchAttributesProps> = ({
               <TableRow hover selected={trophy && trophy.attributes.includes(attribute.key)}>
                 <TableCell>{attribute.title}</TableCell>
                 <TableCell className={classes.player} align="right">
-                  {formatAttribute(match.playerStats[attribute.key])}
+                  {formatAttribute(match ? match.playerStats[attribute.key] : '')}
                 </TableCell>
                 <TableCell align="right">
-                  {formatAttribute(match.minStats[attribute.key])}
+                  {formatAttribute(match ? match.minStats[attribute.key] : '')}
                 </TableCell>
                 <TableCell align="right">
-                  {formatAttribute(match.maxStats[attribute.key])}
+                  {formatAttribute(match ? match.maxStats[attribute.key] : '')}
                 </TableCell>
                 <TableCell align="right">
-                  {formatAttribute(match.avgStats[attribute.key])}
+                  {formatAttribute(match ? match.avgStats[attribute.key] : '')}
                 </TableCell>
               </TableRow>
             </Tooltip>

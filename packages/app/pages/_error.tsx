@@ -18,6 +18,7 @@ const useStyles = makeStyles(theme => ({
     margin: theme.spacing(2)
   }
 }));
+
 const ErrorPage: NextFunctionComponent<ErrorPageProps> = ({ message, statusCode }) => {
   const classes = useStyles();
 
