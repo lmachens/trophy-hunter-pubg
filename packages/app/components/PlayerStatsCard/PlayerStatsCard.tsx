@@ -24,7 +24,10 @@ const useStyles = makeStyles(theme => ({
   },
   caption: {
     color: theme.typography.caption.color,
-    whiteSpace: 'nowrap'
+    whiteSpace: 'nowrap',
+    [theme.breakpoints.down('xs')]: {
+      whiteSpace: 'normal'
+    }
   }
 }));
 
