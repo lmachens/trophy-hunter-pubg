@@ -4,6 +4,7 @@ import Link from 'components/Link';
 import classNames from 'classnames';
 import { makeStyles } from '@material-ui/styles';
 import { RouterProps } from 'next/router';
+import SearchIcon from '@material-ui/icons/Search';
 
 interface NavigationProps {
   router: RouterProps;
@@ -33,6 +34,13 @@ const useStyles = makeStyles(theme => ({
   },
   avatar: {
     borderRadius: 'unset'
+  },
+  search: {
+    backgroundColor: theme.palette.common.white
+  },
+  searchIcon: {
+    width: 32,
+    height: 32
   }
 }));
 
@@ -42,16 +50,34 @@ const Navigation: FunctionComponent<NavigationProps> = ({ router, mobileOpen, on
   const drawer = (
     <List>
       <Link href="/">
-        <Tooltip title="To the Trophy Hunter App" placement="right" enterDelay={200}>
+        <Tooltip title="To the Trophy Hunter app" placement="right" enterDelay={200}>
           <ListItem
             button
             className={classNames(classes.item, {
               [classes.selectedItem]:
-                !router.route.startsWith('/contribution') && !router.route.startsWith('/discord')
+                !router.route.startsWith('/search') &&
+                !router.route.startsWith('/contribution') &&
+                !router.route.startsWith('/discord')
             })}
           >
             <ListItemAvatar>
               <Avatar className={classes.avatar} alt="Home" src="/static/icon.png" />
+            </ListItemAvatar>
+          </ListItem>
+        </Tooltip>
+      </Link>
+      <Link href="/search">
+        <Tooltip title="To the Search page" placement="right" enterDelay={200}>
+          <ListItem
+            button
+            className={classNames(classes.item, {
+              [classes.selectedItem]: router.route.startsWith('/search')
+            })}
+          >
+            <ListItemAvatar>
+              <Avatar alt="Search" className={classes.search}>
+                <SearchIcon className={classes.searchIcon} />
+              </Avatar>
             </ListItemAvatar>
           </ListItem>
         </Tooltip>
