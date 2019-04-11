@@ -19,7 +19,11 @@ Router.events.on('routeChangeStart', () => {
   NProgress.start();
 });
 Router.events.on('routeChangeComplete', () => {
-  document.getElementById('main')!.scrollTop = 0;
+  const main = document.getElementById('main');
+  if (main) {
+    main.scrollTop = 0;
+  }
+
   NProgress.done();
 });
 Router.events.on('routeChangeError', () => NProgress.done());
