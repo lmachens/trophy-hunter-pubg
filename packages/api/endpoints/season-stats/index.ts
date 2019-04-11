@@ -85,10 +85,10 @@ export default async (req: IncomingMessage, res: ServerResponse) => {
       trophies,
       gameModeStats: seasonStats.gameModeStats
     };
-    res.setHeader('Cache-Control', 's-maxage=3600, maxage=0');
+    res.setHeader('Cache-Control', 's-maxage=900, max-age=900');
     res.end(JSON.stringify(result));
   } catch (error) {
-    res.setHeader('Cache-Control', 'max-age=600, s-maxage=60, maxage=0');
+    res.setHeader('Cache-Control', 's-maxage=900, max-age=900');
     console.error(error.message);
     if (!error.response) {
       error.response = {

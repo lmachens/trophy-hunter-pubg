@@ -26,10 +26,15 @@ const endpoints: Endpoints = {
   'season-stats': seasonStats
 };
 
-const hostname = '127.0.0.1';
+const hostname = 'localhost';
 const port = 7000;
 http
   .createServer(async (req, res) => {
+    if (req.url === '/favicon.ico') {
+      res.writeHead(204);
+      return res.end();
+    }
+    console.log(req.url);
     const { pathname = '' } = parse(req.url!);
     const endpointName = pathname.substr(1);
     const endpoint = endpoints[endpointName];

@@ -39,10 +39,10 @@ export default async (req: IncomingMessage, res: ServerResponse) => {
       mapName: match.data.attributes.mapName,
       participantCount
     };
-    res.setHeader('Cache-Control', 's-maxage=31536000, maxage=0');
+    res.setHeader('Cache-Control', 's-maxage=31536000, max-age=86400');
     res.end(JSON.stringify(result));
   } catch (error) {
-    res.setHeader('Cache-Control', 'max-age=600, s-maxage=60, maxage=0');
+    res.setHeader('Cache-Control', 's-maxage=3600, max-age=3600');
     console.error(error.message);
     if (!error.response) {
       error.response = {
