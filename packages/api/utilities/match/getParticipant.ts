@@ -2,12 +2,12 @@ import Match, { Participant } from '../pubg-api/match/interface';
 
 interface GetParticipantProps {
   match: Match;
-  playerId: string;
+  playerName: string;
 }
 
-const getParticipant = ({ match, playerId }: GetParticipantProps) => {
+const getParticipant = ({ match, playerName }: GetParticipantProps) => {
   return match.included.find(doc => {
-    return doc.type === 'participant' && doc.attributes.stats.playerId === playerId;
+    return doc.type === 'participant' && doc.attributes.stats.name === playerName;
   }) as Participant;
 };
 

@@ -58,8 +58,8 @@ export default class MyApp extends App<MyAppProps> {
 
     const pageProps: PageProps = {};
     if (thPubg) {
-      const [platform, playerName, id] = thPubg.split(';');
-      pageProps.account = { platform, playerName, id };
+      const [platform, playerName] = thPubg.split(';');
+      pageProps.account = { platform, playerName };
     }
 
     const initialProps = await App.getInitialProps(appContext);

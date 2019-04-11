@@ -2,7 +2,6 @@ export interface Match {
   platform: string;
   matchId: string;
   playerName: string;
-  playerId: string;
   trophyNames: string[];
   playerStats: ParticipantStats;
   avgStats: ParticipantStats;

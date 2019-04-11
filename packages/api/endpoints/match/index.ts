@@ -9,25 +9,27 @@ export default async (req: IncomingMessage, res: ServerResponse) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
 
-  const { platform, matchId, playerId } = parse(req.url!, true).query;
-  if (typeof platform !== 'string' || typeof matchId !== 'string' || typeof playerId !== 'string') {
+  const { platform, matchId, playerName } = parse(req.url!, true).query;
+  if (
+    typeof platform !== 'string' ||
+    typeof matchId !== 'string' ||
+    typeof playerName !== 'string'
+  ) {
     res.writeHead(400);
     return res.end('Invalid query');
   }
 
   try {
     const match = await getMatch({ platform, matchId });
-    const participant = getParticipant({ match, playerId });
+    const participant = getParticipant({ match, playerName });
     // const team = getTeam({ match, participant });
-    const { name: playerName, ...playerStats } = participant.attributes.stats;
-    delete playerStats.playerId;
+    const playerStats = participant.attributes.stats;
     const participantCount = getParticipantCount({ match });
     const { avgStats, maxStats, minStats } = getGeneralStats({ playerStats, match });
     const trophyNames = calculateTrophies({ playerStats, avgStats, maxStats, minStats });
     const result = {
       platform,
       matchId,
-      playerId,
       playerName,
       trophyNames,
       playerStats,

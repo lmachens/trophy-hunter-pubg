@@ -111,7 +111,7 @@ const PlayerPage: NextFunctionComponent<PlayerPageProps> = ({
           <Link
             color="textPrimary"
             aria-current="page"
-            href={`/player?platform=${player.platform}&playerId=${player.id}`}
+            href={`/player?platform=${player.platform}&playerName=${player.name}`}
           >
             {player.name}
           </Link>
@@ -159,11 +159,11 @@ const PlayerPage: NextFunctionComponent<PlayerPageProps> = ({
 
 PlayerPage.getInitialProps = async ctx => {
   let platform: string;
-  let playerId: string;
-  const { fpp, platform: platformQuery, playerId: playerIdQuery, seasonId } = ctx.query;
+  let playerName: string;
+  const { fpp, platform: platformQuery, playerName: playerNameQuery, seasonId } = ctx.query;
   if (
     typeof platformQuery !== 'string' ||
-    typeof playerIdQuery !== 'string' ||
+    typeof playerNameQuery !== 'string' ||
     Array.isArray(seasonId)
   ) {
     const { thPubg = null } = ctx.req && ctx.req.headers ? parseCookies(ctx) : parseCookies();
@@ -172,17 +172,17 @@ PlayerPage.getInitialProps = async ctx => {
       return { fpp: !!fpp, showPlayerSearch: true };
     }
 
-    const [cookiePlatform, , cookieId] = thPubg.split(';');
+    const [cookiePlatform, cookieName] = thPubg.split(';');
     platform = cookiePlatform;
-    playerId = cookieId;
+    playerName = cookieName;
   } else {
     platform = platformQuery;
-    playerId = playerIdQuery;
+    playerName = playerNameQuery;
   }
 
-  const playerPromise = getPlayer({ platform, playerId });
+  const playerPromise = getPlayer({ platform, playerName });
   const seasonsPromise = getSeasons({ platform });
-  const seasonStatsPromise = getSeasonStats({ platform, playerId, seasonId });
+  const seasonStatsPromise = getSeasonStats({ platform, playerName, seasonId });
   const trophiesPromise = getTrophies();
   const [player, seasons, seasonStats, trophies] = await Promise.all([
     playerPromise,

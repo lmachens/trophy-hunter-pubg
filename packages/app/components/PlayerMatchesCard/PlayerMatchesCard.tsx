@@ -33,7 +33,9 @@ const PlayerMatchesCard: FunctionComponent<PlayerMatchesCardProps> = ({ player, 
           {player.matches.slice(0, maxItems).map(matchId => (
             <Link
               key={matchId}
-              href={`/match?platform=${player.platform}&matchId=${matchId}&playerId=${player.id}`}
+              href={`/match?platform=${player.platform}&matchId=${matchId}&playerName=${
+                player.name
+              }`}
             >
               <MatchListItem matchId={matchId} player={player} trophies={trophies} />
             </Link>

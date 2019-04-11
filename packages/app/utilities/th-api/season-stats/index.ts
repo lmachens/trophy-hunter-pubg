@@ -3,12 +3,12 @@ import { SeasonStats } from './interface';
 
 interface GetSeasonStatsProps {
   platform: string;
-  playerId: string;
+  playerName: string;
   seasonId?: string;
 }
 
-const getSeasonStats = ({ platform, playerId, seasonId }: GetSeasonStatsProps) => {
-  let url = `season-stats?platform=${platform}&playerId=${playerId}`;
+const getSeasonStats = ({ platform, playerName, seasonId }: GetSeasonStatsProps) => {
+  let url = `season-stats?platform=${platform}&playerName=${playerName}`;
   if (seasonId) {
     url += `&seasonId=${seasonId}`;
   }

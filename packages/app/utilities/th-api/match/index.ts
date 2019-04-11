@@ -5,17 +5,17 @@ import { Match } from './interface';
 interface GetMatchProps {
   platform: string;
   matchId: string;
-  playerId: string;
+  playerName: string;
 }
 
 const promiseCache: {
   [matchId: string]: Promise<Match>;
 } = {};
 
-const getMatch = ({ platform, matchId, playerId }: GetMatchProps) => {
+const getMatch = ({ platform, matchId, playerName }: GetMatchProps) => {
   if (!promiseCache[matchId]) {
     promiseCache[matchId] = getTHApi<Match>(
-      `match?platform=${platform}&matchId=${matchId}&playerId=${playerId}`
+      `match?platform=${platform}&matchId=${matchId}&playerName=${playerName}`
     );
   }
   return promiseCache[matchId];

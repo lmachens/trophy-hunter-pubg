@@ -11,7 +11,7 @@ interface MatchPageProps {
   match?: Match;
   trophies?: Trophy[];
   platform: string;
-  playerId: string;
+  playerName: string;
 }
 
 const MatchPage: NextFunctionComponent<MatchPageProps> = ({
@@ -19,7 +19,7 @@ const MatchPage: NextFunctionComponent<MatchPageProps> = ({
   match,
   trophies,
   platform,
-  playerId
+  playerName
 }) => {
   if (!attributes || !match || !trophies) {
     return <Typography>Match not found</Typography>;
@@ -30,15 +30,19 @@ const MatchPage: NextFunctionComponent<MatchPageProps> = ({
       match={match}
       trophies={trophies}
       platform={platform}
-      playerId={playerId}
+      playerName={playerName}
     />
   );
 };
 
 MatchPage.getInitialProps = async ({ query }) => {
-  const { platform, matchId, playerId } = query;
-  if (typeof platform !== 'string' || typeof matchId !== 'string' || typeof playerId !== 'string') {
-    return { platform: '', playerId: '' };
+  const { platform, matchId, playerName } = query;
+  if (
+    typeof platform !== 'string' ||
+    typeof matchId !== 'string' ||
+    typeof playerName !== 'string'
+  ) {
+    return { platform: '', playerName: '' };
   }
 
   const attributesPromise = getAttributes();
@@ -46,14 +50,14 @@ MatchPage.getInitialProps = async ({ query }) => {
   const matchPromise = getMatch({
     platform,
     matchId,
-    playerId
+    playerName
   });
   const [attributes, trophies, match] = await Promise.all([
     attributesPromise,
     trophiesPromise,
     matchPromise
   ]);
-  return { attributes, match, trophies, platform, playerId };
+  return { attributes, match, trophies, platform, playerName };
 };
 
 export default MatchPage;

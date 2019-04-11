@@ -64,7 +64,8 @@ const PlayerSearch: FunctionComponent<PlayerSearchProps> = ({ autoFocus, classNa
     getPlayer({ platform, playerName })
       .then(player => {
         changeAccount({ platform, playerName, id: player.id });
-        Router.push(`/player?platform=${player.platform}&playerId=${player.id}`);
+        setPlayerName('');
+        Router.push(`/player?platform=${player.platform}&playerName=${player.name}`);
       })
       .catch((error: Error) => {
         console.error(error);

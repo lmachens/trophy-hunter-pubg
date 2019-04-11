@@ -57,7 +57,7 @@ const MatchListItem: FunctionComponent<MatchListItemProps> = ({ matchId, player,
     return getMatch({
       platform: player.platform,
       matchId,
-      playerId: player.id
+      playerName: player.name
     })
       .then(match => {
         setMatch(match);

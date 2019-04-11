@@ -6,19 +6,14 @@ export default async (req: IncomingMessage, res: ServerResponse) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
 
-  const { platform, playerName, playerId } = parse(req.url!, true).query;
-  if (
-    typeof platform !== 'string' ||
-    ((typeof playerName !== 'string' && typeof playerId !== 'string') ||
-      Array.isArray(playerName) ||
-      Array.isArray(playerId))
-  ) {
+  const { platform, playerName } = parse(req.url!, true).query;
+  if (typeof platform !== 'string' || typeof playerName !== 'string') {
     res.writeHead(400);
     return res.end('Invalid query');
   }
 
   try {
-    const result = await getPlayer({ platform, playerName, playerId });
+    const result = await getPlayer({ platform, playerName });
     const player = {
       id: result.id,
       name: result.attributes.name,

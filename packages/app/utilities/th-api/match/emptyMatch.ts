@@ -36,7 +36,6 @@ const emptyMatch: Match = {
   platform: '',
   matchId: '',
   playerName: '',
-  playerId: '',
   trophyNames: [],
   playerStats: emptyParticipantStats,
   avgStats: emptyParticipantStats,

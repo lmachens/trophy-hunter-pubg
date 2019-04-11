@@ -3,16 +3,11 @@ import { Player } from './interface';
 
 interface GetPlayerProps {
   platform: string;
-  playerName?: string;
-  playerId?: string;
+  playerName: string;
 }
 
-const getPlayer = ({ platform, playerName, playerId }: GetPlayerProps) => {
-  return getTHApi<Player>(
-    `player?platform=${platform}&${
-      playerName ? `playerName=${encodeURI(playerName)}` : `playerId=${encodeURI(playerId!)}`
-    }`
-  );
+const getPlayer = ({ platform, playerName }: GetPlayerProps) => {
+  return getTHApi<Player>(`player?platform=${platform}&playerName=${encodeURI(playerName)}`);
 };
 
 export default getPlayer;
