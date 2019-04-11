@@ -182,15 +182,19 @@ PlayerPage.getInitialProps = async ctx => {
 
   const playerPromise = getPlayer({ platform, playerName });
   const seasonsPromise = getSeasons({ platform });
-  const seasonStatsPromise = getSeasonStats({ platform, playerName, seasonId });
+
   const trophiesPromise = getTrophies();
-  const [player, seasons, seasonStats, trophies] = await Promise.all([
+  const [player, seasons, trophies] = await Promise.all([
     playerPromise,
     seasonsPromise,
-    seasonStatsPromise,
     trophiesPromise
   ]);
   const currentSeason = seasons.find(season => season.isCurrentSeason);
+  const seasonStats = await getSeasonStats({
+    platform,
+    playerId: player.id,
+    seasonId: seasonId || currentSeason!.id
+  });
 
   return {
     fpp: !!fpp,

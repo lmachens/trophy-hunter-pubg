@@ -5,9 +5,7 @@ import getMatch from '../../utilities/pubg-api/match';
 import { getParticipant, getGeneralStats } from '../../utilities/match';
 // import getTeam from '../../utilities/match/getTeam';
 import { calculateTrophies } from '../../utilities/trophies';
-import getSeasons from '../../utilities/pubg-api/seasons';
 import { GameModeStats } from '../../utilities/pubg-api/seasonStats/interface';
-import getPlayer from '../../utilities/pubg-api/players';
 
 interface Trophies {
   [trophyName: string]: number;
@@ -17,23 +15,18 @@ export default async (req: IncomingMessage, res: ServerResponse) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
 
-  const { platform, playerName, seasonId } = parse(req.url!, true).query;
-  if (typeof platform !== 'string' || typeof playerName !== 'string') {
+  const { platform, playerId, seasonId } = parse(req.url!, true).query;
+  if (
+    typeof platform !== 'string' ||
+    typeof playerId !== 'string' ||
+    typeof seasonId !== 'string'
+  ) {
     res.writeHead(400);
     return res.end('Invalid query');
   }
 
   try {
-    let season = seasonId;
-    if (typeof season !== 'string') {
-      const seasons = await getSeasons({ platform });
-      const currentSeason = seasons.find(season => season.isCurrentSeason);
-      season = currentSeason!.id;
-    }
-
-    const player = await getPlayer({ platform, playerName });
-    const playerId = player.id;
-    const seasonStats = await getSeasonStats({ platform, playerId, seasonId: season });
+    const seasonStats = await getSeasonStats({ platform, playerId, seasonId });
 
     const matchIds = [
       ...seasonStats.matchesSolo,
@@ -53,7 +46,7 @@ export default async (req: IncomingMessage, res: ServerResponse) => {
       trophies: Trophies;
     }>(
       (res, match) => {
-        const participant = getParticipant({ match, playerName });
+        const participant = getParticipant({ match, playerId });
         // const team = getTeam({ match, participant });
         const playerStats = participant.attributes.stats;
         const { avgStats, maxStats, minStats } = getGeneralStats({ playerStats, match });
