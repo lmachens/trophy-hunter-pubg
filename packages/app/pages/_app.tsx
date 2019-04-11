@@ -18,7 +18,10 @@ NProgress.configure({ parent: '#__next', showSpinner: false });
 Router.events.on('routeChangeStart', () => {
   NProgress.start();
 });
-Router.events.on('routeChangeComplete', () => NProgress.done());
+Router.events.on('routeChangeComplete', () => {
+  document.getElementById('main')!.scrollTop = 0;
+  NProgress.done();
+});
 Router.events.on('routeChangeError', () => NProgress.done());
 
 interface PageProps {

@@ -34,7 +34,7 @@ http
       res.writeHead(204);
       return res.end();
     }
-    console.log(req.url);
+    console.log(new Date(), req.url);
     const { pathname = '' } = parse(req.url!);
     const endpointName = pathname.substr(1);
     const endpoint = endpoints[endpointName];

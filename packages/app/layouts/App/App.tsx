@@ -171,7 +171,9 @@ const App: FunctionComponent<AppLayoutProps> = ({ children, router }) => {
       </AppBar>
       <div className={classes.container}>
         <Navigation mobileOpen={mobileOpen} router={router} onClose={handleDrawerToggle} />
-        <main className={classes.main}>{children}</main>
+        <main id="main" className={classes.main}>
+          {children}
+        </main>
       </div>
       {isOverwolfApp && (
         <>
