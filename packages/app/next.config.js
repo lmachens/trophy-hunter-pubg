@@ -62,7 +62,7 @@ module.exports = phase => {
         config.resolve.modules.unshift(__dirname);
         return config;
       },
-      target: PHASE_PRODUCTION_SERVER ? 'serverless' : 'server'
+      target: process.env.NEXT_TARGET || 'serverless'
     })
   );
 };
