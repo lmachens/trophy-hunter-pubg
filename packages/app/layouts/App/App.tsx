@@ -8,6 +8,7 @@ import Navigation from 'components/Navigation';
 import { RouterProps } from 'next/router';
 import MenuIcon from '@material-ui/icons/Menu';
 import PlayerSearch from 'components/PlayerSearch';
+import NotificationsBadge from 'components/NotificationsBadge';
 
 interface AppLayoutProps {
   router: RouterProps;
@@ -96,7 +97,9 @@ const useStyles = makeStyles(theme => ({
     width: 60
   },
   playerSearch: {
-    zIndex: 1
+    zIndex: 1,
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1)
   }
 }));
 
@@ -153,6 +156,7 @@ const App: FunctionComponent<AppLayoutProps> = ({ children, router }) => {
           <Hidden xsDown implementation="css" className={classes.playerSearch}>
             <PlayerSearch />
           </Hidden>
+          <NotificationsBadge />
           {isOverwolfApp && (
             <>
               <div className={classes.move} onMouseDown={handleMouseDown} />

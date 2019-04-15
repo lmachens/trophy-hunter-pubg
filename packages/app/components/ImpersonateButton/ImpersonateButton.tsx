@@ -25,7 +25,11 @@ const ImpersonateButton: FunctionComponent<ImpersonateButtonProps> = ({ player }
 
   const handleClick = () => {
     if (!isFavorite) {
-      changeAccount({ platform: player.platform, playerName: player.name, id: player.id });
+      changeAccount({
+        platform: player.platform,
+        playerName: player.name,
+        recentMatch: player.matches[0]
+      });
     }
   };
 

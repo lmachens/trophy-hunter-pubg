@@ -11,10 +11,15 @@ const AccountProvider: FunctionComponent<AccountProviderProps> = ({ children, de
   const [account, setAccount] = useState(defaultAccount);
 
   const changeAccount = (newAccount: Account) => {
-    setCookie(null, 'thPubg', `${newAccount.platform};${newAccount.playerName}`, {
-      maxAge: 365 * 24 * 60 * 60,
-      path: '/'
-    });
+    setCookie(
+      null,
+      'thPubg',
+      `${newAccount.platform};${newAccount.playerName};${newAccount.recentMatch}`,
+      {
+        maxAge: 365 * 24 * 60 * 60,
+        path: '/'
+      }
+    );
     setAccount(newAccount);
   };
 

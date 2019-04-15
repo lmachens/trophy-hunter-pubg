@@ -27,7 +27,11 @@ const LiveProvider: FunctionComponent = ({ children }) => {
   const updatePlayer = (playerName: string) => {
     if (!account || account.playerName !== playerName) {
       getPlayer({ platform: 'Steam', playerName }).then(player => {
-        changeAccount({ platform: 'Steam', playerName, id: player.id });
+        changeAccount({
+          platform: 'Steam',
+          playerName,
+          recentMatch: player.matches[0]
+        });
         Router.push(`/player?platform=${player.platform}&playerName=${player.name}`);
       });
     }

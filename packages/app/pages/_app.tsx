@@ -8,7 +8,6 @@ import theme from 'themes/default';
 import { CssBaseline } from '@material-ui/core';
 import Main from 'layouts/Main';
 import AppLayout from 'layouts/App';
-import ContributionDrawerContent from 'components/ContributionDrawerContent';
 import { parseCookies } from 'nookies';
 import { AccountProvider } from 'contexts/account';
 import { Account } from 'contexts/account';
@@ -62,10 +61,9 @@ export default class MyApp extends App<MyAppProps> {
 
     const pageProps: PageProps = {};
     if (thPubg) {
-      const [platform, playerName] = thPubg.split(';');
-      pageProps.account = { platform, playerName };
+      const [platform, playerName, recentMatch] = thPubg.split(';');
+      pageProps.account = { platform, playerName, recentMatch };
     }
-
     const initialProps = await App.getInitialProps(appContext);
 
     const clientNeedsProps =

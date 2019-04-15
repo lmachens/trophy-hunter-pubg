@@ -65,7 +65,7 @@ const PlayerSearch: FunctionComponent<PlayerSearchProps> = ({ autoFocus, classNa
     getPlayer({ platform, playerName })
       .then(player => {
         if (!account) {
-          changeAccount({ platform, playerName, id: player.id });
+          changeAccount({ platform, playerName, recentMatch: player.matches[0] });
         }
         setPlayerName('');
         Router.push(`/player?platform=${player.platform}&playerName=${player.name}`);
