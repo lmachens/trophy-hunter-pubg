@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { NextFunctionComponent } from 'next';
 import { makeStyles } from '@material-ui/styles';
-import { TextField, Button, Divider } from '@material-ui/core';
+import { TextField, Button, Divider, Breadcrumbs } from '@material-ui/core';
 import { createIssue } from 'utilities/octokit';
 import { Issue } from 'utilities/octokit/interface';
 import { useAccount } from 'contexts/account';
+import Link from 'components/Link';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -61,51 +62,57 @@ const CreateIssuePage: NextFunctionComponent = () => {
   };
 
   return (
-    <>
-      <div className={classes.root}>
-        <div className={classes.form}>
-          <TextField
-            id="title"
-            label="Title"
-            value={issue.title}
-            onChange={handleTextChange('title')}
-            margin="normal"
-            fullWidth
-            placeholder="Addicted"
-            helperText="Select a meaningful title"
-            required
-          />
-          <TextField
-            id="description"
-            label="Description"
-            value={issue.description}
-            onChange={handleTextChange('description')}
-            margin="normal"
-            fullWidth
-            multiline
-            helperText="Describe your issue with all informations required for reconstruction"
-            required
-          />
-          <TextField
-            id="author"
-            label="Author"
-            value={issue.author}
-            onChange={handleTextChange('author')}
-            margin="normal"
-            fullWidth
-            placeholder="Jon Doe"
-            helperText="What is your name?"
-          />
-        </div>
-        <Divider />
-        <div className={classes.actions}>
-          <div className={classes.grow} />
-          <Button onClick={handleSubmit} disabled={loading}>
-            Submit Issue
-          </Button>
-        </div>
+    <div className={classes.root}>
+      <Breadcrumbs aria-label="Breadcrumb">
+        <Link color="inherit" href="/contribution">
+          Contribution
+        </Link>
+        <Link color="textPrimary" aria-current="page" href="/contribution/issues/create">
+          New Issue
+        </Link>
+      </Breadcrumbs>
+      <div className={classes.form}>
+        <TextField
+          id="title"
+          label="Title"
+          value={issue.title}
+          onChange={handleTextChange('title')}
+          margin="normal"
+          fullWidth
+          placeholder="Addicted"
+          helperText="Select a meaningful title"
+          required
+        />
+        <TextField
+          id="description"
+          label="Description"
+          value={issue.description}
+          onChange={handleTextChange('description')}
+          margin="normal"
+          fullWidth
+          multiline
+          helperText="Describe your issue with all informations required for reconstruction"
+          required
+        />
+        <TextField
+          id="author"
+          label="Author"
+          value={issue.author}
+          onChange={handleTextChange('author')}
+          margin="normal"
+          fullWidth
+          placeholder="Jon Doe"
+          helperText="What is your name?"
+        />
       </div>
-    </>
+      <Divider />
+      <div className={classes.actions}>
+        <div className={classes.grow} />
+        <Button onClick={handleSubmit} disabled={loading}>
+          Submit Issue
+        </Button>
+      </div>
+    </div>
   );
 };
 

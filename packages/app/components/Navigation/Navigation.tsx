@@ -102,7 +102,7 @@ const Navigation: FunctionComponent<NavigationProps> = ({ router, mobileOpen, on
           <ListItem
             button
             className={classNames(classes.item, {
-              [classes.selectedItem]: router.route === '/contribution'
+              [classes.selectedItem]: router.route.startsWith('/contribution')
             })}
           >
             <ListItemAvatar>

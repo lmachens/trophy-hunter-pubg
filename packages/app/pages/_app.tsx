@@ -85,22 +85,16 @@ export default class MyApp extends App<MyAppProps> {
     const { Component, pageProps, router } = this.props;
     const { gotInitialProps } = this.state;
 
-    let drawerContent;
-    if (router.route.startsWith('/contribution')) {
-      drawerContent = <ContributionDrawerContent router={router} />;
-    }
-    const content = (
-      <Main drawerContent={drawerContent}>
-        <Component {...pageProps} />
-      </Main>
-    );
-
     const container = (
       <Container>
         <Head>
           <title>Trophy Hunter</title>
         </Head>
-        <AppLayout router={router}>{content}</AppLayout>
+        <AppLayout router={router}>
+          <Main>
+            <Component {...pageProps} />
+          </Main>
+        </AppLayout>
       </Container>
     );
 

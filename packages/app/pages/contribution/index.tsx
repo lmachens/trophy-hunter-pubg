@@ -2,9 +2,9 @@ import React from 'react';
 import { getIssues } from 'utilities/octokit';
 import { IssuesListForRepoResponseItem } from '@octokit/rest';
 import { makeStyles } from '@material-ui/styles';
-import { Link as MuiLink, Typography } from '@material-ui/core';
+import { Link as MuiLink, Typography, Button } from '@material-ui/core';
 import { NextFunctionComponent } from 'next';
-import Link from 'next/link';
+import Link from 'components/Link';
 
 interface ContributionPageProps {
   issues: IssuesListForRepoResponseItem[];
@@ -12,9 +12,13 @@ interface ContributionPageProps {
 
 const useStyles = makeStyles(theme => ({
   container: {
-    display: 'flex',
-    flexDirection: 'column',
     margin: theme.spacing(2)
+  },
+  actions: {
+    marginTop: theme.spacing(2)
+  },
+  action: {
+    marginRight: theme.spacing(2)
   }
 }));
 
@@ -23,7 +27,7 @@ const ContributionPage: NextFunctionComponent<ContributionPageProps> = ({ issues
 
   return (
     <div className={classes.container}>
-      <Typography variant="overline">
+      <Typography>
         Trophy Hunter is{' '}
         <MuiLink
           href="https://github.com/lmachens/trophy-hunter-pubg/blob/master/LICENSE"
@@ -36,23 +40,26 @@ const ContributionPage: NextFunctionComponent<ContributionPageProps> = ({ issues
         <MuiLink href="https://github.com/lmachens/trophy-hunter-pubg" target="_blank">
           GitHub
         </MuiLink>
-        ,{' '}
-        <Link href="/contribution/issues/create">
-          <MuiLink>send feedback/report issues</MuiLink>
-        </Link>{' '}
-        or submit{' '}
-        <Link href="/contribution/trophies/create">
-          <MuiLink>trophy proposals</MuiLink>
-        </Link>
-        .
+        , <Link href="/contribution/issues/create">send feedback/report issues</Link> or submit{' '}
+        <Link href="/contribution/trophies/create">trophy proposals</Link>.
       </Typography>
       <Typography variant="subtitle1">Latest Requests</Typography>
       {issues.map(issue => (
         <MuiLink key={issue.id} href={issue.html_url} target="_blank">
-          {issue.title}
+          <div>{issue.title}</div>
         </MuiLink>
       ))}
       {issues.length === 0 && <Typography>No issues found</Typography>}
+      <div className={classes.actions}>
+        <Link href="/contribution/issues/create">
+          <Button className={classes.action} variant="contained">
+            Create Issue
+          </Button>
+        </Link>
+        <Link href="/contribution/trophies/create">
+          <Button variant="contained">Create Trophy</Button>
+        </Link>
+      </div>
     </div>
   );
 };

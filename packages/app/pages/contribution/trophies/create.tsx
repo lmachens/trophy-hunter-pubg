@@ -12,7 +12,8 @@ import {
   Divider,
   Link as MuiLink,
   FormHelperText,
-  Snackbar
+  Snackbar,
+  Breadcrumbs
 } from '@material-ui/core';
 import getGameIconsSvgPath from 'utilities/th-api/game-icons';
 import getTrophies, { Trophy } from 'utilities/th-api/trophies';
@@ -20,6 +21,7 @@ import TrophyProgress from 'components/TrophyProgress';
 import { createTrophyProposal } from 'utilities/octokit';
 import MonacoEditor, { ScriptLoad } from 'components/MonacoEditor';
 import { useAccount } from 'contexts/account';
+import Link from 'components/Link';
 
 interface CreateTrophyPageProps {
   trophies: Trophy[];
@@ -130,6 +132,14 @@ const CreateTrophyPage: NextFunctionComponent<CreateTrophyPageProps> = ({ trophi
     <>
       <ScriptLoad />
       <form className={classes.root} onSubmit={handleSubmit} autoComplete="off">
+        <Breadcrumbs aria-label="Breadcrumb">
+          <Link color="inherit" href="/contribution">
+            Contribution
+          </Link>
+          <Link color="textPrimary" aria-current="page" href="/contribution/trophies/create">
+            New Trophy
+          </Link>
+        </Breadcrumbs>
         <div className={classes.form}>
           <FormControl margin="normal" fullWidth>
             <InputLabel htmlFor="template">Trophy Template</InputLabel>

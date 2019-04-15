@@ -1,10 +1,5 @@
 import React, { FunctionComponent } from 'react';
 import { makeStyles } from '@material-ui/styles';
-import SubDrawer from 'components/SubDrawer';
-
-interface MainProps {
-  drawerContent?: React.ReactNode;
-}
 
 const useStyles = makeStyles({
   container: {
@@ -14,15 +9,10 @@ const useStyles = makeStyles({
   }
 });
 
-const Main: FunctionComponent<MainProps> = ({ children, drawerContent }) => {
+const Main: FunctionComponent = ({ children }) => {
   const classes = useStyles();
 
-  return (
-    <div className={classes.container}>
-      {drawerContent && <SubDrawer>{drawerContent}</SubDrawer>}
-      {children}
-    </div>
-  );
+  return <div className={classes.container}>{children}</div>;
 };
 
 export default Main;
