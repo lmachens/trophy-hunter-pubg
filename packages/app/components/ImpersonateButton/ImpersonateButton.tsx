@@ -6,7 +6,7 @@ import { makeStyles } from '@material-ui/styles';
 import { useAccount, useChangeAccount } from 'contexts/account';
 import { Player } from 'utilities/th-api/player';
 
-interface FavoritesButtonProps {
+interface ImpersonateButtonProps {
   player: Player;
 }
 
@@ -16,7 +16,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const FavoritesButton: FunctionComponent<FavoritesButtonProps> = ({ player }) => {
+const ImpersonateButton: FunctionComponent<ImpersonateButtonProps> = ({ player }) => {
   const classes = useStyles();
   const account = useAccount();
   const changeAccount = useChangeAccount();
@@ -50,4 +50,4 @@ const FavoritesButton: FunctionComponent<FavoritesButtonProps> = ({ player }) =>
   );
 };
 
-export default FavoritesButton;
+export default ImpersonateButton;

@@ -23,7 +23,7 @@ import getPlayer, { Player } from 'utilities/th-api/player';
 import SearchPage from './search';
 import { parseCookies } from 'nookies';
 import Link from 'components/Link';
-import FavoritesButton from 'components/FavoritesButton';
+import ImpersonateButton from 'components/ImpersonateButton';
 
 interface PlayerPageProps {
   fpp: boolean;
@@ -121,7 +121,7 @@ const PlayerPage: NextFunctionComponent<PlayerPageProps> = ({
             {player.name}
           </Link>
         </Breadcrumbs>
-        <FavoritesButton player={player} />
+        <ImpersonateButton player={player} />
       </Grid>
       <Grid item xs={12}>
         <Grid container spacing={2} alignItems="center">
