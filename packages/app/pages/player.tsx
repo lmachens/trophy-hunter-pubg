@@ -23,6 +23,7 @@ import getPlayer, { Player } from 'utilities/th-api/player';
 import SearchPage from './search';
 import { parseCookies } from 'nookies';
 import Link from 'components/Link';
+import FavoritesButton from 'components/FavoritesButton';
 
 interface PlayerPageProps {
   fpp: boolean;
@@ -45,6 +46,10 @@ const useStyles = makeStyles(theme => ({
   content: {
     flex: 1,
     marginTop: theme.spacing(1)
+  },
+  top: {
+    display: 'flex',
+    justifyContent: 'space-between'
   }
 }));
 
@@ -106,7 +111,7 @@ const PlayerPage: NextFunctionComponent<PlayerPageProps> = ({
 
   return (
     <Grid container spacing={2} className={classes.container} alignContent="flex-start">
-      <Grid item xs={12}>
+      <Grid item xs={12} className={classes.top}>
         <Breadcrumbs aria-label="Breadcrumb">
           <Link
             color="textPrimary"
@@ -116,6 +121,7 @@ const PlayerPage: NextFunctionComponent<PlayerPageProps> = ({
             {player.name}
           </Link>
         </Breadcrumbs>
+        <FavoritesButton player={player} />
       </Grid>
       <Grid item xs={12}>
         <Grid container spacing={2} alignItems="center">

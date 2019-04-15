@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/styles';
 import { IconButton, InputBase, MenuItem, Paper, Select, Snackbar } from '@material-ui/core';
 import Search from '@material-ui/icons/Search';
 import getPlayer from 'utilities/th-api/player';
-import { useChangeAccount } from 'contexts/account';
+import { useChangeAccount, useAccount } from 'contexts/account';
 import Router from 'next/router';
 import classNames from 'classnames';
 
@@ -45,6 +45,7 @@ const PlayerSearch: FunctionComponent<PlayerSearchProps> = ({ autoFocus, classNa
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
   const changeAccount = useChangeAccount();
+  const account = useAccount();
 
   const handlePlayerNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPlayerName(event.target.value.trim());
@@ -63,7 +64,9 @@ const PlayerSearch: FunctionComponent<PlayerSearchProps> = ({ autoFocus, classNa
     setLoading(true);
     getPlayer({ platform, playerName })
       .then(player => {
-        changeAccount({ platform, playerName, id: player.id });
+        if (!account) {
+          changeAccount({ platform, playerName, id: player.id });
+        }
         setPlayerName('');
         Router.push(`/player?platform=${player.platform}&playerName=${player.name}`);
       })
