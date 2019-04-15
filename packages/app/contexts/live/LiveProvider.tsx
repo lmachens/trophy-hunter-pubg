@@ -36,8 +36,16 @@ const LiveProvider: FunctionComponent = ({ children }) => {
     console.log('handleInfoUpdate', infoUpdate);
     if (infoUpdate.info && infoUpdate.info.me) {
       updatePlayer(infoUpdate.info.me.name);
+    }
+    if (infoUpdate.info.match_info) {
       setMatch({
         ...match,
+        trophyNames: [],
+        playerStats: {},
+        minStats: {},
+        maxStats: {},
+        avgStats: {},
+        mapName: infoUpdate.info.match_info.map,
         playerName: infoUpdate.info.me.name
       });
     }
@@ -45,8 +53,20 @@ const LiveProvider: FunctionComponent = ({ children }) => {
 
   const handleInfo = ({ status, res }: any) => {
     console.log('handleInfo', status, res);
-    if (status === 'success' && res && res.me) {
+    if (status === 'success' && res.me) {
       updatePlayer(res.me.name);
+    }
+    if (status === 'success' && res.match_info) {
+      setMatch({
+        ...match,
+        trophyNames: [],
+        playerStats: {},
+        minStats: {},
+        maxStats: {},
+        avgStats: {},
+        mapName: res.match_info.map,
+        playerName: res.me.name
+      });
     }
   };
 
