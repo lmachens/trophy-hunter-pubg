@@ -1,9 +1,10 @@
 import React, { FunctionComponent } from 'react';
-import { Table, TableBody, TableRow, TableCell } from '@material-ui/core';
+import { Table, TableBody, TableRow, TableCell, Typography, Grid } from '@material-ui/core';
 import { GameModeStats } from 'utilities/th-api/season-stats';
 import { makeStyles } from '@material-ui/styles';
 import millisToMinutesAndSeconds from 'utilities/millisToMinutesAndSeconds';
 import CardComponent from 'components/CardComponent';
+import RankIcon from 'components/RankIcon';
 
 interface PlayerStatsCardProps {
   stats: GameModeStats;
@@ -28,6 +29,10 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.down('xs')]: {
       whiteSpace: 'normal'
     }
+  },
+  rank: {
+    margin: 0,
+    width: '100%'
   }
 }));
 
@@ -41,6 +46,23 @@ const PlayerStatsCard: FunctionComponent<PlayerStatsCardProps> = ({
 
   return (
     <CardComponent headerBackgroundColor={headerBackgroundColor} title={title} icon={icon}>
+      <Grid
+        className={classes.rank}
+        container
+        alignItems="center"
+        justify="space-between"
+        spacing={2}
+      >
+        <Grid item>
+          <RankIcon rankPointsTitle={stats.rankPointsTitle} />
+        </Grid>
+        <Grid item>
+          <Typography variant="h4">{stats.rankPoints.toFixed()} SP</Typography>
+        </Grid>
+        <Grid item>
+          <Typography variant="h6">{stats.roundsPlayed} Games</Typography>
+        </Grid>
+      </Grid>
       <Table>
         <TableBody>
           <TableRow className={classes.row}>
@@ -49,7 +71,7 @@ const PlayerStatsCard: FunctionComponent<PlayerStatsCardProps> = ({
               {((stats.wins / stats.roundsPlayed) * 100 || 0).toFixed(1)}%
             </TableCell>
             <TableCell className={classes.caption}>Top 10%</TableCell>
-            <TableCell>{((stats.top10s / stats.roundsPlayed) * 100).toFixed(1)}%</TableCell>
+            <TableCell>{((stats.top10s / stats.roundsPlayed) * 100 || 0).toFixed(1)}%</TableCell>
           </TableRow>
           <TableRow className={classes.row}>
             <TableCell className={classes.caption}>Longest Kill</TableCell>
