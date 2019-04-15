@@ -49,7 +49,7 @@ const PlayerStatsCard: FunctionComponent<PlayerStatsCardProps> = ({
               {((stats.wins / stats.roundsPlayed) * 100 || 0).toFixed(1)}%
             </TableCell>
             <TableCell className={classes.caption}>Top 10%</TableCell>
-            <TableCell>{stats.top10s.toFixed(1)}%</TableCell>
+            <TableCell>{((stats.top10s / stats.roundsPlayed) * 100).toFixed(1)}%</TableCell>
           </TableRow>
           <TableRow className={classes.row}>
             <TableCell className={classes.caption}>Longest Kill</TableCell>
