@@ -1,8 +1,10 @@
 import React, { FunctionComponent, useState, useEffect, useRef } from 'react';
 import { IconButton, Badge, Menu, MenuItem, Divider } from '@material-ui/core';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import NotificationsIcon from '@material-ui/icons/Notifications';
 import { useAccount, useChangeAccount } from 'contexts/account';
 import getPlayer from 'utilities/th-api/player';
+import Link from 'components/Link';
+import MatchListItem from 'components/MatchListItem';
 
 const NotificationsBadge: FunctionComponent = () => {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
@@ -28,7 +30,6 @@ const NotificationsBadge: FunctionComponent = () => {
             platform: account.platform,
             playerName: account.playerName
           });
-          console.log(player.matches[0], account.recentMatch);
           if (player.matches[0] !== account.recentMatch) {
             const oldIndex = player.matches.indexOf(account.recentMatch);
             const newMatches = player.matches.slice(
@@ -59,7 +60,7 @@ const NotificationsBadge: FunctionComponent = () => {
         onClick={handleMenu}
       >
         <Badge badgeContent={notifications.length} color="secondary">
-          <AccountCircleIcon />
+          <NotificationsIcon />
         </Badge>
       </IconButton>
       <Menu
@@ -75,14 +76,29 @@ const NotificationsBadge: FunctionComponent = () => {
         }}
         open={open}
         onClose={handleClose}
+        disableAutoFocusItem
       >
-        <MenuItem onClick={handleClose}>{account ? account.playerName : 'Unknown'}</MenuItem>
+        <Link href="/">
+          <MenuItem onClick={handleClose}>{account ? account.playerName : 'Unknown'}</MenuItem>
+        </Link>
         <Divider />
-        {notifications.map(notification => (
-          <MenuItem key={notification} onClick={handleClose}>
-            {notification}
-          </MenuItem>
-        ))}
+        {account &&
+          notifications.map(matchId => (
+            <Link
+              key={matchId}
+              href={`/match?platform=${account.platform}&matchId=${matchId}&playerName=${
+                account.playerName
+              }`}
+            >
+              <MenuItem onClick={handleClose}>
+                <MatchListItem
+                  matchId={matchId}
+                  platform={account.platform}
+                  playerName={account.playerName}
+                />
+              </MenuItem>
+            </Link>
+          ))}
         {notifications.length === 0 && <MenuItem onClick={handleClose}>No Notifications</MenuItem>}
       </Menu>
     </>

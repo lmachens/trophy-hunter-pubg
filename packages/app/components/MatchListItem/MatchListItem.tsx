@@ -2,7 +2,6 @@ import { makeStyles } from '@material-ui/styles';
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import getMatch, { Match } from 'utilities/th-api/match';
 import { ListItem, ListItemText, Typography } from '@material-ui/core';
-import { Player } from 'utilities/th-api/player';
 import timeSince from 'utilities/timeSince';
 import millisToMinutesAndSeconds from 'utilities/millisToMinutesAndSeconds';
 import TrophyProgress from 'components/TrophyProgress';
@@ -10,8 +9,9 @@ import { Trophy } from 'utilities/th-api/trophies';
 
 interface MatchListItemProps {
   matchId: string;
-  player: Player;
-  trophies: Trophy[];
+  platform: string;
+  playerName: string;
+  trophies?: Trophy[];
 }
 
 const useStyles = makeStyles(theme => ({
@@ -45,7 +45,12 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const MatchListItem: FunctionComponent<MatchListItemProps> = ({ matchId, player, trophies }) => {
+const MatchListItem: FunctionComponent<MatchListItemProps> = ({
+  matchId,
+  platform,
+  playerName,
+  trophies
+}) => {
   const classes = useStyles();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
@@ -55,9 +60,9 @@ const MatchListItem: FunctionComponent<MatchListItemProps> = ({ matchId, player,
     setLoading(true);
     setError(false);
     return getMatch({
-      platform: player.platform,
+      platform,
       matchId,
-      playerName: player.name
+      playerName
     })
       .then(match => {
         setMatch(match);
@@ -89,15 +94,17 @@ const MatchListItem: FunctionComponent<MatchListItemProps> = ({ matchId, player,
               {millisToMinutesAndSeconds(match.duration)}
             </Typography>
           </div>
-          <div className={classes.trophies}>
-            {match.trophyNames.map(trophyName => (
-              <TrophyProgress
-                key={trophyName}
-                trophy={trophies.find(trophy => trophy.name === trophyName)}
-                achieved={true}
-              />
-            ))}
-          </div>
+          {trophies && (
+            <div className={classes.trophies}>
+              {match.trophyNames.map(trophyName => (
+                <TrophyProgress
+                  key={trophyName}
+                  trophy={trophies.find(trophy => trophy.name === trophyName)}
+                  achieved={true}
+                />
+              ))}
+            </div>
+          )}
           <Typography className={classes.place}>
             #{match.playerStats.winPlace}
             <span className={classes.placeCount}>/{match.participantCount}</span>

@@ -37,7 +37,12 @@ const PlayerMatchesCard: FunctionComponent<PlayerMatchesCardProps> = ({ player, 
                 player.name
               }`}
             >
-              <MatchListItem matchId={matchId} player={player} trophies={trophies} />
+              <MatchListItem
+                matchId={matchId}
+                platform={player.platform}
+                playerName={player.name}
+                trophies={trophies}
+              />
             </Link>
           ))}
           <Button fullWidth onClick={handleMore}>
