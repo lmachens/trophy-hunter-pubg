@@ -49,6 +49,8 @@ const PlayerSearch: FunctionComponent<PlayerSearchProps> = ({ autoFocus, classNa
 
   const handlePlayerNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPlayerName(event.target.value.trim());
+    setError(null);
+    setLoading(false);
   };
 
   const handlePlatformChange = (event: React.ChangeEvent<HTMLSelectElement>) => {

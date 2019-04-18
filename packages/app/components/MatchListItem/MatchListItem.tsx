@@ -12,6 +12,7 @@ interface MatchListItemProps {
   platform: string;
   playerName: string;
   trophies?: Trophy[];
+  onClick?(): void;
 }
 
 const useStyles = makeStyles(theme => ({
@@ -49,7 +50,8 @@ const MatchListItem: FunctionComponent<MatchListItemProps> = ({
   matchId,
   platform,
   playerName,
-  trophies
+  trophies,
+  onClick
 }) => {
   const classes = useStyles();
   const [loading, setLoading] = useState(false);
@@ -81,7 +83,7 @@ const MatchListItem: FunctionComponent<MatchListItemProps> = ({
   }, [matchId]);
 
   return (
-    <ListItem button onClick={error ? handleRefresh(matchId) : undefined}>
+    <ListItem button onClick={error ? handleRefresh(matchId) : onClick}>
       {loading && <ListItemText primary="Loading..." />}
       {!loading && error && <ListItemText primary="Click to refresh" />}
       {!loading && !error && match && (

@@ -100,6 +100,9 @@ const useStyles = makeStyles(theme => ({
     zIndex: 1,
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1)
+  },
+  notificationsBadge: {
+    zIndex: 1
   }
 }));
 
@@ -156,7 +159,7 @@ const App: FunctionComponent<AppLayoutProps> = ({ children, router }) => {
           <Hidden xsDown implementation="css" className={classes.playerSearch}>
             <PlayerSearch />
           </Hidden>
-          <NotificationsBadge />
+          <NotificationsBadge className={classes.notificationsBadge} />
           {isOverwolfApp && (
             <>
               <div className={classes.move} onMouseDown={handleMouseDown} />
