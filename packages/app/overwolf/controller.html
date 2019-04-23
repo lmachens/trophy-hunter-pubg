@@ -1,0 +1,35 @@
+<script>
+  const openWindow = windowName => {
+    overwolf.windows.obtainDeclaredWindow(windowName, result => {
+      if (result.status === 'success') {
+        const windowId = result.window.id;
+        overwolf.windows.restore(windowId, {});
+      }
+    });
+  };
+
+  const handleAppLaunch = () => {
+    openWindow('MainWindow');
+    overwolf.games.getRunningGameInfo(gameInfo => {
+      if (gameInfo && gameInfo.isRunning) {
+        openWindow('OverlayWindow');
+      }
+    });
+  };
+
+  overwolf.extensions.onAppLaunchTriggered.addListener(handleAppLaunch);
+
+  overwolf.settings.registerHotKey('th_pubg', hotkey => {
+    if (hotkey.status == 'success') {
+      overwolf.windows.obtainDeclaredWindow('OverlayWindow', result => {
+        if (result.window.isVisible) {
+          overwolf.windows.hide(result.window.id, () => {});
+        } else {
+          overwolf.windows.restore(result.window.id, () => {});
+        }
+      });
+    }
+  });
+
+  handleAppLaunch();
+</script>

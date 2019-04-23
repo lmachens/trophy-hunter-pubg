@@ -114,20 +114,6 @@ const LiveProvider: FunctionComponent = ({ children }) => {
 
   useEffect(() => {
     if (typeof overwolf !== 'undefined') {
-      overwolf.settings.registerHotKey('th_pubg', (hotkey: any) => {
-        if (hotkey.status == 'success') {
-          overwolf.windows.getCurrentWindow((result: any) => {
-            if (result.status == 'success') {
-              if (result.window.isVisible) {
-                overwolf.windows.hide(result.window.id, () => {});
-              } else {
-                overwolf.windows.restore(result.window.id, () => {});
-              }
-            }
-          });
-        }
-      });
-
       overwolf.games.onGameInfoUpdated.addListener(handleGameInfoUpdated);
       overwolf.games.getRunningGameInfo(handleRunningGameInfo);
 

@@ -42,8 +42,33 @@
     "externally_connectable": {
       "matches": ["https://pubg-api.th.gl"]
     },
-    "start_window": "MainWindow",
+    "start_window": "ControllerWindow",
     "windows": {
+      "ControllerWindow": {
+        "file": "controller.html",
+        "min_size": {
+          "width": 0,
+          "height": 0
+        },
+        "max_size": {
+          "width": 0,
+          "height": 0
+        },
+        "size": {
+          "width": 0,
+          "height": 0
+        },
+        "start_position": {
+          "top": 0,
+          "left": 0
+        },
+        "transparent": true,
+        "clickthrough": true,
+        "show_in_taskbar": false,
+        "desktop_only": true,
+        "grab_keyboard_focus": false,
+        "grab_focus_on_desktop": false
+      },
       "MainWindow": {
         "file": "index.html",
         "transparent": true,
@@ -62,6 +87,10 @@
         "size": {
           "width": 660,
           "height": 670
+        },
+        "start_position": {
+          "top": 100,
+          "left": 100
         },
         "block_top_window_navigation": true,
         "mute": true,
@@ -85,6 +114,10 @@
         "size": {
           "width": 660,
           "height": 670
+        },
+        "start_position": {
+          "top": 100,
+          "left": 100
         },
         "block_top_window_navigation": true,
         "mute": true,
