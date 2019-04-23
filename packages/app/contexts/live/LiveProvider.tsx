@@ -25,7 +25,7 @@ const LiveProvider: FunctionComponent = ({ children }) => {
   const [match, setMatch] = useState();
 
   const updatePlayer = (playerName: string) => {
-    if (!account || account.playerName !== playerName) {
+    if (playerName && (!account || account.playerName !== playerName)) {
       getPlayer({ platform: 'Steam', playerName }).then(player => {
         changeAccount({
           platform: 'Steam',
