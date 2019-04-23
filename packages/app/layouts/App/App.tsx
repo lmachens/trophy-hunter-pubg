@@ -25,6 +25,10 @@ const useStyles = makeStyles(theme => ({
     backgroundImage: 'url(/static/backgrounds/gun-metal.png)',
     zIndex: theme.zIndex.drawer + 2
   },
+  banner: {
+    display: 'flex',
+    alignItems: 'center'
+  },
   logo: {
     height: 40,
     verticalAlign: 'middle',
@@ -151,10 +155,14 @@ const App: FunctionComponent<AppLayoutProps> = ({ children, router }) => {
           >
             <MenuIcon />
           </IconButton>
-          <Link href="/">
-            <img className={classes.logo} src="/static/text.png" />
-          </Link>
-          <img className={classes.game} src="/static/pubg.png" />
+          <Hidden xsDown implementation="css">
+            <div className={classes.banner}>
+              <Link href="/">
+                <img className={classes.logo} src="/static/text.png" />
+              </Link>
+              <img className={classes.game} src="/static/pubg.png" />
+            </div>
+          </Hidden>
           <div className={classes.grow} />
           <Hidden xsDown implementation="css" className={classes.playerSearch}>
             <PlayerSearch />

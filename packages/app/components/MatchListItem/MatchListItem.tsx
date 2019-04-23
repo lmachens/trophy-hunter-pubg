@@ -20,7 +20,8 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     alignItems: 'center',
     width: '100%',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    color: theme.palette.common.white
   },
   timeSince: {
     fontSize: '0.8rem'
@@ -28,17 +29,12 @@ const useStyles = makeStyles(theme => ({
   duration: {},
   place: {
     fontSize: '1.2rem',
-    minWidth: 80,
     textAlign: 'right'
   },
   placeCount: {
     fontSize: '0.8rem'
   },
-  general: {
-    minWidth: 100
-  },
   trophies: {
-    color: theme.palette.common.white,
     overflowX: 'auto',
     display: 'flex',
     flex: 1,
@@ -88,7 +84,7 @@ const MatchListItem: FunctionComponent<MatchListItemProps> = ({
       {!loading && error && <ListItemText primary="Click to refresh" />}
       {!loading && !error && match && (
         <div className={classes.container}>
-          <div className={classes.general}>
+          <div>
             <Typography className={classes.timeSince}>
               {timeSince(new Date(match.createdAt).getTime())} ago
             </Typography>

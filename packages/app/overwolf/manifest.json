@@ -53,17 +53,17 @@
         "focus_game_takeover": "ReleaseOnHidden",
         "focus_game_takeover_release_hotkey": "th_pubg",
         "in_game_only": false,
-        "desktop_only": false,
+        "desktop_only": true,
         "native_window": true,
         "use_os_windowing": true,
         "popup_blocker": true,
         "min_size": {
-          "width": 430,
+          "width": 450,
           "height": 420
         },
         "size": {
-          "width": 1222,
-          "height": 720
+          "width": 660,
+          "height": 670
         },
         "block_top_window_navigation": true,
         "mute": true,

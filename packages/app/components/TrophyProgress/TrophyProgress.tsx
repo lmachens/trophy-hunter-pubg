@@ -25,11 +25,13 @@ const TrophyProgress: FunctionComponent<TrophyProgressProps> = ({ achieved, trop
 
   return (
     <Tooltip title={`${trophy.title}: ${trophy.description}`}>
-      <TrophyIcon
-        className={classes.trophy}
-        trophy={trophy}
-        color={achieved ? 'inherit' : 'disabled'}
-      />
+      <div>
+        <TrophyIcon
+          className={classes.trophy}
+          trophy={trophy}
+          color={achieved ? 'inherit' : 'disabled'}
+        />
+      </div>
     </Tooltip>
   );
 };

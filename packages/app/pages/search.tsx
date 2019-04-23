@@ -11,7 +11,7 @@ const useStyles = makeStyles(theme => ({
     backgroundImage: 'url(/static/backgrounds/main.jpg)',
     backgroundPosition: 'center right',
     backgroundSize: 'cover',
-    padding: theme.spacing(3),
+    padding: theme.spacing(2),
     height: '100%',
     display: 'flex',
     flexDirection: 'column',

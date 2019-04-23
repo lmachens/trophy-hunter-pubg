@@ -28,7 +28,7 @@ const Link: FunctionComponent<LinkProps> = ({ children, href, ...other }) => {
 
   return (
     <NextLink href={href}>
-      <MuiLink className={classes.link} {...other}>
+      <MuiLink className={classes.link} color="inherit" {...other}>
         {children}
       </MuiLink>
     </NextLink>

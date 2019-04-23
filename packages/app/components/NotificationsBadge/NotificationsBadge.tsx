@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useState, useEffect, useRef } from 'react';
-import { IconButton, Badge, Menu, MenuItem, Divider, Typography } from '@material-ui/core';
+import { IconButton, Badge, Menu, MenuItem, Typography } from '@material-ui/core';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import { useAccount, useChangeAccount } from 'contexts/account';
 import getPlayer from 'utilities/th-api/player';
@@ -11,16 +11,17 @@ interface NotificationsBadgeProps {
   className?: string;
 }
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
   playerName: {
     overflow: 'hidden',
     textOverflow: 'ellipsis',
-    whiteSpace: 'nowrap'
+    whiteSpace: 'nowrap',
+    margin: theme.spacing(1)
   },
   menuPaper: {
     minWidth: 260
   }
-});
+}));
 
 const NotificationsBadge: FunctionComponent<NotificationsBadgeProps> = ({ className }) => {
   const classes = useStyles();
@@ -74,7 +75,9 @@ const NotificationsBadge: FunctionComponent<NotificationsBadgeProps> = ({ classN
 
   return (
     <>
-      <Typography className={classes.playerName}>{account ? account.playerName : ''}</Typography>
+      <Link href="/">
+        <Typography className={classes.playerName}>{account ? account.playerName : ''}</Typography>
+      </Link>
       <IconButton
         className={className}
         color="inherit"
@@ -96,10 +99,6 @@ const NotificationsBadge: FunctionComponent<NotificationsBadgeProps> = ({ classN
           paper: classes.menuPaper
         }}
       >
-        <Link href="/">
-          <MenuItem onClick={handleClose}>{account ? account.playerName : 'Unknown'}</MenuItem>
-        </Link>
-        <Divider />
         {account &&
           notifications.slice(0, 5).map(matchId => (
             <Link
