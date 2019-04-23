@@ -3,7 +3,7 @@
   "type": "WebApp",
   "meta": {
     "name": "Trophy Hunter PUBG",
-    "version": "1.1.5",
+    "version": "1.2.0",
     "minimum-overwolf-version": "0.108.209.0",
     "author": "Leon Machens",
     "icon": "IconMouseOver.png",
@@ -50,12 +50,33 @@
         "resizable": false,
         "show_in_taskbar": true,
         "keep_window_location": true,
-        "focus_game_takeover": "ReleaseOnHidden",
-        "focus_game_takeover_release_hotkey": "th_pubg",
         "in_game_only": false,
         "desktop_only": true,
         "native_window": true,
         "use_os_windowing": true,
+        "popup_blocker": true,
+        "min_size": {
+          "width": 450,
+          "height": 420
+        },
+        "size": {
+          "width": 660,
+          "height": 670
+        },
+        "block_top_window_navigation": true,
+        "mute": true,
+        "enable_top_isolation": true
+      },
+      "OverlayWindow": {
+        "file": "index.html",
+        "transparent": true,
+        "resizable": false,
+        "show_in_taskbar": false,
+        "keep_window_location": true,
+        "focus_game_takeover": "ReleaseOnHidden",
+        "focus_game_takeover_release_hotkey": "th_pubg",
+        "in_game_only": true,
+        "desktop_only": false,
         "popup_blocker": true,
         "min_size": {
           "width": 450,
