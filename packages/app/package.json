@@ -9,7 +9,7 @@
   "scripts": {
     "dev": "next",
     "build": "next build",
-    "export": "next build && next export",
+    "export": "cross-env NODE_ENV=production next build && next export",
     "start": "next start"
   },
   "dependencies": {
@@ -19,6 +19,7 @@
     "@octokit/rest": "^16.25.0",
     "axios": "^0.18.0",
     "classnames": "^2.2.6",
+    "cross-env": "^5.2.0",
     "dotenv": "^7.0.0",
     "jdenticon": "^2.1.1",
     "jss": "^10.0.0-alpha.11",
