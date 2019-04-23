@@ -99,12 +99,14 @@ const useStyles = makeStyles(theme => ({
   playerSearch: {
     zIndex: 1,
     marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1)
+    marginRight: theme.spacing(1),
+    position: 'relative'
   },
   foreground: {
     zIndex: 1,
     display: 'flex',
-    alignItems: 'center'
+    alignItems: 'center',
+    position: 'relative'
   }
 }));
 
@@ -162,8 +164,8 @@ const App: FunctionComponent<AppLayoutProps> = ({ children, router }) => {
             </div>
           </Hidden>
           <div className={classes.grow} />
-          <Hidden xsDown implementation="css" className={classes.playerSearch}>
-            <PlayerSearch />
+          <Hidden xsDown implementation="css">
+            <PlayerSearch className={classes.playerSearch} />
           </Hidden>
           <NotificationsBadge className={classes.foreground} />
           {isOverwolfApp && (
