@@ -5,7 +5,9 @@
   "build": {
     "env": {
       "TH_PUBG_API": "https://pubg-api.th.gl",
-      "GITHUB_TOKEN": "@github_token"
+      "GITHUB_TOKEN": "@github_token",
+      "MATOMO_ID": "1",
+      "MATOMO_URL": "https://matomo.machens.cloud/matomo.php"
     }
   },
   "builds": [{ "src": "next.config.js", "use": "@now/next" }]

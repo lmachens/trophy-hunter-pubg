@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/camelcase */
 import { ThemeProvider } from '@material-ui/styles';
 import App, { Container, NextAppContext } from 'next/app';
 import Head from 'next/head';
@@ -12,11 +13,24 @@ import { parseCookies } from 'nookies';
 import { AccountProvider } from 'contexts/account';
 import { Account } from 'contexts/account';
 import { LiveProvider } from 'contexts/live';
+import matomo from 'utilities/matomo';
 
 NProgress.configure({ parent: '#__next', showSpinner: false });
-Router.events.on('routeChangeStart', () => {
+if (typeof window !== 'undefined') {
+  matomo.track({
+    url: location.href,
+    action_name: location.pathname.substr(1) || 'player'
+  });
+}
+Router.events.on('routeChangeStart', (url: string) => {
+  console.log(url);
   NProgress.start();
+  matomo.track({
+    url: `${window.origin}${url}`,
+    action_name: url.substr(1).split('?')[0] || 'player'
+  });
 });
+
 Router.events.on('routeChangeComplete', () => {
   const main = document.getElementById('main');
   if (main) {

@@ -23,7 +23,9 @@ module.exports = phase => {
     withCSS({
       env: {
         TH_PUBG_API: process.env.TH_PUBG_API,
-        GITHUB_TOKEN: process.env.GITHUB_TOKEN
+        GITHUB_TOKEN: process.env.GITHUB_TOKEN,
+        MATOMO_ID: process.env.MATOMO_ID,
+        MATOMO_URL: process.env.MATOMO_URL
       },
       exportPathMap: (defaultPathMap, { dev, dir, outDir, distDir, buildId }) => {
         if (!dev && phase !== PHASE_PRODUCTION_SERVER && !process.env.NOW_REGION) {

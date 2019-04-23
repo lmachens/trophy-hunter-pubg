@@ -23,6 +23,7 @@
     "dotenv": "^7.0.0",
     "jdenticon": "^2.1.1",
     "jss": "^10.0.0-alpha.11",
+    "matomo-tracker": "^2.2.1",
     "monaco-editor": "^0.16.2",
     "next": "^8.1.0",
     "nookies": "^2.0.4",
