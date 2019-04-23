@@ -9,10 +9,11 @@
   };
 
   const handleAppLaunch = () => {
-    openWindow('MainWindow');
     overwolf.games.getRunningGameInfo(gameInfo => {
-      if (gameInfo && gameInfo.isRunning) {
+      if (gameInfo && gameInfo.isRunning && gameInfo.isInFocus) {
         openWindow('OverlayWindow');
+      } else {
+        openWindow('MainWindow');
       }
     });
   };

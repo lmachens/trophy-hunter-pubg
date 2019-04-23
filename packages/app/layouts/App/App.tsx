@@ -25,10 +25,6 @@ const useStyles = makeStyles(theme => ({
     backgroundImage: 'url(/static/backgrounds/gun-metal.png)',
     zIndex: theme.zIndex.drawer + 2
   },
-  banner: {
-    display: 'flex',
-    alignItems: 'center'
-  },
   logo: {
     height: 40,
     verticalAlign: 'middle',
@@ -105,8 +101,10 @@ const useStyles = makeStyles(theme => ({
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1)
   },
-  notificationsBadge: {
-    zIndex: 1
+  foreground: {
+    zIndex: 1,
+    display: 'flex',
+    alignItems: 'center'
   }
 }));
 
@@ -156,7 +154,7 @@ const App: FunctionComponent<AppLayoutProps> = ({ children, router }) => {
             <MenuIcon />
           </IconButton>
           <Hidden xsDown implementation="css">
-            <div className={classes.banner}>
+            <div className={classes.foreground}>
               <Link href="/">
                 <img className={classes.logo} src="/static/text.png" />
               </Link>
@@ -167,7 +165,7 @@ const App: FunctionComponent<AppLayoutProps> = ({ children, router }) => {
           <Hidden xsDown implementation="css" className={classes.playerSearch}>
             <PlayerSearch />
           </Hidden>
-          <NotificationsBadge className={classes.notificationsBadge} />
+          <NotificationsBadge className={classes.foreground} />
           {isOverwolfApp && (
             <>
               <div className={classes.move} onMouseDown={handleMouseDown} />

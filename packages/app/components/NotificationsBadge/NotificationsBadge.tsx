@@ -74,12 +74,11 @@ const NotificationsBadge: FunctionComponent<NotificationsBadgeProps> = ({ classN
   }, [account && account.playerName]);
 
   return (
-    <>
+    <div className={className}>
       <Link href="/">
         <Typography className={classes.playerName}>{account ? account.playerName : ''}</Typography>
       </Link>
       <IconButton
-        className={className}
         color="inherit"
         aria-owns={open ? 'menu-appbar' : undefined}
         aria-haspopup="true"
@@ -122,7 +121,7 @@ const NotificationsBadge: FunctionComponent<NotificationsBadgeProps> = ({ classN
           </Link>
         )}
       </Menu>
-    </>
+    </div>
   );
 };
 
