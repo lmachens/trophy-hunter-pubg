@@ -1,4 +1,4 @@
-<a href='https://pubg.th.gl/'><img src="./.github/logo.png" alt="Trophy Hunter" align="right" height="40" /></a>
+<a href="https://pubg.th.gl/" target="_blank"><img src="./.github/logo.png" alt="Trophy Hunter" align="right" height="40" /></a>
 
 # Trophy Hunter PUBG
 
@@ -30,11 +30,11 @@ Trophy Hunter PUBG is based on [Next.js](https://nextjs.org/) and [Zeit Now](htt
 
 ### App
 
-See [App Readme](https://github.com/lmachens/trophy-hunter-pubg/tree/master/packages/app)
+See [App Readme](https://github.com/lmachens/trophy-hunter-pubg/blob/master/packages/app/README.md)
 
 ### API
 
-See [API Readme](https://github.com/lmachens/trophy-hunter-pubg/tree/master/packages/api)
+See [API Readme](https://github.com/lmachens/trophy-hunter-pubg/blob/master/packages/api/README.md)
 
 ## Contribute
 
