@@ -40,7 +40,7 @@
       "googlesyndication": "http"
     },
     "externally_connectable": {
-      "matches": ["https://pubg-api.th.gl", "https//matomo.machens.cloud"]
+      "matches": ["https://pubg-api.th.gl", "https://matomo.machens.cloud"]
     },
     "start_window": "ControllerWindow",
     "windows": {
