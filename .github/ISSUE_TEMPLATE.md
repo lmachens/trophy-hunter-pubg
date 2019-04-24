@@ -1,0 +1,18 @@
+- **I'm submitting a ...**
+
+  - [ ] bug report
+  - [ ] feature request
+  - [ ] support request
+
+- **for the ...**
+
+  - [ ] Overwolf app
+  - [ ] Website (pubg.th.gl)
+
+- **What is the current behavior?** (you can paste screenshots here)
+
+* **What is the expected behavior?**
+
+- **If the current behavior is a bug, please provide the steps to reproduce the problem** (e.g. player name, region, match mode)
+
+* **Other information** (e.g. detailed explanation, stacktraces, related issues, suggestions how to fix, links for us to have context, eg. stackoverflow, patch notes, etc)

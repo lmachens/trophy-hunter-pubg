@@ -19,7 +19,8 @@ NProgress.configure({ parent: '#__next', showSpinner: false });
 if (typeof window !== 'undefined') {
   matomo.track({
     url: location.href,
-    action_name: location.pathname.substr(1) || 'player'
+    action_name: location.pathname.substr(1) || 'player',
+    urlref: document.referrer
   });
 }
 Router.events.on('routeChangeStart', (url: string) => {
