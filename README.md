@@ -1,4 +1,4 @@
-<a href='https://pubg.th.gl/'><img src="./.github/logo.png" alt="Trophy Hunter" align="right" height="211" /></a>
+<a href='https://pubg.th.gl/'><img src="./.github/logo.png" alt="Trophy Hunter" align="right" height="40" /></a>
 
 # Trophy Hunter PUBG
 
