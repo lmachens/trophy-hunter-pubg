@@ -1,5 +1,13 @@
 import React, { FunctionComponent } from 'react';
-import { Table, TableBody, TableRow, TableCell, Typography, Grid } from '@material-ui/core';
+import {
+  Table,
+  TableBody,
+  TableRow,
+  TableCell,
+  Typography,
+  Grid,
+  Tooltip
+} from '@material-ui/core';
 import { GameModeStats } from 'utilities/th-api/season-stats';
 import { makeStyles } from '@material-ui/styles';
 import millisToMinutesAndSeconds from 'utilities/millisToMinutesAndSeconds';
@@ -57,7 +65,9 @@ const PlayerStatsCard: FunctionComponent<PlayerStatsCardProps> = ({
           <RankIcon rankPointsTitle={stats.rankPointsTitle} />
         </Grid>
         <Grid item>
-          <Typography variant="h4">{stats.rankPoints.toFixed()} SP</Typography>
+          <Tooltip title="Survival Points">
+            <Typography variant="h4">{stats.rankPoints.toFixed()} SP</Typography>
+          </Tooltip>
         </Grid>
         <Grid item>
           <Typography variant="h6">{stats.roundsPlayed} Games</Typography>

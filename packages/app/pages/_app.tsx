@@ -23,7 +23,6 @@ if (typeof window !== 'undefined') {
   });
 }
 Router.events.on('routeChangeStart', (url: string) => {
-  console.log(url);
   NProgress.start();
   matomo.track({
     url: `${window.origin}${url}`,

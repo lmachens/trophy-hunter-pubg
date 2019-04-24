@@ -34,7 +34,17 @@ const ImpersonateButton: FunctionComponent<ImpersonateButtonProps> = ({ player }
   };
 
   return (
-    <Tooltip title={isFavorite ? 'This is your player' : `Impersonate as ${player.name}`}>
+    <Tooltip
+      title={
+        <>
+          {isFavorite
+            ? `Already impersonated as ${player.name}.`
+            : `Impersonate as ${player.name}.`}
+          <br />
+          You will receive notifications and load this player on start.
+        </>
+      }
+    >
       <div>
         <Button
           variant="contained"
