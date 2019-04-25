@@ -7,6 +7,11 @@ import gameIcons from './endpoints/game-icons';
 import seasons from './endpoints/seasons';
 import seasonStats from './endpoints/season-stats';
 import { parse } from 'url';
+import dotenv from 'dotenv';
+
+dotenv.config({
+  path: '.env'
+});
 
 if (!process.env.PUBG_API_KEY) {
   throw new Error(`No process.env.PUBG_API_KEY set. Set env PUBG_API_KEY="xxx" first`);
