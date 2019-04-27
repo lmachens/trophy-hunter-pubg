@@ -173,7 +173,7 @@ PlayerPage.getInitialProps = async ctx => {
     typeof playerNameQuery !== 'string' ||
     Array.isArray(seasonId)
   ) {
-    const { thPubg = null } = ctx.req && ctx.req.headers ? parseCookies(ctx) : parseCookies();
+    const { thPubg = null } = parseCookies(ctx);
 
     if (!thPubg || Array.isArray(seasonId)) {
       return { fpp: !!fpp, showPlayerSearch: true };

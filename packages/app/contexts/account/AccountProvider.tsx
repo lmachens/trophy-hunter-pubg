@@ -7,12 +7,15 @@ interface AccountProviderProps {
   defaultAccount?: Account;
 }
 
-const AccountProvider: FunctionComponent<AccountProviderProps> = ({ children, defaultAccount }) => {
+const AccountProvider: FunctionComponent<AccountProviderProps> = (
+  { children, defaultAccount },
+  ctx
+) => {
   const [account, setAccount] = useState(defaultAccount);
 
   const changeAccount = (newAccount: Account) => {
     setCookie(
-      null,
+      ctx,
       'thPubg',
       `${newAccount.platform};${newAccount.playerName};${newAccount.recentMatch}`,
       {
