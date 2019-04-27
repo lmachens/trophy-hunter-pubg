@@ -10,7 +10,8 @@ import {
   FormControlLabel,
   Checkbox,
   Grid,
-  Breadcrumbs
+  Breadcrumbs,
+  Theme
 } from '@material-ui/core';
 import getSeasonStats, { SeasonStats } from 'utilities/th-api/season-stats';
 import { makeStyles } from '@material-ui/styles';
@@ -35,7 +36,7 @@ interface PlayerPageProps {
   showPlayerSearch: boolean;
 }
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme: Theme) => ({
   container: {
     margin: theme.spacing(2)
   },

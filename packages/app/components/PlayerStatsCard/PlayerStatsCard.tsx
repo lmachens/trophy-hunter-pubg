@@ -6,7 +6,8 @@ import {
   TableCell,
   Typography,
   Grid,
-  Tooltip
+  Tooltip,
+  Theme
 } from '@material-ui/core';
 import { GameModeStats } from 'utilities/th-api/season-stats';
 import { makeStyles } from '@material-ui/styles';
@@ -21,7 +22,7 @@ interface PlayerStatsCardProps {
   icon: React.ReactNode;
 }
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme: Theme) => ({
   row: {
     backgroundColor: '#444',
     '&:nth-of-type(odd)': {

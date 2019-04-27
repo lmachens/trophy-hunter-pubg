@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useState } from 'react';
 import { makeStyles } from '@material-ui/styles';
-import { IconButton, InputBase, MenuItem, Paper, Select, Snackbar } from '@material-ui/core';
+import { IconButton, InputBase, MenuItem, Paper, Select, Snackbar, Theme } from '@material-ui/core';
 import Search from '@material-ui/icons/Search';
 import getPlayer from 'utilities/th-api/player';
 import { useChangeAccount, useAccount } from 'contexts/account';
@@ -12,7 +12,7 @@ interface PlayerSearchProps {
   className?: string;
 }
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme: Theme) => ({
   paper: {
     padding: '2px 4px',
     display: 'flex',

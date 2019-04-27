@@ -195,13 +195,3 @@ const survivalTitles = {
 };
 
 export default survivalTitles;
-
-const getSurvivalTitle = (rankPointsTitle: string) => {
-  if (rankPointsTitle === '') {
-    return 'UNKNOWN';
-  }
-  const titleLevel = rankPointsTitle.split('-');
-  if (titleLevel.length === 1) {
-    return 'LONE SURVIVOR';
-  }
-};

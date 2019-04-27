@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useState } from 'react';
-import { Divider, Typography, Breadcrumbs, Grid } from '@material-ui/core';
+import { Divider, Typography, Breadcrumbs, Grid, Theme } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import { Match, MAPS } from 'utilities/th-api/match';
 import { Trophy } from 'utilities/th-api/trophies';
@@ -18,7 +18,7 @@ interface MatchPageProps {
   playerName: string;
 }
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme: Theme) => ({
   container: {
     margin: theme.spacing(2)
   },

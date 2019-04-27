@@ -1,5 +1,14 @@
 import React, { FunctionComponent } from 'react';
-import { List, ListItem, ListItemAvatar, Avatar, Tooltip, Drawer, Hidden } from '@material-ui/core';
+import {
+  List,
+  ListItem,
+  ListItemAvatar,
+  Avatar,
+  Tooltip,
+  Drawer,
+  Hidden,
+  Theme
+} from '@material-ui/core';
 import Link from 'components/Link';
 import classNames from 'classnames';
 import { makeStyles } from '@material-ui/styles';
@@ -13,7 +22,7 @@ interface NavigationProps {
 }
 
 const drawerWidth = 76;
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme: Theme) => ({
   drawer: {
     [theme.breakpoints.up('sm')]: {
       width: drawerWidth,

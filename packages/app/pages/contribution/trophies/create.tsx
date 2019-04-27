@@ -13,7 +13,8 @@ import {
   Link as MuiLink,
   FormHelperText,
   Snackbar,
-  Breadcrumbs
+  Breadcrumbs,
+  Theme
 } from '@material-ui/core';
 import getGameIconsSvgPath from 'utilities/th-api/game-icons';
 import getTrophies, { Trophy } from 'utilities/th-api/trophies';
@@ -27,7 +28,7 @@ interface CreateTrophyPageProps {
   trophies: Trophy[];
 }
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme: Theme) => ({
   root: {
     flex: 1,
     display: 'flex',

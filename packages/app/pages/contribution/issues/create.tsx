@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { NextFunctionComponent } from 'next';
 import { makeStyles } from '@material-ui/styles';
-import { TextField, Button, Divider, Breadcrumbs } from '@material-ui/core';
+import { TextField, Button, Divider, Breadcrumbs, Theme } from '@material-ui/core';
 import { createIssue } from 'utilities/octokit';
 import { Issue } from 'utilities/octokit/interface';
 import { useAccount } from 'contexts/account';
 import Link from 'components/Link';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme: Theme) => ({
   root: {
     flex: 1,
     display: 'flex',

@@ -1,6 +1,6 @@
 import React from 'react';
 import { NextFunctionComponent } from 'next';
-import { Typography, Button } from '@material-ui/core';
+import { Typography, Button, Theme } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import Router from 'next/router';
 
@@ -9,7 +9,7 @@ interface ErrorPageProps {
   statusCode: number;
 }
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme: Theme) => ({
   root: {
     margin: 'auto',
     textAlign: 'center'

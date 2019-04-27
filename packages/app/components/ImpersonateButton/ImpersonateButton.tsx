@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { Button, Tooltip } from '@material-ui/core';
+import { Button, Tooltip, Theme } from '@material-ui/core';
 import StarIcon from '@material-ui/icons/Star';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 import { makeStyles } from '@material-ui/styles';
@@ -10,7 +10,7 @@ interface ImpersonateButtonProps {
   player: Player;
 }
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme: Theme) => ({
   leftIcon: {
     marginRight: theme.spacing(1)
   }

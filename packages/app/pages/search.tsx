@@ -4,9 +4,9 @@ import { NextFunctionComponent } from 'next';
 import { makeStyles } from '@material-ui/styles';
 import Link from 'next/link';
 import { useAccount } from 'contexts/account';
-import { Button } from '@material-ui/core';
+import { Button, Theme } from '@material-ui/core';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme: Theme) => ({
   container: {
     backgroundImage: 'url(/static/backgrounds/main.jpg)',
     backgroundPosition: 'center right',

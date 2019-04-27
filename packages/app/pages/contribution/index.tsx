@@ -2,7 +2,7 @@ import React from 'react';
 import { getIssues } from 'utilities/octokit';
 import { IssuesListForRepoResponseItem } from '@octokit/rest';
 import { makeStyles } from '@material-ui/styles';
-import { Link as MuiLink, Typography, Button } from '@material-ui/core';
+import { Link as MuiLink, Typography, Button, Theme } from '@material-ui/core';
 import { NextFunctionComponent } from 'next';
 import Link from 'components/Link';
 
@@ -10,7 +10,7 @@ interface ContributionPageProps {
   issues: IssuesListForRepoResponseItem[];
 }
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme: Theme) => ({
   container: {
     margin: theme.spacing(2)
   },

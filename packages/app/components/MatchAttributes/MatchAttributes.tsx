@@ -1,6 +1,14 @@
 import React, { FunctionComponent } from 'react';
 import { Attributes, Attribute } from 'utilities/th-api/attributes';
-import { Table, TableHead, TableRow, TableCell, TableBody, Tooltip } from '@material-ui/core';
+import {
+  Table,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableBody,
+  Tooltip,
+  Theme
+} from '@material-ui/core';
 import { Match } from 'utilities/th-api/match';
 import formatAttribute from 'utilities/formatAttribute';
 import { makeStyles } from '@material-ui/styles';
@@ -14,7 +22,7 @@ interface MatchAttributesProps {
   trophy?: Trophy;
 }
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme: Theme) => ({
   player: {
     color: theme.palette.primary.main
   }

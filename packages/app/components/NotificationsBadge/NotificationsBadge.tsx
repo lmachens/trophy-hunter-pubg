@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useState, useEffect, useRef } from 'react';
-import { IconButton, Badge, Menu, MenuItem, Typography } from '@material-ui/core';
+import { IconButton, Badge, Menu, MenuItem, Typography, Theme } from '@material-ui/core';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import { useAccount, useChangeAccount } from 'contexts/account';
 import getPlayer from 'utilities/th-api/player';
@@ -11,7 +11,7 @@ interface NotificationsBadgeProps {
   className?: string;
 }
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme: Theme) => ({
   playerName: {
     overflow: 'hidden',
     textOverflow: 'ellipsis',

@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/styles';
 import { NextFunctionComponent } from 'next';
 import getTrophies, { Trophy } from 'utilities/th-api/trophies';
 import getAttributes, { Attributes } from 'utilities/th-api/attributes';
-import { Grid, Typography, Divider, Button, Breadcrumbs } from '@material-ui/core';
+import { Grid, Typography, Divider, Button, Breadcrumbs, Theme } from '@material-ui/core';
 import { MAPS } from 'utilities/th-api/match';
 import PlayerTrophiesCard from 'components/PlayerTrophiesCard';
 import MatchAttributes from 'components/MatchAttributes';
@@ -14,7 +14,7 @@ interface LivePageProps {
   trophies: Trophy[];
 }
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme: Theme) => ({
   container: {
     margin: theme.spacing(2)
   },

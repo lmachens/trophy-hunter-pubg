@@ -1,7 +1,7 @@
 import { makeStyles } from '@material-ui/styles';
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import getMatch, { Match } from 'utilities/th-api/match';
-import { ListItem, ListItemText, Typography } from '@material-ui/core';
+import { ListItem, ListItemText, Typography, Theme } from '@material-ui/core';
 import timeSince from 'utilities/timeSince';
 import millisToMinutesAndSeconds from 'utilities/millisToMinutesAndSeconds';
 import TrophyProgress from 'components/TrophyProgress';
@@ -15,7 +15,7 @@ interface MatchListItemProps {
   onClick?(): void;
 }
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme: Theme) => ({
   container: {
     display: 'flex',
     alignItems: 'center',

@@ -2,7 +2,7 @@ import React, { FunctionComponent, useState } from 'react';
 import { makeStyles } from '@material-ui/styles';
 import Close from '@material-ui/icons/Close';
 import Minimize from '@material-ui/icons/Minimize';
-import { IconButton, AppBar, Toolbar, Hidden } from '@material-ui/core';
+import { IconButton, AppBar, Toolbar, Hidden, Theme } from '@material-ui/core';
 import Link from 'components/Link';
 import Navigation from 'components/Navigation';
 import { RouterProps } from 'next/router';
@@ -14,7 +14,7 @@ interface AppLayoutProps {
   router: RouterProps;
 }
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme: Theme) => ({
   frame: {
     display: 'flex',
     flexDirection: 'column',

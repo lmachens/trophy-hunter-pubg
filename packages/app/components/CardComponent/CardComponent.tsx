@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { Card, CardHeader, Avatar, CardContent } from '@material-ui/core';
+import { Card, CardHeader, Avatar, CardContent, Theme } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 
 interface CardComponentProps {
@@ -12,7 +12,7 @@ interface StyleProps {
   headerBackgroundColor: string;
 }
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme: Theme) => ({
   header: (props: StyleProps) => ({
     background: props.headerBackgroundColor
   }),
