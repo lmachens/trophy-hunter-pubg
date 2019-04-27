@@ -91,10 +91,10 @@ const PlayerPage: NextFunctionComponent<PlayerPageProps> = ({
   if (!seasons || !seasonStats || !trophies || !player) {
     return <Error statusCode={400} />;
   }
-  const handleSeasonChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleSeasonChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     Router.push({
       pathname: Router.pathname,
-      query: { ...Router.query, seasonId: event.target.value }
+      query: { ...Router.query, seasonId: event.target.value as string }
     });
   };
   const handleFppChange = (event: React.ChangeEvent<HTMLInputElement>) => {

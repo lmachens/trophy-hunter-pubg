@@ -53,8 +53,8 @@ const PlayerSearch: FunctionComponent<PlayerSearchProps> = ({ autoFocus, classNa
     setLoading(false);
   };
 
-  const handlePlatformChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setPlatform(event.target.value);
+  const handlePlatformChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+    setPlatform(event.target.value as string);
   };
 
   const handleSubmit = (event: React.FormEvent) => {

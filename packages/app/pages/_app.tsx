@@ -49,6 +49,9 @@ interface MyAppProps {
   clientNeedsProps: boolean;
 }
 
+// @ts-ignore
+const hasProcessBrowser = !!process.browser;
+
 export default class MyApp extends App<MyAppProps> {
   state = { gotInitialProps: !this.props.clientNeedsProps };
 
@@ -81,7 +84,7 @@ export default class MyApp extends App<MyAppProps> {
     const initialProps = await App.getInitialProps(appContext);
 
     const clientNeedsProps =
-      !process.browser && !(appContext.ctx.req && appContext.ctx.req.headers);
+      !hasProcessBrowser && !(appContext.ctx.req && appContext.ctx.req.headers);
 
     return {
       ...initialProps,

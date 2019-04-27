@@ -108,8 +108,8 @@ const CreateTrophyPage: NextFunctionComponent<CreateTrophyPageProps> = ({ trophi
     }
   };
 
-  const handleTemplateChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const trophyName = event.target.value;
+  const handleTemplateChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+    const trophyName = event.target.value as string;
     const templateTrophy = trophies.find(trophy => trophy.name === trophyName);
     if (templateTrophy) {
       setTrophy(templateTrophy);
