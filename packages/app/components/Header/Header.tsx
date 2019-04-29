@@ -41,9 +41,9 @@ const Header: FunctionComponent = () => {
     <AppBar className={classes.appBar} position="static">
       <Toolbar>
         <Link href="/">
-          <img className={classes.logo} src="/static/text.png" />
+          <img className={classes.logo} src="/static/text.webp" alt="Trophy Hunter" />
         </Link>
-        <img className={classes.game} src="/static/pubg.png" />
+        <img className={classes.game} src="/static/pubg.png" alt="PUBG" />
         <div className={classes.grow} />
 
         <Tooltip title="GitHub">

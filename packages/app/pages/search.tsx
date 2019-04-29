@@ -8,7 +8,7 @@ import { Button, Theme } from '@material-ui/core';
 
 const useStyles = makeStyles((theme: Theme) => ({
   container: {
-    backgroundImage: 'url(/static/backgrounds/main.jpg)',
+    backgroundImage: 'url(/static/backgrounds/main.webp)',
     backgroundPosition: 'center right',
     backgroundSize: 'cover',
     padding: theme.spacing(2),
@@ -22,13 +22,14 @@ const useStyles = makeStyles((theme: Theme) => ({
   logo: {
     maxWidth: 350,
     position: 'absolute',
-    top: -140,
+    top: 'calc(50% - 140px)',
     left: 0,
     right: 0,
     margin: '0 auto'
   },
   latest: {
-    margin: theme.spacing(2)
+    position: 'absolute',
+    top: 'calc(50% + 40px)'
   },
   playerSearch: {
     width: 400,
@@ -43,7 +44,7 @@ const SearchPage: NextFunctionComponent = () => {
 
   return (
     <div className={classes.container}>
-      <img className={classes.logo} src="/static/logo.png" />
+      <img className={classes.logo} src="/static/logo.webp" alt="Trophy Hunter Logo" />
       <PlayerSearch autoFocus className={classes.playerSearch} />
       {account && (
         <Link href="/">

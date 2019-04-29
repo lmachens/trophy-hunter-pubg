@@ -34,7 +34,7 @@ class JssDocument extends Document<{ registry: SheetsRegistry }> {
 
   render() {
     return (
-      <html>
+      <html lang="en">
         <Head>
           <meta
             name="viewport"
@@ -46,6 +46,7 @@ class JssDocument extends Document<{ registry: SheetsRegistry }> {
             name="keywords"
             content="PUBG, PUBG App, PUBG Guide, Real-time In Game, Statistics, PUBG Spectate, Overwolf, Trophies"
           />
+          <link rel="manifest" href="/static/manifest.webmanifest" />
           <link rel="icon" type="image/x-icon" href="/static/favicon.ico" />
           <link rel="stylesheet" type="text/css" href="/static/index.css" />
           <link rel="stylesheet" type="text/css" href="/static/nprogress.css" />

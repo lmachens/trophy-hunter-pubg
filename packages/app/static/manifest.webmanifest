@@ -1,0 +1,31 @@
+{
+  "name": "Trophy Hunter PUBG",
+  "short_name": "TrophyHunterPubg",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#303030",
+  "theme_color": "#f8b834",
+  "description": "Earn trophies while playing PlayerUnknown's Battlegrounds.",
+  "icons": [
+    {
+      "src": "/static/icon.png",
+      "sizes": "40x40",
+      "type": "image/png"
+    },
+    {
+      "src": "/static/icon256.png",
+      "sizes": "256x256",
+      "type": "image/png"
+    },
+    {
+      "src": "/static/icon512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "related_applications": [
+    {
+      "platform": "Web"
+    }
+  ]
+}
