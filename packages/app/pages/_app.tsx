@@ -71,7 +71,9 @@ export default class MyApp extends App<MyAppProps> {
   }
 
   static async getInitialProps(appContext: NextAppContext) {
-    const { thPubg = null } = parseCookies(appContext.ctx);
+    const ctx = appContext.ctx;
+    const clientNeedsProps = !hasProcessBrowser && !(ctx.req && ctx.req.headers);
+    const { thPubg = null } = !clientNeedsProps ? parseCookies(ctx) : {};
 
     const pageProps: PageProps = {};
     if (thPubg) {
@@ -79,9 +81,6 @@ export default class MyApp extends App<MyAppProps> {
       pageProps.account = { platform, playerName, recentMatch };
     }
     const initialProps = await App.getInitialProps(appContext);
-
-    const clientNeedsProps =
-      !hasProcessBrowser && !(appContext.ctx.req && appContext.ctx.req.headers);
 
     return {
       ...initialProps,
