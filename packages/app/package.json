@@ -26,6 +26,7 @@
     "matomo-tracker": "^2.2.1",
     "monaco-editor": "^0.16.2",
     "next": "^8.1.0",
+    "next-offline": "^3.3.8",
     "nookies": "^2.0.4",
     "nprogress": "^0.2.0",
     "react": "^16.8.6",
