@@ -160,7 +160,7 @@ const PlayerPage: NextFunctionComponent<PlayerPageProps> = ({
 PlayerPage.getInitialProps = async ctx => {
   const { fpp, platform, playerName, seasonId } = ctx.query;
   if (typeof platform !== 'string' || typeof playerName !== 'string' || Array.isArray(seasonId)) {
-    throw 'invalid query';
+    return { fpp: false };
   }
 
   const playerPromise = getPlayer({ platform, playerName });
