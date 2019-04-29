@@ -71,7 +71,7 @@ const Navigation: FunctionComponent<NavigationProps> = ({ router, mobileOpen, on
             })}
           >
             <ListItemAvatar>
-              <Avatar className={classes.avatar} alt="Home" src="/static/icon.png" />
+              <Avatar className={classes.avatar} alt="Home" src="/static/icon.webp" />
             </ListItemAvatar>
           </ListItem>
         </Tooltip>

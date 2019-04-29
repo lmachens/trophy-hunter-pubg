@@ -94,7 +94,7 @@ const PlayerSearch: FunctionComponent<PlayerSearchProps> = ({ autoFocus, classNa
           className={classes.select}
           value={platform}
           onChange={handlePlatformChange}
-          input={<InputBase name="platform" id="platform-select" />}
+          input={<InputBase name="platform" />}
         >
           {platforms.map(platform => (
             <MenuItem value={platform} key={platform}>

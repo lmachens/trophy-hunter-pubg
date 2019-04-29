@@ -67,11 +67,15 @@ module.exports = phase => {
           return config;
         },
         target: process.env.NEXT_TARGET || 'serverless',
-        generateInDevMode: true,
         workboxOpts: {
+          swDest: 'static/service-worker.js',
           runtimeCaching: [
             {
               urlPattern: /.png$/,
+              handler: 'cacheFirst'
+            },
+            {
+              urlPattern: /.webp$/,
               handler: 'cacheFirst'
             },
             {

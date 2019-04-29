@@ -158,9 +158,9 @@ const App: FunctionComponent<AppLayoutProps> = ({ children, router }) => {
           <Hidden xsDown implementation="css">
             <div className={classes.foreground}>
               <Link href="/">
-                <img className={classes.logo} src="/static/text.png" />
+                <img className={classes.logo} src="/static/text.png" alt="Trophy Hunter" />
               </Link>
-              <img className={classes.game} src="/static/pubg.png" />
+              <img className={classes.game} src="/static/pubg.png" alt="PUBG" />
             </div>
           </Hidden>
           <div className={classes.grow} />
