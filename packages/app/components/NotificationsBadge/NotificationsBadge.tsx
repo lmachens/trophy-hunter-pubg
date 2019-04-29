@@ -6,6 +6,7 @@ import getPlayer from 'utilities/th-api/player';
 import Link from 'components/Link';
 import MatchListItem from 'components/MatchListItem';
 import { makeStyles } from '@material-ui/styles';
+import Router from 'next/router';
 
 interface NotificationsBadgeProps {
   className?: string;
@@ -48,14 +49,28 @@ const NotificationsBadge: FunctionComponent<NotificationsBadgeProps> = ({ classN
         platform: account.platform,
         playerName: account.playerName
       });
-      if (player.matches[0] !== account.recentMatch) {
+      const recentMatch = player.matches[0];
+      if (recentMatch !== account.recentMatch) {
         const oldIndex = player.matches.indexOf(account.recentMatch);
         const newMatches = player.matches.slice(
           0,
           oldIndex === -1 ? player.matches.length : oldIndex
         );
         setNotifications(newMatches);
-        changeAccount({ ...account, recentMatch: player.matches[0] });
+        changeAccount({ ...account, recentMatch });
+
+        const notification = new Notification('Trophy Hunter PUBG', {
+          body: 'A new match is analysed',
+          icon: '/static/icon.png',
+          vibrate: [200, 100, 200, 100, 200, 100, 200]
+        });
+        notification.onclick = function() {
+          window.focus();
+          Router.push(
+            `/match?matchId=${recentMatch}&platform=${player.platform}&playerName=${player.name}`
+          );
+          this.close();
+        };
       }
     } catch (error) {
       console.error(error);
@@ -63,6 +78,10 @@ const NotificationsBadge: FunctionComponent<NotificationsBadgeProps> = ({ classN
   };
 
   useEffect(() => {
+    if (account) {
+      Notification.requestPermission();
+    }
+
     interval.current = setInterval(updateNotifications, 900000);
     updateNotifications();
     return () => {
