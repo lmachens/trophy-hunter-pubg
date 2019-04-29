@@ -21,8 +21,6 @@ import getSeasons, { Season } from 'utilities/th-api/seasons';
 import Router from 'next/router';
 import PlayerMatchesCard from 'components/PlayerMatchesCard';
 import getPlayer, { Player } from 'utilities/th-api/player';
-import SearchPage from './search';
-import { parseCookies } from 'nookies';
 import Link from 'components/Link';
 import ImpersonateButton from 'components/ImpersonateButton';
 
@@ -33,7 +31,6 @@ interface PlayerPageProps {
   trophies?: Trophy[];
   seasonId?: string;
   player?: Player;
-  showPlayerSearch: boolean;
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -80,12 +77,8 @@ const PlayerPage: NextFunctionComponent<PlayerPageProps> = ({
   seasonStats,
   trophies,
   seasonId,
-  player,
-  showPlayerSearch
+  player
 }) => {
-  if (showPlayerSearch) {
-    return <SearchPage />;
-  }
   const classes = useStyles();
 
   if (!seasons || !seasonStats || !trophies || !player) {
@@ -165,26 +158,9 @@ const PlayerPage: NextFunctionComponent<PlayerPageProps> = ({
 };
 
 PlayerPage.getInitialProps = async ctx => {
-  let platform: string;
-  let playerName: string;
-  const { fpp, platform: platformQuery, playerName: playerNameQuery, seasonId } = ctx.query;
-  if (
-    typeof platformQuery !== 'string' ||
-    typeof playerNameQuery !== 'string' ||
-    Array.isArray(seasonId)
-  ) {
-    const { thPubg = null } = parseCookies(ctx);
-
-    if (!thPubg || Array.isArray(seasonId)) {
-      return { fpp: !!fpp, showPlayerSearch: true };
-    }
-
-    const [cookiePlatform, cookieName] = thPubg.split(';');
-    platform = cookiePlatform;
-    playerName = cookieName;
-  } else {
-    platform = platformQuery;
-    playerName = playerNameQuery;
+  const { fpp, platform, playerName, seasonId } = ctx.query;
+  if (typeof platform !== 'string' || typeof playerName !== 'string' || Array.isArray(seasonId)) {
+    throw 'invalid query';
   }
 
   const playerPromise = getPlayer({ platform, playerName });
@@ -209,8 +185,7 @@ PlayerPage.getInitialProps = async ctx => {
     seasons,
     seasonStats,
     trophies,
-    seasonId: seasonId || (currentSeason && currentSeason.id),
-    showPlayerSearch: false
+    seasonId: seasonId || (currentSeason && currentSeason.id)
   };
 };
 
