@@ -86,19 +86,26 @@ const PlayerPage: NextFunctionComponent<PlayerPageProps> = ({
   }
   const handleSeasonChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     Router.push({
-      pathname: Router.pathname,
-      query: { ...Router.query, seasonId: event.target.value as string }
+      pathname: '/player',
+      query: {
+        platform: player.platform,
+        playerName: player.name,
+        seasonId: event.target.value as string
+      }
     });
   };
   const handleFppChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const query: Record<string, string | string[] | undefined> = { ...Router.query };
+    const query: Record<string, string | string[] | undefined> = {
+      platform: player.platform,
+      playerName: player.name
+    };
     if (event.target.checked) {
       query.fpp = 'true';
     } else {
       delete query.fpp;
     }
     Router.push({
-      pathname: Router.pathname,
+      pathname: '/player',
       query
     });
   };

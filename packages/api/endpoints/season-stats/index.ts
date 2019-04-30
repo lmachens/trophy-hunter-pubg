@@ -1,11 +1,11 @@
 import { IncomingMessage, ServerResponse } from 'http';
 import { parse } from 'url';
-import getSeasonStats from '../../utilities/pubg-api/seasonStats';
+import getSeasonStats, { emptyGameModeStats } from '../../utilities/pubg-api/seasonStats';
 import getMatch from '../../utilities/pubg-api/match';
 import { getParticipant, getGeneralStats } from '../../utilities/match';
 // import getTeam from '../../utilities/match/getTeam';
 import { calculateTrophies } from '../../utilities/trophies';
-import { GameModeStats } from '../../utilities/pubg-api/seasonStats/interface';
+import { GameModeStats, PlayerSeasonStats } from '../../utilities/pubg-api/seasonStats/interface';
 
 interface Trophies {
   [trophyName: string]: number;
@@ -26,7 +26,30 @@ export default async (req: IncomingMessage, res: ServerResponse) => {
   }
 
   try {
-    const seasonStats = await getSeasonStats({ platform, playerId, seasonId });
+    let seasonStats: PlayerSeasonStats;
+    try {
+      seasonStats = await getSeasonStats({ platform, playerId, seasonId });
+    } catch (err) {
+      if (!err.response || err.response.status !== 404) {
+        throw err;
+      }
+      seasonStats = {
+        gameModeStats: {
+          duo: emptyGameModeStats,
+          'duo-fpp': emptyGameModeStats,
+          solo: emptyGameModeStats,
+          'solo-fpp': emptyGameModeStats,
+          squad: emptyGameModeStats,
+          'squad-fpp': emptyGameModeStats
+        },
+        matchesSolo: [],
+        matchesSoloFPP: [],
+        matchesDuo: [],
+        matchesDuoFPP: [],
+        matchesSquad: [],
+        matchesSquadFPP: []
+      };
+    }
 
     const matchIds = [
       ...seasonStats.matchesSolo,

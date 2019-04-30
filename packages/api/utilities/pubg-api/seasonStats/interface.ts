@@ -85,3 +85,20 @@ interface MatchList {
     id: string;
   }[];
 }
+
+export interface PlayerSeasonStats {
+  gameModeStats: {
+    duo: GameModeStats;
+    'duo-fpp': GameModeStats;
+    solo: GameModeStats;
+    'solo-fpp': GameModeStats;
+    squad: GameModeStats;
+    'squad-fpp': GameModeStats;
+  };
+  matchesSolo: string[];
+  matchesSoloFPP: string[];
+  matchesDuo: string[];
+  matchesDuoFPP: string[];
+  matchesSquad: string[];
+  matchesSquadFPP: string[];
+}
