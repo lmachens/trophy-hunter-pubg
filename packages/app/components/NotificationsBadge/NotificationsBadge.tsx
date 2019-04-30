@@ -59,18 +59,20 @@ const NotificationsBadge: FunctionComponent<NotificationsBadgeProps> = ({ classN
         setNotifications(newMatches);
         changeAccount({ ...account, recentMatch });
 
-        const notification = new Notification('Trophy Hunter PUBG', {
-          body: 'A new match is analysed',
-          icon: '/static/icon.png',
-          vibrate: [200, 100, 200, 100, 200, 100, 200]
-        });
-        notification.onclick = function() {
-          window.focus();
-          Router.push(
-            `/match?matchId=${recentMatch}&platform=${player.platform}&playerName=${player.name}`
-          );
-          this.close();
-        };
+        if ('Notification' in window) {
+          const notification = new Notification('Trophy Hunter PUBG', {
+            body: 'A new match is analysed',
+            icon: '/static/icon.png',
+            vibrate: [200, 100, 200, 100, 200, 100, 200]
+          });
+          notification.onclick = function() {
+            window.focus();
+            Router.push(
+              `/match?matchId=${recentMatch}&platform=${player.platform}&playerName=${player.name}`
+            );
+            this.close();
+          };
+        }
       }
     } catch (error) {
       console.error(error);
