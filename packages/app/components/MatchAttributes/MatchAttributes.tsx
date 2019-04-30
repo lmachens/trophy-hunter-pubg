@@ -73,7 +73,7 @@ const MatchAttributes: FunctionComponent<MatchAttributesProps> = ({
                   {formatAttribute(match ? match.maxStats[attribute.key] : '')}
                 </TableCell>
                 <TableCell align="right">
-                  {formatAttribute(match ? match.avgStats[attribute.key] : '')}
+                  {formatAttribute(match ? match.avgStats[attribute.key] : '', 1)}
                 </TableCell>
               </TableRow>
             </Tooltip>
