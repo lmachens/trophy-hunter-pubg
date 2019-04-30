@@ -13,11 +13,11 @@ import { parseCookies } from 'nookies';
 import { AccountProvider } from 'contexts/account';
 import { Account } from 'contexts/account';
 import { LiveProvider } from 'contexts/live';
-import matomo from 'utilities/matomo';
+import { track } from 'utilities/matomo';
 
 NProgress.configure({ parent: '#__next', showSpinner: false });
 if (typeof window !== 'undefined') {
-  matomo.track({
+  track({
     url: location.href,
     action_name: location.pathname.substr(1) || 'player',
     urlref: document.referrer
@@ -25,7 +25,7 @@ if (typeof window !== 'undefined') {
 }
 Router.events.on('routeChangeStart', (url: string) => {
   NProgress.start();
-  matomo.track({
+  track({
     url: `${window.origin}${url}`,
     action_name: url.substr(1).split('?')[0] || 'player'
   });

@@ -12,7 +12,8 @@ interface ContributionPageProps {
 
 const useStyles = makeStyles((theme: Theme) => ({
   container: {
-    margin: theme.spacing(2)
+    margin: `${theme.spacing(2)}px auto`,
+    textAlign: 'center'
   },
   actions: {
     marginTop: theme.spacing(2)
