@@ -149,7 +149,7 @@ const PlayerPage: NextFunctionComponent<PlayerPageProps> = ({
             />
           </Grid>
         </Grid>
-        <Typography variant="caption">Note: Analysed 100 matches of current season</Typography>
+        <Typography variant="caption">Note: Analysed matches of the last 14 days only</Typography>
       </Grid>
       <Grid item xs={12}>
         <Divider />

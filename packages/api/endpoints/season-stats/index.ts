@@ -2,7 +2,7 @@ import { IncomingMessage, ServerResponse } from 'http';
 import { parse } from 'url';
 import getSeasonStats, { emptyGameModeStats } from '../../utilities/pubg-api/seasonStats';
 import getMatch from '../../utilities/pubg-api/match';
-import { getParticipant, getGeneralStats } from '../../utilities/match';
+import { getParticipant, getGeneralStats, getParticipantStats } from '../../utilities/match';
 // import getTeam from '../../utilities/match/getTeam';
 import { calculateTrophies } from '../../utilities/trophies';
 import { GameModeStats, PlayerSeasonStats } from '../../utilities/pubg-api/seasonStats/interface';
@@ -60,7 +60,7 @@ export default async (req: IncomingMessage, res: ServerResponse) => {
       ...seasonStats.matchesSquadFPP
     ];
     const matches = await Promise.all(matchIds.map(matchId => getMatch({ platform, matchId })));
-
+    console.log(matchIds.length, matches.length);
     Object.values(seasonStats.gameModeStats).forEach(gameModeStats => {
       gameModeStats.roundsAnalysed = 0;
       gameModeStats.avgRank = 0;
@@ -71,7 +71,7 @@ export default async (req: IncomingMessage, res: ServerResponse) => {
       (res, match) => {
         const participant = getParticipant({ match, playerId });
         // const team = getTeam({ match, participant });
-        const playerStats = participant.attributes.stats;
+        const playerStats = getParticipantStats({ participant });
         const { avgStats, maxStats, minStats } = getGeneralStats({ playerStats, match });
         const trophyNames = calculateTrophies({ playerStats, avgStats, maxStats, minStats });
 
