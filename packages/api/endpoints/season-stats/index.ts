@@ -60,7 +60,7 @@ export default async (req: IncomingMessage, res: ServerResponse) => {
       ...seasonStats.matchesSquadFPP
     ];
     const matches = await Promise.all(matchIds.map(matchId => getMatch({ platform, matchId })));
-    console.log(matchIds.length, matches.length);
+
     Object.values(seasonStats.gameModeStats).forEach(gameModeStats => {
       gameModeStats.roundsAnalysed = 0;
       gameModeStats.avgRank = 0;
