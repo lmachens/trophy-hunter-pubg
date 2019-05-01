@@ -20,6 +20,8 @@ interface MatchAttributesProps {
   attributes: Attributes;
   match?: Match;
   trophy?: Trophy;
+  onHoverStart?(attribute: Attribute): void;
+  onHoverEnd?(): void;
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -40,9 +42,19 @@ const handleSort = (a: Attribute, b: Attribute) => {
 const MatchAttributes: FunctionComponent<MatchAttributesProps> = ({
   attributes,
   match,
-  trophy
+  trophy,
+  onHoverStart,
+  onHoverEnd
 }) => {
   const classes = useStyles();
+
+  const handleMouseEnter = (attribute: Attribute) => () => {
+    if (onHoverStart) onHoverStart(attribute);
+  };
+
+  const handleMouseLeave = () => {
+    if (onHoverEnd) onHoverEnd();
+  };
 
   return (
     <CardComponent headerBackgroundColor="#3094be" title="Stats" icon={<BarChart />}>
@@ -61,7 +73,12 @@ const MatchAttributes: FunctionComponent<MatchAttributesProps> = ({
         <TableBody>
           {attributes.sort(handleSort).map(attribute => (
             <Tooltip key={attribute.key} title={attribute.subtitle} enterDelay={200}>
-              <TableRow hover selected={trophy && trophy.attributes.includes(attribute.key)}>
+              <TableRow
+                hover
+                selected={trophy && trophy.attributes.includes(attribute.key)}
+                onMouseEnter={onHoverStart && handleMouseEnter(attribute)}
+                onMouseLeave={onHoverEnd && handleMouseLeave}
+              >
                 <TableCell>{attribute.title}</TableCell>
                 <TableCell className={classes.player} align="right">
                   {formatAttribute(match ? match.playerStats[attribute.key] : '')}

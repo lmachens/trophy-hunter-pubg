@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/styles';
 import { Match, MAPS } from 'utilities/th-api/match';
 import { Trophy } from 'utilities/th-api/trophies';
 import MatchAttributes from 'components/MatchAttributes';
-import { Attributes } from 'utilities/th-api/attributes';
+import { Attributes, Attribute } from 'utilities/th-api/attributes';
 import millisToMinutesAndSeconds from 'utilities/millisToMinutesAndSeconds';
 import timeSince from 'utilities/timeSince';
 import Link from 'components/Link';
@@ -39,6 +39,7 @@ const MatchDetails: FunctionComponent<MatchPageProps> = ({
 }) => {
   const classes = useStyles();
   const [hoveredTrophy, setHoveredTrophy] = useState<Trophy | undefined>();
+  const [hoveredAttribute, setHoveredAttribute] = useState<Attribute | undefined>();
 
   const handleHoverStart = (trophy: Trophy) => {
     setHoveredTrophy(trophy);
@@ -46,6 +47,14 @@ const MatchDetails: FunctionComponent<MatchPageProps> = ({
 
   const handleHoverEnd = () => {
     setHoveredTrophy(undefined);
+  };
+
+  const handleAttributeHoverStart = (attribute: Attribute) => {
+    setHoveredAttribute(attribute);
+  };
+
+  const handleAttributeHoverEnd = () => {
+    setHoveredAttribute(undefined);
   };
 
   const achievedTrophies = match.trophyNames.reduce((acc, trophyName) => {
@@ -84,13 +93,20 @@ const MatchDetails: FunctionComponent<MatchPageProps> = ({
       <Grid item xs={12}>
         <PlayerTrophiesCard
           trophies={trophies}
+          attribute={hoveredAttribute}
           achievedTrophies={achievedTrophies}
           onHoverStart={handleHoverStart}
           onHoverEnd={handleHoverEnd}
         />
       </Grid>
       <Grid item xs={12}>
-        <MatchAttributes attributes={attributes} match={match} trophy={hoveredTrophy} />
+        <MatchAttributes
+          attributes={attributes}
+          match={match}
+          trophy={hoveredTrophy}
+          onHoverStart={handleAttributeHoverStart}
+          onHoverEnd={handleAttributeHoverEnd}
+        />
       </Grid>
     </Grid>
   );
