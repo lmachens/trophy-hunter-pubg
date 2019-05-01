@@ -12,9 +12,11 @@ import panzerfaust from './panzerfaust';
 import assistent from './assistent';
 import fat from './fat';
 import serialKiller from './serialKiller';
-import omnipresent from './addicted';
+import omnipresent from './omnipresent';
+import achillesHeel from './achillesHeel';
 
 const trophies = {
+  [achillesHeel.name]: achillesHeel,
   [addicted.name]: addicted,
   [assistent.name]: assistent,
   [champions.name]: champions,

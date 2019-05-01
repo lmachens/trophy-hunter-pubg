@@ -7,7 +7,8 @@ interface GetParticipantStatsProps {
 const getParticipantStats = ({ participant }: GetParticipantStatsProps): ParticipantStats => {
   const { stats } = participant.attributes;
   const killParticipation = stats.kills + stats.assists;
-  const participantStats = { ...stats, killParticipation };
+  const avgKillDamage = stats.kills > 0 ? stats.damageDealt / stats.kills : NaN;
+  const participantStats = { ...stats, killParticipation, avgKillDamage };
   delete participantStats.name;
   delete participantStats.playerId;
   return participantStats;

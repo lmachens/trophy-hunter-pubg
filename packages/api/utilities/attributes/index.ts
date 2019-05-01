@@ -14,6 +14,11 @@ const attributes = {
     subtitle: 'Number of boost items used',
     title: 'Boosters'
   },
+  avgKillDamage: {
+    key: 'avgKillDamage',
+    subtitle: 'Average damage dealt for a kill',
+    title: 'Average Kill Damage'
+  },
   damageDealt: {
     key: 'damageDealt',
     subtitle: 'Total damage dealt. Note: Self inflicted damage is subtracted',

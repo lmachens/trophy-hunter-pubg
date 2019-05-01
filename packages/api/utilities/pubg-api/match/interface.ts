@@ -56,6 +56,7 @@ export interface ParticipantStats {
   [key: string]: any;
   DBNOs: number;
   assists: number;
+  avgKillDamage: number;
   boosts: number;
   damageDealt: number;
   deathType: string;

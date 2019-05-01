@@ -19,11 +19,12 @@ const getGeneralStats = ({ match, playerStats }: GetGeneralStatsProps): GeneralS
   const participantStats = participants.map(participant => getParticipantStats({ participant }));
   const stats = Object.keys(playerStats).reduce(
     (stats, key) => {
-      const allStats = participantStats.map(stats => stats[key]);
-
+      const allStats = participantStats
+        .map(stats => stats[key])
+        .filter(statistic => !isNaN(statistic));
       const max = Math.max(...allStats);
       const min = Math.min(...allStats);
-      const sum = allStats.reduce((a, b) => a + b);
+      const sum = allStats.reduce((a, b) => a + b, 0);
       const avg = sum / allStats.length;
       return {
         maxStats: { ...stats.maxStats, [key]: max },

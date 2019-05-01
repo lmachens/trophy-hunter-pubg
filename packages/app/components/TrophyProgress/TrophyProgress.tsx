@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { Tooltip, Theme } from '@material-ui/core';
+import { Tooltip, Theme, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import TrophyIcon from 'components/TrophyIcon';
 import { Trophy } from 'utilities/th-api/trophies';
@@ -24,7 +24,16 @@ const TrophyProgress: FunctionComponent<TrophyProgressProps> = ({ achieved, trop
   const classes = useStyles();
 
   return (
-    <Tooltip title={`${trophy.title}: ${trophy.description}`}>
+    <Tooltip
+      title={
+        <>
+          <Typography variant="caption" component="div">
+            {trophy.title}
+          </Typography>
+          <span>{trophy.description}</span>
+        </>
+      }
+    >
       <div>
         <TrophyIcon
           className={classes.trophy}

@@ -33,7 +33,9 @@ const theme = createMuiTheme({
       tooltip: {
         backgroundColor: '#111318',
         border: '1px solid rgba(255, 255, 255, 0.23)',
-        maxWidth: 350
+        maxWidth: 350,
+        fontSize: '0.7rem',
+        textAlign: 'center'
       }
     },
     MuiSnackbarContent: {
