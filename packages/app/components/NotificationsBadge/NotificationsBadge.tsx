@@ -80,7 +80,7 @@ const NotificationsBadge: FunctionComponent<NotificationsBadgeProps> = ({ classN
   };
 
   useEffect(() => {
-    if (account) {
+    if (account && 'Notification' in window) {
       Notification.requestPermission();
     }
 

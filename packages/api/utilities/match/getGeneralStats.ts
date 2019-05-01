@@ -1,4 +1,5 @@
 import Match, { Participant, ParticipantStats } from '../pubg-api/match/interface';
+import getParticipantStats from './getParticipantStats';
 
 interface GetGeneralStatsProps {
   match: Match;
@@ -15,9 +16,11 @@ const getGeneralStats = ({ match, playerStats }: GetGeneralStatsProps): GeneralS
   const participants = match.included.filter(doc => {
     return doc.type === 'participant';
   }) as Participant[];
+  const participantStats = participants.map(participant => getParticipantStats({ participant }));
   const stats = Object.keys(playerStats).reduce(
     (stats, key) => {
-      const allStats = participants.map(participant => participant.attributes.stats[key]);
+      const allStats = participantStats.map(stats => stats[key]);
+
       const max = Math.max(...allStats);
       const min = Math.min(...allStats);
       const sum = allStats.reduce((a, b) => a + b);

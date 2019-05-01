@@ -1,11 +1,11 @@
 import Trophy from '../interface';
-import attributes from '../../attributes';
+import attributes from '../../../attributes';
 
 const assistent: Trophy = {
   name: 'assistent',
   title: 'Assistent',
   author: 'lmachens',
-  description: 'Assist at least 2 times',
+  description: 'Assist at least two times',
   attributes: [attributes.assists.key],
   src: 'https://game-icons.net/1x1/delapouite/team-idea.html',
   svgPath:

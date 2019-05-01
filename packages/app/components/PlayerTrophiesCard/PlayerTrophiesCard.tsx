@@ -14,6 +14,15 @@ interface PlayerTrophiesCardProps {
   onHoverEnd?(): void;
 }
 
+const sortTrophies = (a: Trophy, b: Trophy) => {
+  if (a.title > b.title) {
+    return 1;
+  } else if (a.title < b.title) {
+    return -1;
+  }
+  return 0;
+};
+
 const PlayerTrophiesCard: FunctionComponent<PlayerTrophiesCardProps> = ({
   trophies,
   achievedTrophies,
@@ -31,7 +40,7 @@ const PlayerTrophiesCard: FunctionComponent<PlayerTrophiesCardProps> = ({
   return (
     <CardComponent headerBackgroundColor="#418c3e" title="Trophies" icon={<Grade />}>
       <Grid container justify="center">
-        {trophies.map(trophy => (
+        {trophies.sort(sortTrophies).map(trophy => (
           <div
             key={trophy.name}
             onMouseEnter={onHoverStart && handleMouseEnter(trophy)}

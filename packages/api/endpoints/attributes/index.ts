@@ -1,5 +1,5 @@
 import { IncomingMessage, ServerResponse } from 'http';
-import { attributes } from '../../utilities/trophies';
+import attributes from '../../utilities/attributes';
 
 export default async (_: IncomingMessage, res: ServerResponse) => {
   res.setHeader('Access-Control-Allow-Origin', '*');

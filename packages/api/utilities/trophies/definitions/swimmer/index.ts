@@ -1,5 +1,5 @@
 import Trophy from '../interface';
-import attributes from '../../attributes';
+import attributes from '../../../attributes';
 
 const swimmer: Trophy = {
   name: 'swimmer',

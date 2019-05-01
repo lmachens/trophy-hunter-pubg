@@ -12,6 +12,7 @@ import panzerfaust from './panzerfaust';
 import assistent from './assistent';
 import fat from './fat';
 import serialKiller from './serialKiller';
+import omnipresent from './addicted';
 
 const trophies = {
   [addicted.name]: addicted,
@@ -20,6 +21,7 @@ const trophies = {
   [collector.name]: collector,
   [fat.name]: fat,
   [healer.name]: healer,
+  [omnipresent.name]: omnipresent,
   [panzerfaust.name]: panzerfaust,
   [roadKills.name]: roadKills,
   [runner.name]: runner,

@@ -66,6 +66,7 @@ export interface ParticipantStats {
   killPointsDelta: number;
   killStreaks: number;
   kills: number;
+  killParticipation: number;
   lastKillPoints: number;
   lastWinPoints: number;
   longestKill: number;
@@ -83,6 +84,8 @@ export interface ParticipantStats {
   winPlace: number;
   winPoints: number;
   winPointsDelta: number;
+  name: string;
+  playerId: string;
 }
 
 export interface Roster {

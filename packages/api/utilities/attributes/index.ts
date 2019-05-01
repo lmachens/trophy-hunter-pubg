@@ -1,12 +1,4 @@
-export interface Attributes {
-  [attributeName: string]: {
-    key: string;
-    subtitle: string;
-    title: string;
-  };
-}
-
-const attributes: Attributes = {
+const attributes = {
   DBNOs: {
     key: 'DBNOs',
     subtitle: 'Number of enemy players knocked out',
@@ -56,6 +48,11 @@ const attributes: Attributes = {
     key: 'kills',
     subtitle: 'Number of enemy players killed',
     title: 'Kills'
+  },
+  killParticipation: {
+    key: 'killParticipation',
+    subtitle: 'Total of kills and assists',
+    title: 'Kill Participation'
   },
   longestKill: {
     key: 'longestKill',
