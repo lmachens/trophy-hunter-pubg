@@ -8,9 +8,6 @@ import { Button, Theme } from '@material-ui/core';
 
 const useStyles = makeStyles((theme: Theme) => ({
   container: {
-    backgroundImage: 'url(/static/backgrounds/main.webp)',
-    backgroundPosition: 'center right',
-    backgroundSize: 'cover',
     padding: theme.spacing(2),
     height: '100%',
     display: 'flex',
@@ -18,6 +15,23 @@ const useStyles = makeStyles((theme: Theme) => ({
     alignItems: 'center',
     justifyContent: 'center',
     flex: 1
+  },
+  backgroundContainer: {
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    zIndex: 0,
+    overflow: 'hidden'
+  },
+  background: {
+    width: '100%',
+    height: '100%',
+    position: 'absolute',
+    objectFit: 'cover',
+    objectPosition: '90% 0',
+    top: '50%',
+    left: '50%',
+    transform: 'translateX(-50%) translateY(-50%)'
   },
   logo: {
     maxWidth: 350,
@@ -44,7 +58,23 @@ const SearchPage: NextFunctionComponent = () => {
 
   return (
     <div className={classes.container}>
-      <img className={classes.logo} src="/static/logo.webp" alt="Trophy Hunter Logo" />
+      <div className={classes.backgroundContainer}>
+        <picture>
+          <source srcSet="/static/backgrounds/main.webp" type="image/webp" />
+          <source srcSet="/static/legacy/backgrounds/main.jpg" type="image/jpeg" />
+          <img
+            className={classes.background}
+            src="/static/backgrounds/main.webp"
+            alt="Background"
+          />
+        </picture>
+      </div>
+
+      <picture>
+        <source srcSet="/static/logo.webp" type="image/webp" />
+        <source srcSet="/static/legacy/logo.png" type="image/png" />
+        <img className={classes.logo} src="/static/logo.webp" alt="Trophy Hunter Logo" />
+      </picture>
       <PlayerSearch autoFocus className={classes.playerSearch} />
       {account && (
         <Link href="/">
