@@ -28,6 +28,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     height: '100%',
     position: 'absolute',
     objectFit: 'cover',
+    objectPosition: '90% 0',
     top: '50%',
     left: '50%',
     transform: 'translateX(-50%) translateY(-50%)'
