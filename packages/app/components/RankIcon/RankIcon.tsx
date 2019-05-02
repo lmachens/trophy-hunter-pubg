@@ -31,12 +31,19 @@ const getRankIcon = (rankPointsTitle: string) => {
   if (level && level !== '0') {
     icon += `_0${level}`;
   }
-
-  return `/static/ranks/${icon}.webp`;
+  return icon;
 };
+
 const RankIcon: FunctionComponent<RankIconProps> = ({ rankPointsTitle }) => {
   const classes = useStyles();
-  return <img src={getRankIcon(rankPointsTitle)} className={classes.img} alt="Rank" />;
+  const icon = getRankIcon(rankPointsTitle);
+  return (
+    <picture>
+      <source srcSet={`/static/ranks/${icon}.webp`} type="image/webp" />
+      <source srcSet={`/static/legacy/ranks/${icon}.png`} type="image/png" />
+      <img src={`/static/ranks/${icon}.webp`} className={classes.img} alt="Rank" />
+    </picture>
+  );
 };
 
 export default RankIcon;

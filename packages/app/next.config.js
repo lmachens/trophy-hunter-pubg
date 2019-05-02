@@ -35,6 +35,8 @@ module.exports = phase => {
             files.forEach(file => {
               fs.copyFileSync(join(dir, 'overwolf', file), join(outDir, file));
             });
+
+            rmDir(join(dir, 'static/legacy'));
           }
 
           return defaultPathMap;
@@ -87,4 +89,19 @@ module.exports = phase => {
       })
     )
   );
+};
+
+const rmDir = dir => {
+  if (fs.existsSync(dir)) {
+    const files = fs.readdirSync(dir);
+    files.forEach(file => {
+      const path = join(dir, file);
+      if (fs.statSync(path).isDirectory()) {
+        rmDir(path);
+      } else {
+        fs.unlinkSync(path);
+      }
+    });
+    fs.rmdirSync(dir);
+  }
 };

@@ -22,6 +22,9 @@ interface PlayerSearchProps {
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
+  form: {
+    zIndex: 1
+  },
   paper: {
     padding: '2px 4px',
     display: 'flex',
@@ -107,7 +110,7 @@ const PlayerSearch: FunctionComponent<PlayerSearchProps> = ({ autoFocus, classNa
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form className={classes.form} onSubmit={handleSubmit}>
       <Paper className={classNames(classes.paper, className)} elevation={1}>
         <Select
           className={classes.select}
