@@ -7,15 +7,15 @@ const { PHASE_PRODUCTION_SERVER } =
     ? require('next/constants') // Get values from `next` package when building locally
     : require('next-server/constants'); // Get values from `next-server` package when building on now v2
 
-module.exports = phase => {
-  const withTypescript = require('@zeit/next-typescript');
-  const withCSS = require('@zeit/next-css');
-  const withOffline = require('next-offline');
-  const fs = require('fs');
-  const { join } = require('path');
-  const dotenv = require('dotenv');
-  const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
+const withTypescript = require('@zeit/next-typescript');
+const withCSS = require('@zeit/next-css');
+const withOffline = require('next-offline');
+const fs = require('fs');
+const { join } = require('path');
+const dotenv = require('dotenv');
+const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
 
+module.exports = phase => {
   dotenv.config({
     path: `${process.env.NODE_ENV}.env`
   });
