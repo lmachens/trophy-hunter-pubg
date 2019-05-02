@@ -36,7 +36,7 @@ module.exports = phase => {
               fs.copyFileSync(join(dir, 'overwolf', file), join(outDir, file));
             });
 
-            rmDir(join(dir, 'static/legacy'));
+            rmDir(join(outDir, 'static/legacy'));
           }
 
           return defaultPathMap;
