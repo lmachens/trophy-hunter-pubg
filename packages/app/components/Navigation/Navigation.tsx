@@ -39,8 +39,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     }
   },
   permanent: {
-    marginTop: theme.mixins.toolbar.minHeight + 4,
-    height: `calc(100% - ${theme.mixins.toolbar.minHeight}px)`
+    paddingTop: 65,
+    height: `100%`
   },
   drawerPaper: {
     backgroundColor: theme.palette.common.black,
