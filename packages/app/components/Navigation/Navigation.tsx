@@ -14,6 +14,7 @@ import classNames from 'classnames';
 import { makeStyles } from '@material-ui/styles';
 import { RouterProps } from 'next/router';
 import SearchIcon from '@material-ui/icons/Search';
+import HelpIcon from '@material-ui/icons/HelpOutline';
 
 interface NavigationProps {
   router: RouterProps;
@@ -23,17 +24,28 @@ interface NavigationProps {
 
 const drawerWidth = 76;
 const useStyles = makeStyles((theme: Theme) => ({
+  list: {
+    display: 'flex',
+    flexDirection: 'column',
+    height: '100%'
+  },
+  grow: {
+    flex: 1
+  },
   drawer: {
     [theme.breakpoints.up('sm')]: {
       width: drawerWidth,
       flexShrink: 0
     }
   },
+  permanent: {
+    marginTop: theme.mixins.toolbar.minHeight + 4,
+    height: `calc(100% - ${theme.mixins.toolbar.minHeight}px)`
+  },
   drawerPaper: {
     backgroundColor: theme.palette.common.black,
     backgroundImage: 'url(/static/backgrounds/dark-mosaic.png)',
-    width: drawerWidth,
-    top: 'inherit'
+    width: drawerWidth
   },
   item: {
     borderLeft: `3px solid transparent`
@@ -44,10 +56,10 @@ const useStyles = makeStyles((theme: Theme) => ({
   avatar: {
     borderRadius: 'unset'
   },
-  search: {
+  avatarIcon: {
     backgroundColor: theme.palette.common.white
   },
-  searchIcon: {
+  icon: {
     width: 32,
     height: 32
   }
@@ -57,17 +69,18 @@ const Navigation: FunctionComponent<NavigationProps> = ({ router, mobileOpen, on
   const classes = useStyles();
 
   const drawer = (
-    <List>
+    <List className={classes.list}>
       <Link href="/">
         <Tooltip title="Profile" placement="right" enterDelay={200}>
           <ListItem
             button
             className={classNames(classes.item, {
               [classes.selectedItem]:
-                !router.route.startsWith('/live') &&
+                !router.route.startsWith('/overwolf') &&
                 !router.route.startsWith('/search') &&
                 !router.route.startsWith('/contribution') &&
-                !router.route.startsWith('/discord')
+                !router.route.startsWith('/discord') &&
+                !router.route.startsWith('/about')
             })}
           >
             <ListItemAvatar>
@@ -85,8 +98,8 @@ const Navigation: FunctionComponent<NavigationProps> = ({ router, mobileOpen, on
             })}
           >
             <ListItemAvatar>
-              <Avatar alt="Search" className={classes.search}>
-                <SearchIcon className={classes.searchIcon} />
+              <Avatar alt="Search" className={classes.avatarIcon}>
+                <SearchIcon className={classes.icon} />
               </Avatar>
             </ListItemAvatar>
           </ListItem>
@@ -136,6 +149,23 @@ const Navigation: FunctionComponent<NavigationProps> = ({ router, mobileOpen, on
           </ListItem>
         </Tooltip>
       </Link>
+      <div className={classes.grow} />
+      <Link href="/about">
+        <Tooltip title="About" placement="right" enterDelay={200}>
+          <ListItem
+            button
+            className={classNames(classes.item, {
+              [classes.selectedItem]: router.route === '/about'
+            })}
+          >
+            <ListItemAvatar>
+              <Avatar alt="About" className={classes.avatarIcon}>
+                <HelpIcon className={classes.icon} />
+              </Avatar>
+            </ListItemAvatar>
+          </ListItem>
+        </Tooltip>
+      </Link>
     </List>
   );
   return (
@@ -160,7 +190,7 @@ const Navigation: FunctionComponent<NavigationProps> = ({ router, mobileOpen, on
           variant="permanent"
           open
           classes={{
-            paper: classes.drawerPaper
+            paper: classNames(classes.drawerPaper, classes.permanent)
           }}
         >
           {drawer}
