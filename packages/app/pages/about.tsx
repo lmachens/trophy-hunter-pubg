@@ -225,7 +225,7 @@ const AboutPage: NextFunctionComponent = () => {
         opting out. By confirming the link
         <iframe
           style={{ display: 'block', border: 0, height: 200, width: 600 }}
-          src="https://matomo.machens.cloud/index.php?module=CoreAdminHome&action=optOut&language=de&backgroundColor=&fontColor=ffffff&fontSize=1rem&fontFamily=%22Roboto%22%2C%20%22Helvetica%22%2C%20%22Arial%22%2C%20sans-serif"
+          src="https://matomo.machens.cloud/index.php?module=CoreAdminHome&action=optOut&language=de&backgroundColor=&fontColor=ffffff&fontSize=1rem&fontFamily=%22Roboto%22%2C%20%22Helvetica%22%2C%20%22Arial%22%2C%20sans-serif&language=en"
         />
         a cookie is stored on your device via your browser to prevent any further analysis. Please
         note, however, that you must click the above link again if you delete the cookies stored on
