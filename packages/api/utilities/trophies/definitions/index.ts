@@ -14,6 +14,7 @@ import fat from './fat';
 import serialKiller from './serialKiller';
 import omnipresent from './omnipresent';
 import achillesHeel from './achillesHeel';
+import muscleUp from './champions';
 
 const trophies = {
   [achillesHeel.name]: achillesHeel,
@@ -23,6 +24,7 @@ const trophies = {
   [collector.name]: collector,
   [fat.name]: fat,
   [healer.name]: healer,
+  [muscleUp.name]: muscleUp,
   [omnipresent.name]: omnipresent,
   [panzerfaust.name]: panzerfaust,
   [roadKills.name]: roadKills,
