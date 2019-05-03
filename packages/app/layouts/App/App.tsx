@@ -32,8 +32,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     zIndex: 1
   },
   game: {
-    height: 20,
-    marginLeft: 6
+    height: 25,
+    marginLeft: 4
   },
   grow: {
     flex: 1,
