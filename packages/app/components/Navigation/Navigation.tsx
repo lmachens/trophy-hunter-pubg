@@ -92,20 +92,22 @@ const Navigation: FunctionComponent<NavigationProps> = ({ router, mobileOpen, on
           </ListItem>
         </Tooltip>
       </Link>
-      <Link href="/live">
-        <Tooltip title="Live Match" placement="right" enterDelay={200}>
-          <ListItem
-            button
-            className={classNames(classes.item, {
-              [classes.selectedItem]: router.route.startsWith('/live')
-            })}
-          >
-            <ListItemAvatar>
-              <Avatar className={classes.avatar} alt="Live" src="/static/overwolf.png" />
-            </ListItemAvatar>
-          </ListItem>
-        </Tooltip>
-      </Link>
+      {typeof overwolf === 'undefined' && (
+        <Link href="/overwolf">
+          <Tooltip title="Live Match" placement="right" enterDelay={200}>
+            <ListItem
+              button
+              className={classNames(classes.item, {
+                [classes.selectedItem]: router.route.startsWith('/overwolf')
+              })}
+            >
+              <ListItemAvatar>
+                <Avatar className={classes.avatar} alt="Live" src="/static/overwolf.png" />
+              </ListItemAvatar>
+            </ListItem>
+          </Tooltip>
+        </Link>
+      )}
       <Link href="/contribution">
         <Tooltip title="Contribution" placement="right" enterDelay={200}>
           <ListItem
