@@ -9,6 +9,7 @@ import { RouterProps } from 'next/router';
 import MenuIcon from '@material-ui/icons/Menu';
 import PlayerSearch from 'components/PlayerSearch';
 import NotificationsBadge from 'components/NotificationsBadge';
+import isOverwolfApp from 'utilities/overwolf/isOverwolfApp';
 
 interface AppLayoutProps {
   router: RouterProps;
@@ -134,7 +135,6 @@ const dragResize = (edge: string) => () => {
   });
 };
 
-const isOverwolfApp = typeof overwolf !== 'undefined';
 const App: FunctionComponent<AppLayoutProps> = ({ children, router }) => {
   const classes = useStyles();
   const [mobileOpen, setMobileOpen] = useState(false);

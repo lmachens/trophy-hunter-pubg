@@ -5,6 +5,7 @@ import getPlayer from 'utilities/th-api/player';
 import Router from 'next/router';
 import { gameEnded, gameLaunched, gameRunning, setFeatures } from 'utilities/overwolf/games';
 import { Game } from './interface';
+import isOverwolfApp from 'utilities/overwolf/isOverwolfApp';
 
 const interestedInFeatures = [
   'me',
@@ -113,7 +114,7 @@ const LiveProvider: FunctionComponent = ({ children }) => {
   };
 
   useEffect(() => {
-    if (typeof overwolf !== 'undefined') {
+    if (isOverwolfApp) {
       overwolf.games.onGameInfoUpdated.addListener(handleGameInfoUpdated);
       overwolf.games.getRunningGameInfo(handleRunningGameInfo);
 

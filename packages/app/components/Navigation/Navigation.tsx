@@ -15,6 +15,7 @@ import { makeStyles } from '@material-ui/styles';
 import { RouterProps } from 'next/router';
 import SearchIcon from '@material-ui/icons/Search';
 import HelpIcon from '@material-ui/icons/HelpOutline';
+import isOverwolfApp from 'utilities/overwolf/isOverwolfApp';
 
 interface NavigationProps {
   router: RouterProps;
@@ -105,7 +106,7 @@ const Navigation: FunctionComponent<NavigationProps> = ({ router, mobileOpen, on
           </ListItem>
         </Tooltip>
       </Link>
-      {typeof overwolf === 'undefined' && (
+      {!isOverwolfApp && (
         <Link href="/overwolf">
           <Tooltip title="Live Match" placement="right" enterDelay={200}>
             <ListItem

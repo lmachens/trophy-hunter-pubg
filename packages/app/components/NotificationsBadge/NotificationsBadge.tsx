@@ -1,12 +1,15 @@
 import React, { FunctionComponent, useState, useEffect, useRef } from 'react';
-import { IconButton, Badge, Menu, MenuItem, Typography, Theme } from '@material-ui/core';
+import { IconButton, Badge, Menu, MenuItem, Typography, Theme, Divider } from '@material-ui/core';
 import NotificationsIcon from '@material-ui/icons/Notifications';
+import NotificationsOffIcon from '@material-ui/icons/NotificationsOff';
 import { useAccount, useChangeAccount } from 'contexts/account';
 import getPlayer from 'utilities/th-api/player';
 import Link from 'components/Link';
 import MatchListItem from 'components/MatchListItem';
 import { makeStyles } from '@material-ui/styles';
 import Router from 'next/router';
+import getOverwolfHealth from 'utilities/overwolf/getOverwolfHealth';
+import isOverwolfApp from 'utilities/overwolf/isOverwolfApp';
 
 interface NotificationsBadgeProps {
   className?: string;
@@ -32,6 +35,7 @@ const NotificationsBadge: FunctionComponent<NotificationsBadgeProps> = ({ classN
   const interval = useRef<NodeJS.Timeout | null>(null);
   const changeAccount = useChangeAccount();
   const [notifications, setNotifications] = useState<string[]>([]);
+  const [health, setHealth] = useState(1);
 
   const handleMenu = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     setAnchorEl(event.currentTarget);
@@ -43,6 +47,11 @@ const NotificationsBadge: FunctionComponent<NotificationsBadgeProps> = ({ classN
   };
 
   const updateNotifications = async () => {
+    if (isOverwolfApp) {
+      const overwolfHealth = await getOverwolfHealth();
+      setHealth(overwolfHealth.state);
+    }
+
     if (!account) return;
     try {
       const player = await getPlayer({
@@ -106,7 +115,8 @@ const NotificationsBadge: FunctionComponent<NotificationsBadgeProps> = ({ classN
         onClick={handleMenu}
       >
         <Badge badgeContent={notifications.length} color="secondary">
-          <NotificationsIcon />
+          {health === 1 && <NotificationsIcon />}
+          {health !== 1 && <NotificationsOffIcon color="error" />}
         </Badge>
       </IconButton>
       <Menu
@@ -119,6 +129,18 @@ const NotificationsBadge: FunctionComponent<NotificationsBadgeProps> = ({ classN
           paper: classes.menuPaper
         }}
       >
+        {isOverwolfApp && (
+          <MenuItem button onClick={handleClose}>
+            {health === 1 && 'All game events are available'}
+            {health === 2 && (
+              <Typography color="error">Some game events may be unavailable</Typography>
+            )}
+            {health === 3 && (
+              <Typography color="error">Game events are currently unavailable</Typography>
+            )}
+          </MenuItem>
+        )}
+        <Divider />
         {account &&
           notifications.slice(0, 5).map(matchId => (
             <Link
