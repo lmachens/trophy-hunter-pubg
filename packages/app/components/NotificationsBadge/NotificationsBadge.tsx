@@ -130,17 +130,19 @@ const NotificationsBadge: FunctionComponent<NotificationsBadgeProps> = ({ classN
         }}
       >
         {isOverwolfApp && (
-          <MenuItem button onClick={handleClose}>
-            {health === 1 && 'All game events are available'}
-            {health === 2 && (
-              <Typography color="error">Some game events may be unavailable</Typography>
-            )}
-            {health === 3 && (
-              <Typography color="error">Game events are currently unavailable</Typography>
-            )}
-          </MenuItem>
+          <>
+            <MenuItem button onClick={handleClose}>
+              {health === 1 && 'All game events are available'}
+              {health === 2 && (
+                <Typography color="error">Some game events may be unavailable</Typography>
+              )}
+              {health === 3 && (
+                <Typography color="error">Game events are currently unavailable</Typography>
+              )}
+            </MenuItem>
+            <Divider />
+          </>
         )}
-        <Divider />
         {account &&
           notifications.slice(0, 5).map(matchId => (
             <Link

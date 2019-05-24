@@ -58,6 +58,8 @@ jspm_packages/
 # next.js build output
 .next
 out
+dist
 
 # Editors
 .vscode
+

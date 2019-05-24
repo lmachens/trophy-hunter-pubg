@@ -3,7 +3,7 @@
   "type": "WebApp",
   "meta": {
     "name": "Trophy Hunter PUBG",
-    "version": "1.6.0",
+    "version": "1.6.1",
     "minimum-overwolf-version": "0.108.209.0",
     "author": "Leon Machens",
     "icon": "IconMouseOver.png",
@@ -40,7 +40,11 @@
       "googlesyndication": "http"
     },
     "externally_connectable": {
-      "matches": ["https://pubg-api.th.gl", "https://matomo.machens.cloud"]
+      "matches": [
+        "https://pubg-api.th.gl",
+        "https://matomo.machens.cloud",
+        "https://developers.overwolf.com"
+      ]
     },
     "start_window": "ControllerWindow",
     "windows": {

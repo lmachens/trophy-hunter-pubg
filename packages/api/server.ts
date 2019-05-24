@@ -1,4 +1,5 @@
-import http from 'http';
+import compression from 'compression';
+import express from 'express';
 import match from './endpoints/match';
 import player from './endpoints/player';
 import trophies from './endpoints/trophies';
@@ -6,7 +7,6 @@ import attributes from './endpoints/attributes';
 import gameIcons from './endpoints/game-icons';
 import seasons from './endpoints/seasons';
 import seasonStats from './endpoints/season-stats';
-import { parse } from 'url';
 import dotenv from 'dotenv';
 
 dotenv.config({
@@ -31,30 +31,27 @@ const endpoints: Endpoints = {
   'season-stats': seasonStats
 };
 
-const hostname = 'localhost';
 const port = 7000;
-http
-  .createServer(async (req, res) => {
-    if (req.url === '/favicon.ico') {
-      res.writeHead(204);
-      return res.end();
-    }
-    console.log(new Date(), req.url);
-    const { pathname = '' } = parse(req.url!);
-    const endpointName = pathname.substr(1);
-    const endpoint = endpoints[endpointName];
-    if (!endpoint) {
-      res.writeHead(400);
-      res.end(`Unknown endpoint ${req.url}`);
-      return;
-    }
+const app = express();
+app.use(compression());
 
-    return await endpoint(req, res);
-  })
-  .listen(port, hostname, () => {
-    console.log('Trophy Hunter PUBG API is running!');
+app.get('/', (_req, res) => {
+  res.writeHead(200);
+  res.end('Trophy Hunter PUBG API');
+});
 
-    Object.keys(endpoints).forEach(endpoint => {
-      console.log(`http://${hostname}:${port}/${endpoint}`);
-    });
-  });
+Object.entries(endpoints).forEach(([route, handle]) => {
+  app.get(`/${route}`, handle);
+  console.log(`http://127.0.0.1:${port}/${route}`);
+});
+
+app.get('/favicon.ico', (_req, res) => {
+  res.writeHead(204);
+  return res.end();
+});
+
+app.listen(port, () => {
+  console.log('Trophy Hunter PUBG API is running!');
+  console.log('NODE_ENV:', process.env.NODE_ENV);
+  console.log('Version:', process.version);
+});

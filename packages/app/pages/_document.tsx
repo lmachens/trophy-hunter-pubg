@@ -3,6 +3,10 @@ import { SheetsRegistry } from 'jss';
 import Document, { Head, Main, NextDocumentContext, NextScript } from 'next/document';
 import React from 'react';
 
+console.log('Trophy Hunter PUBG WWW is running!');
+console.log('NODE_ENV:', process.env.NODE_ENV);
+console.log('Version:', process.version);
+
 class JssDocument extends Document<{ registry: SheetsRegistry }> {
   static async getInitialProps(ctx: NextDocumentContext) {
     const registry = new SheetsRegistry();
