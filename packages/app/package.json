@@ -20,7 +20,7 @@
     "@material-ui/icons": "^4.0.0",
     "@material-ui/styles": "^4.0.0",
     "@octokit/rest": "^16.27.0",
-    "axios": "^0.18.0",
+    "axios": "^0.18.1",
     "classnames": "^2.2.6",
     "cross-env": "^5.2.0",
     "dotenv": "^8.0.0",
